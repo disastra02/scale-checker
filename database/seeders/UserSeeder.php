@@ -30,6 +30,27 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('12345678')
             ],
             [
+                'name' => 'Checker C',
+                'email' => 'checkerc@gmail.com',
+                'is_mobile' => true,
+                'id_jenis' => 2,
+                'password' => Hash::make('12345678')
+            ],
+            [
+                'name' => 'Checker D',
+                'email' => 'checkerd@gmail.com',
+                'is_mobile' => true,
+                'id_jenis' => 2,
+                'password' => Hash::make('12345678')
+            ],
+            [
+                'name' => 'Checker E',
+                'email' => 'checkere@gmail.com',
+                'is_mobile' => true,
+                'id_jenis' => 2,
+                'password' => Hash::make('12345678')
+            ],
+            [
                 'name' => 'Admin Gudang',
                 'email' => 'admin@gmail.com',
                 'is_mobile' => false,
