@@ -67,7 +67,7 @@
                             <span class="mb-1 text-black-50">Total Berat</span>
                         </div>
                         <div class="col-6 text-end">
-                            <h5 class="mb-0 fw-bold">{{ getJumlahBerat($transport->id) }} KG</h5>
+                            <h5 class="mb-0 fw-bold">{{ getJumlahBerat($transport->id) }}</h5>
                         </div>
                     </div>
                     <div class="row">
@@ -82,31 +82,43 @@
                                         <h5 class="mb-0 fw-bold">{{ $item->no_surat }}</h5>
                                         @if ($item->timbangans)
                                             <p class="mb-1 mt-3 text-black-50">Data Barang</p>
-                                            <table class="table align-middle mb-0">
+                                            <table class="table table-borderless align-middle mb-0">
                                                 <thead>
                                                     <tr>
-                                                        <th class="text-start" width="5%">No</th>
-                                                        <th class="text-start" width="60%">Barang</th>
-                                                        <th class="text-start" width="35%">Berat</th>
+                                                        <th class="text-center" width="5%">No</th>
+                                                        <th class="text-start" width="40%">Barang</th>
+                                                        <th class="text-center" width="30%">Berat</th>
+                                                        <th class="text-center" width="30%">Total</th>
                                                     </tr>
                                                 </thead>
                                                 <tbody>
+                                                    @php
+                                                        $last_item = null;
+                                                        $same_item = null;
+                                                    @endphp
                                                     @forelse ($item->timbangans as $data)
                                                         <tr>
-                                                            <td>{{ $loop->iteration }}</td>
+                                                            <td class="text-center">{{ $loop->iteration }}</td>
                                                             <td>{{ $data->name }}</td>
-                                                            <td>{{ $data->berat_barang }} KG</td>
+                                                            <td class="text-center">{{ $data->berat_barang }} KG</td>
+                                                            @if ($last_item == $data->kode_barang)
+                                                                @php $same_item = $data->kode_barang; @endphp
+                                                                <td></td>
+                                                            @else
+                                                                <td class="active text-center">{{ getJumlahBeratLetterBarang($data->id_letter, $data->kode_barang) }}</td>
+                                                            @endif
                                                         </tr>
 
                                                         @if ($loop->last)
-                                                            <tr>
-                                                                <td colspan="2" class="fw-bold">Total Berat</td>
-                                                                <td class="fw-bold">{{ getJumlahBeratLetter($item->id) }} KG</td>
+                                                            <tr class="border-top border-secondary-subtle">
+                                                                <td colspan="3" class="fw-bold">Total Berat</td>
+                                                                <td class="fw-bold text-center">{{ getJumlahBeratLetter($item->id) }}</td>
                                                             </tr>
                                                         @endif
+                                                        @php $last_item = $data->kode_barang; @endphp
                                                     @empty
                                                         <tr>
-                                                            <td colspan="3" class="text-danger text-center">Tidak ada data</td>
+                                                            <td colspan="4" class="text-center">Tidak ada data</td>
                                                         </tr>
                                                     @endforelse
                                                 </tbody>
@@ -131,7 +143,7 @@
                     </div>
                     <div class="row justify-content-end">
                         <div class="col-4 d-flex flex-column">
-                            <button class="btn btn-primary back-page btn-light bg-danger-subtle text-danger border-danger" type="button"><i class="fa-solid fa-arrow-left"></i> &nbsp; Kembali </button>
+                            <button class="btn btn-light back-page" type="button"><i class="fa-solid fa-arrow-left"></i> &nbsp; Kembali </button>
                         </div>
                     </div>
                 </div>
@@ -145,6 +157,8 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js" integrity="sha512-r6rDA7W6ZeQhvl8S7yRVQUKVHdexq+GAlNkNNqVC7YyIV+NwqCTJe2hDWCiffTyRNOeGEzRRJ9ifvRm/HCzGYg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         $(document).ready(function() {
+            $(`td.active`).parent().addClass('border-top border-secondary-subtle');
+
             // Button back
             $('.back-page').on('click', function() {
                 let url = `{{ route('home') }}`;

@@ -7,7 +7,7 @@ use App\Models\User;
 if ( !function_exists('getJumlahSurat') )
 {
     function getJumlahSurat($id){
-        $hasil = Letter::where("id_transport", $id)->count(); 
+        $hasil = Letter::where("id_transport", $id)->get()->count(); 
 
         return $hasil;
     }
@@ -24,7 +24,7 @@ if ( !function_exists('getJumlahBerat') )
             $total = $total + $berat;
         }
 
-        return $total;
+        return converHasilSatuan($total);
     }
 }
 
@@ -33,9 +33,57 @@ if ( !function_exists('getJumlahBeratLetter') )
     function getJumlahBeratLetter($id){
         $hasil = Timbangan::where("id_letter", $id)->sum('berat_barang');
 
+        return converHasilSatuan($hasil);
+    }
+}
+
+if ( !function_exists('getJumlahBarang') )
+{
+    function getJumlahBarang($id){
+        $hasil = Timbangan::select('kode_barang')->where("id_letter", $id)->groupBy('kode_barang')->get()->count();
+
+        return $hasil.' Barang';
+    }
+}
+
+if ( !function_exists('getTotalBarang') )
+{
+    function getTotalBarang($id){
+        $hasil = Timbangan::where("id_letter", $id)->count();
+
+        return $hasil.' Barang';
+    }
+}
+
+if ( !function_exists('getJumlahBeratLetterBarang') )
+{
+    function getJumlahBeratLetterBarang($id, $kodeBarang){
+        $hasil = Timbangan::where("id_letter", $id)->where("kode_barang", $kodeBarang)->sum('berat_barang');
+
+        return converHasilSatuan($hasil);
+    }
+}
+
+if ( !function_exists('converHasilSatuan') )
+{
+    function converHasilSatuan($jumlah){
+        if ($jumlah < 100) {
+            $perhitungan = number_format($jumlah, 3, ',');
+            $hasil = $perhitungan.' KG';
+        } else if ($jumlah >= 100 && $jumlah < 1000) {
+            $perhitungan = number_format($jumlah / 100, 3, ',');
+            $hasil = $perhitungan.' KW';
+        } else if ($jumlah >= 1000) {
+            $perhitungan = number_format($jumlah / 1000, 3, ',');
+            $hasil = $perhitungan.' TON';
+        } else {
+            $hasil = 0;
+        }
+
         return $hasil;
     }
 }
+
 
 if ( !function_exists('getUser') )
 {

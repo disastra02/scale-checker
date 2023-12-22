@@ -40,16 +40,16 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <h3 class="fw-bold mb-0">Perbandingan Manual</h3>
-                        <span class="text-black-50">Lorem ipsum dolor</span>
+                        <span class="text-black-50">Title deskripsi</span>
                     </div>
                     <div class="col-md-6">
                         <div class="">
-                            <label for="exampleFormControlInput1" class="form-label fw-medium">Perbandingan Data</label>
+                            <label for="exampleFormControlInput1" class="form-label fw-medium">Perbandingan Data Checker</label>
                             <div class="d-flex">
                                 <select class="form-select select2" id="perbandingan-value">
                                     <option selected value="" disabled>Pilih Perbandingan</option>
                                     @foreach ($kendaraan as $item)
-                                        <option value="{{ $item->id }}">{{ $item->no_kendaraan }} - {{ getJumlahSurat($item->id) }} Surat - {{ getJumlahBerat($item->id) }} KG</option>
+                                        <option value="{{ $item->id }}">{{ $item->no_kendaraan }} - {{ getJumlahSurat($item->id) }} Surat - {{ getJumlahBerat($item->id) }}</option>
                                     @endforeach
                                 </select>
                                 <button type="button" class="btn btn-primary btn-cari ms-3" title="Cari"><i class="fa-solid fa-magnifying-glass"></i></button>
@@ -78,7 +78,7 @@
                                     <div class="card bg-danger-subtle text-danger border-0">
                                         <div class="card-body">
                                             <h3 class="fw-bold mb-4"><i class="fa-solid fa-user"></i></h3>
-                                            <h3 class="fw-bold mb-0">{{ getJumlahBerat($transport->id) }} KG</h3>
+                                            <h3 class="fw-bold mb-0">{{ getJumlahBerat($transport->id) }}</h3>
                                             <span>Total Berat</span>
                                         </div>
                                     </div>
@@ -86,59 +86,95 @@
                             </div>
         
                             @forelse ($suratJalan as $item)
-                                <div class="card div-surat">
-                                    <div class="card-body">
-                                        <h3 class="fw-bold mb-0 text-center">Surat Jalan</h3>
-                                        <p class="text-center text-black-50 mb-4">Nomor : {{ $item->no_surat }}</p>
-        
-                                        <table class="table table-borderless table-sm align-middle">
-                                            <tr>
-                                                <td class="fw-bold ps-0" width="35%">Nomor Kendaraan</td>
-                                                <td>: <span class="text-black-50 mb-0">{{ $transport->no_kendaraan }}</span></td>
-                                            </tr>
-                                            <tr>
-                                                <td class="fw-bold ps-0" width="35%">Tanggal</td>
-                                                <td>: <span class="text-black-50 mb-0">{{ getTanggalIndo($item->created_at->format('Y-m-d')) }}</span></td>
-                                            </tr>
-                                        </table>
-        
-                                        @if ($item->timbangans)
-                                            <table class="table table-bordered align-middle mb-0">
-                                                <thead>
-                                                    <tr>
-                                                        <th class="text-start" width="5%">No</th>
-                                                        <th class="text-start" width="60%">Barang</th>
-                                                        <th class="text-start" width="35%">Berat</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    @forelse ($item->timbangans as $data)
-                                                        <tr>
-                                                            <td>{{ $loop->iteration }}</td>
-                                                            <td>{{ $data->name }}</td>
-                                                            <td>{{ $data->berat_barang }} KG</td>
-                                                        </tr>
-        
-                                                        @if ($loop->last)
-                                                            <tr>
-                                                                <td colspan="2" class="fw-bold">Total Berat</td>
-                                                                <td class="fw-bold">{{ getJumlahBeratLetter($item->id) }} KG</td>
-                                                            </tr>
-                                                        @endif
-                                                    @empty
-                                                        <tr>
-                                                            <td colspan="3" class="text-center">Tidak ada data</td>
-                                                        </tr>
-                                                    @endforelse
-                                                </tbody>
-                                            </table>
-                                        @else
-                                            <div class="w-100 text-center">
-                                                <div class="alert alert-danger" role="alert">
-                                                    Tidak ada data.
+                                <div class="row justify-content-center div-surat">
+                                    <div class="col-md-12">
+                                        <div class="card shadow-sm border-light-subtle">
+                                            <div class="card-body">
+                                                <h3 class="fw-bold mb-0 text-center">Surat Jalan</h3>
+                                                <p class="text-center text-black-50 mb-4">Nomor : {{ $item->no_surat }}</p>
+
+                                                <div class="row mb-3">
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="col-md-4"><span class="fw-medium">Nomor Kendaraan</span></div>
+                                                                    <div class="col-md-8">: <span class="text-black-50">{{ $transport->no_kendaraan }}</span></div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-4"><span class="fw-medium">Tanggal</span></div>
+                                                                    <div class="col-md-8">: <span class="text-black-50">{{ getTanggalIndo($item->created_at->format('Y-m-d')) }}</span></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-12">
+                                                                <div class="row">
+                                                                    <div class="col-md-4"><span class="fw-medium">Jumlah Barang</span></div>
+                                                                    <div class="col-md-8">: <span class="text-black-50">{{ getJumlahBarang($item->id) }}</span></div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-4"><span class="fw-medium">Total Barang</span></div>
+                                                                    <div class="col-md-8">: <span class="text-black-50">{{ getTotalBarang($item->id) }}</span></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
                                                 </div>
+
+                                                @if ($item->timbangans)
+                                                    <table class="table table-borderless align-middle mb-0">
+                                                        <thead>
+                                                            <tr class="border-top border-secondary-subtle">
+                                                                <th class="text-center" width="5%">No</th>
+                                                                <th class="text-start" width="55%">Barang</th>
+                                                                <th class="text-center" width="20%">Berat</th>
+                                                                <th class="text-center" width="20%">Total</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody>
+                                                            @php
+                                                                $last_item = null;
+                                                                $same_item = null;
+                                                            @endphp
+                                                            @forelse ($item->timbangans as $data)
+                                                                <tr>
+                                                                    <td class="text-center">{{ $loop->iteration }}</td>
+                                                                    <td>{{ $data->name }}</td>
+                                                                    <td class="text-center">{{ $data->berat_barang }} KG</td>
+                                                                    @if ($last_item == $data->kode_barang)
+                                                                        @php $same_item = $data->kode_barang; @endphp
+                                                                        <td></td>
+                                                                    @else
+                                                                        <td class="active text-center">{{ getJumlahBeratLetterBarang($data->id_letter, $data->kode_barang) }}</td>
+                                                                    @endif
+                                                                </tr>
+
+                                                                @if ($loop->last)
+                                                                    <tr class="border-top border-secondary-subtle">
+                                                                        <td colspan="3" class="fw-bold">Total Berat</td>
+                                                                        <td class="fw-bold text-center">{{ getJumlahBeratLetter($item->id) }}</td>
+                                                                    </tr>
+                                                                @endif
+                                                                @php $last_item = $data->kode_barang; @endphp
+                                                            @empty
+                                                                <tr>
+                                                                    <td colspan="4" class="text-center">Tidak ada data</td>
+                                                                </tr>
+                                                            @endforelse
+                                                        </tbody>
+                                                    </table>
+                                                @else
+                                                    <div class="w-100 text-center">
+                                                        <div class="alert alert-danger" role="alert">
+                                                            Tidak ada data.
+                                                        </div>
+                                                    </div>
+                                                @endif
                                             </div>
-                                        @endif
+                                        </div>
                                     </div>
                                 </div>
                             @empty
@@ -163,7 +199,7 @@
             <hr>
             <div class="row justify-content-end">
                 <div class="col-md-2 d-flex flex-column">
-                    <a class="btn btn-primary btn-light bg-danger-subtle text-danger border-danger" href="{{ route('w-cek-manual.index') }}"><i class="fa-solid fa-arrow-left"></i> &nbsp; Kembali </a>
+                    <a class="btn btn-light" href="{{ route('w-cek-manual.index') }}"><i class="fa-solid fa-arrow-left"></i> &nbsp; Kembali </a>
                 </div>
             </div>
         </div>
@@ -173,6 +209,8 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
+            $(`td.active`).parent().addClass('border-top border-secondary-subtle');
+
             // Select 2
             $('.select2').select2();
 

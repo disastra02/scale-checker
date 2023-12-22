@@ -108,7 +108,7 @@
     
                         <div class="mb-3">
                             <h3 class="mb-0 fw-bold">Login</h3>
-                            <span class="">Lorem ipsum dolor</span>
+                            <span class="">Title deskripsi</span>
                         </div>
     
                         <form method="POST" action="{{ route('login') }}">

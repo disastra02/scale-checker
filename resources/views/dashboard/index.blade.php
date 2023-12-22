@@ -49,7 +49,7 @@
                         <div class="card-body">
                             <h2 class="fw-bold mb-3"><i class="fa-solid fa-weight-scale"></i></h2>
                             <span>Berat</span>
-                            <h5 class="mb-0 fw-bold">{{ number_format($totalBerat / 1000, 2) }} TON</h5>
+                            <h5 class="mb-0 fw-bold">{{ converHasilSatuan($totalBerat) }}</h5>
                         </div>
                     </div>
                 </div>
@@ -129,7 +129,7 @@
                                 </div>
                                 <div class="col-6 mb-3">
                                     <span class="mb-1 text-black-50">Total Berat</span>
-                                    <h5 class="mb-0 fw-bold">{{ getJumlahBerat($item->id) }} KG</h5>
+                                    <h5 class="mb-0 fw-bold">{{ getJumlahBerat($item->id) }}</h5>
                                 </div>
                                 <div class="col-6">
                                     <span class="mb-1 text-black-50">Tanggal</span>

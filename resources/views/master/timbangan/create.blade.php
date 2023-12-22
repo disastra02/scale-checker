@@ -87,7 +87,7 @@
 
                         <div class="row justify-content-end mt-3">
                             <div class="col-4 d-flex flex-column">
-                                <button class="btn btn-primary back-page btn-light bg-danger-subtle text-danger border-danger" type="button"><i class="fa-solid fa-xmark"></i> &nbsp; Batal </button>
+                                <button class="btn btn-light back-page" type="button"><i class="fa-solid fa-xmark"></i> &nbsp; Batal </button>
                             </div>
                             <div class="col-4 d-flex flex-column">
                                 <button class="btn btn-primary btn-submit-data" type="button"><i class="fa-solid fa-check"></i> &nbsp; Simpan </button>

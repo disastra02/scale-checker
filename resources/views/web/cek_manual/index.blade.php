@@ -14,10 +14,10 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <h3 class="fw-bold mb-0">Cek Manual</h3>
-                        <span class="text-black-50">Lorem ipsum dolor</span>
+                        <span class="text-black-50">Title deskripsi</span>
                     </div>
                     <div class="col-md-6 text-end">
-                        <a class="btn btn-primary" href="{{ route('w-cek-manual.create') }}"><i class="fa-solid fa-plus"></i> &nbsp; Tambah Data</a>
+                        <a class="btn btn-primary btn-sm" href="{{ route('w-cek-manual.create') }}"><i class="fa-solid fa-plus"></i> &nbsp; Tambah Data</a>
                     </div>
                 </div>
             </div>
@@ -40,8 +40,8 @@
                             <td>{{ getUser($item->created_by) ? getUser($item->created_by)->name : '-' }}</td>
                             <td>{{ $item->no_kendaraan }}</td>
                             <td>{{ getJumlahSurat($item->id) }} Surat</td>
-                            <td>{{ getJumlahBerat($item->id) }} KG</td>
-                            <td>{{ $item->created_at }}</td>
+                            <td>{{ getJumlahBerat($item->id) }}</td>
+                            <td>{{ getTanggalIndo($item->created_at->format('Y-m-d')) }}, {{ $item->created_at->format('H:i') }}</td>
                             <td class="text-center">
                                 <div class="btn-group">
                                     <button type="button" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">

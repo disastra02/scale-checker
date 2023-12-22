@@ -7,17 +7,17 @@
         </ol>
     </nav>
 
-    <div class="card shadow-lg">
+    <div class="card shadow-lg border-light-subtle">
         <div class="card-body">
             <div class="card-title mb-4">
                 <h3 class="fw-bold mb-0">Summary Dashboard</h3>
-                <span class="text-black-50">Lorem ipsum dolor</span>
+                <span class="text-black-50">Title deskripsi</span>
             </div>
             <div class="row">
                 <div class="col-md-4">
                     <div class="row">
                         <div class="col-md-6">
-                            <div class="card mb-4 bg-secondary-subtle text-secondary border-0">
+                            <div class="card mb-4 bg-secondary-subtle text-secondary border-0 shadow-sm">
                                 <div class="card-body">
                                     <h3 class="fw-bold mb-4"><i class="fa-solid fa-truck"></i></h3>
                                     <h3 class="fw-bold mb-0">{{ $totalKendaraan }}</h3>
@@ -26,7 +26,7 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="card mb-4 bg-primary-subtle text-primary border-0">
+                            <div class="card mb-4 bg-primary-subtle text-primary border-0 shadow-sm">
                                 <div class="card-body">
                                     <h3 class="fw-bold mb-4"><i class="fa-solid fa-envelope"></i></h3>
                                     <h3 class="fw-bold mb-0">{{ $totalSurat }}</h3>
@@ -35,16 +35,16 @@
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="card bg-success-subtle text-success border-0">
+                            <div class="card bg-success-subtle text-success border-0 shadow-sm">
                                 <div class="card-body">
                                     <h3 class="fw-bold mb-4"><i class="fa-solid fa-weight-scale"></i></h3>
-                                    <h3 class="fw-bold mb-0">{{ number_format($totalBerat / 1000, 2) }} TON</h3>
+                                    <h3 class="fw-bold mb-0">{{ converHasilSatuan($totalBerat) }}</h3>
                                     <span>Total Berat</span>
                                 </div>
                             </div>
                         </div>
                         <div class="col-md-6">
-                            <div class="card bg-danger-subtle text-danger border-0">
+                            <div class="card bg-danger-subtle text-danger border-0 shadow-sm">
                                 <div class="card-body">
                                     <h3 class="fw-bold mb-4"><i class="fa-solid fa-user"></i></h3>
                                     <h3 class="fw-bold mb-0">{{ $totalChecker }}</h3>
@@ -55,18 +55,18 @@
                     </div>
                 </div>
                 <div class="col-md-8">
-                    <div class="card h-100">
+                    <div class="card h-100 border-light-subtle shadow-sm">
                         <div class="card-body">
                             <canvas id="myChart"></canvas>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-12">
-                    <div class="card mt-4">
+                    <div class="card mt-4 border-light-subtle shadow-sm">
                         <div class="card-body">
                             <div class="card-title mb-4">
                                 <h3 class="fw-bold mb-0">Pengecekan Barang</h3>
-                                <span class="text-black-50">Lorem ipsum dolor</span>
+                                <span class="text-black-50">Title deskripsi</span>
                             </div>
                             <table class="table align-middle" id="datacek">
                                 <thead>
@@ -87,8 +87,8 @@
                                             <td>{{ getUser($item->created_by) ? getUser($item->created_by)->name : '-' }}</td>
                                             <td>{{ $item->no_kendaraan }}</td>
                                             <td>{{ getJumlahSurat($item->id) }} Surat</td>
-                                            <td>{{ getJumlahBerat($item->id) }} KG</td>
-                                            <td>{{ $item->created_at }}</td>
+                                            <td>{{ getJumlahBerat($item->id) }}</td>
+                                            <td>{{ getTanggalIndo($item->created_at->format('Y-m-d')) }}, {{ $item->created_at->format('H:i') }}</td>
                                             <td class="text-center">
                                                 <div class="btn-group">
                                                     <button type="button" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
