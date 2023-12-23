@@ -25,8 +25,6 @@ class TimbanganController extends Controller
     public function index()
     {
         $data['page'] = 'manual';
-        $data['user'] = Auth::user();
-        $data['kendaraan'] = Transport::where('created_by', $data['user']->id)->orderBy('id', 'DESC')->get();
 
         return view('web.cek_manual.index', $data);
     }
@@ -78,7 +76,6 @@ class TimbanganController extends Controller
                 })
                 ->rawColumns(['user', 'total', 'berat', 'tanggal', 'aksi'])
                 ->make(true);
-
         }
     }
 

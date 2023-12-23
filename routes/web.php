@@ -4,6 +4,7 @@ use App\Http\Controllers\AfterLoginController;
 use App\Http\Controllers\Master\TimbanganController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\Master\BarangController;
+use App\Http\Controllers\Web\Master\CustomerController;
 use App\Http\Controllers\Web\Master\TimbanganController as MasterTimbanganController;
 use App\Http\Controllers\Web\Master\UsersController;
 use App\Http\Controllers\Web\TimbanganController as WebTimbanganController;
@@ -51,8 +52,13 @@ Route::resource('w-cek-manual', MasterTimbanganController::class);
 
 // Master 
 // Barang
+Route::get('m-barang/scope-data', [BarangController::class, 'scopeData'])->name('m-barang.scopeData');
 Route::resource('m-barang', BarangController::class);
 
 // User
+Route::get('m-users/scope-data', [UsersController::class, 'scopeData'])->name('m-users.scopeData');
 Route::resource('m-users', UsersController::class);
 
+// Customer
+Route::get('m-customer/scope-data', [CustomerController::class, 'scopeData'])->name('m-customer.scopeData');
+Route::resource('m-customer', CustomerController::class);

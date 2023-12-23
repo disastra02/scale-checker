@@ -21,40 +21,16 @@
                     </div>
                 </div>
             </div>
-            <table class="table align-middle" id="datacek">
+            <table class="table align-middle" id="dataUser">
                 <thead>
                     <tr>
-                        <th class="text-center">No</th>
-                        <th class="text-center">Nama</th>
-                        <th class="text-center">Email</th>
-                        <th class="text-center">Jenis</th>
-                        <th class="text-center">Aksi</th>
+                        <th class="text-center" width="8%">No</th>
+                        <th class="text-center" width="42%">Nama</th>
+                        <th class="text-center" width="28%">Email</th>
+                        <th class="text-center" width="16%">Jenis</th>
+                        <th class="text-center" width="8%">Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach ($users as $item)
-                        <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
-                            <td>{{ $item->name }}</td>
-                            <td>{{ $item->email }}</td>
-                            <td>{{ $item->jenisUsers->name }}</td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="#">Detail</a></li>
-                                        <li><a class="dropdown-item" href="#">Perbarui</a></li>
-                                        @if ($item->id_jenis != 1)
-                                            <li><a class="dropdown-item" href="#">Hapus</a></li>
-                                        @endif
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
             </table>
         </div>
     </div>
@@ -63,7 +39,19 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            new DataTable('#datacek');
+            // Data User
+            var tableUser = $('#dataUser').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('m-users.scopeData') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'name', name: 'name'},
+                    {data: 'email', name: 'email'},
+                    {data: 'jenis', name: 'jenis'},
+                    {data: 'aksi', name: 'aksi', orderable: false, searchable: false},
+                ]
+            });
         });
     </script>
 @endpush

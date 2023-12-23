@@ -24,13 +24,13 @@
             <table class="table align-middle" id="dataChecker">
                 <thead>
                     <tr>
-                        <th class="text-center">No</th>
+                        <th class="text-center" width="8%">No</th>
                         <th class="text-center">Pembuat</th>
-                        <th class="text-center">Nomor Kendaraan</th>
-                        <th class="text-center">Total Surat</th>
-                        <th class="text-center">Total Berat</th>
-                        <th class="text-center">Waktu</th>
-                        <th class="text-center">Aksi</th>
+                        <th class="text-center" width="16%">Nomor Kendaraan</th>
+                        <th class="text-center" width="16%">Total</th>
+                        <th class="text-center" width="16%">Total Berat</th>
+                        <th class="text-center" width="16%">Waktu</th>
+                        <th class="text-center" width="8%">Aksi</th>
                     </tr>
                 </thead>
             </table>
@@ -41,8 +41,6 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            // new DataTable('#datacek');
-
             // Data Checker
             var tableChecker = $('#dataChecker').DataTable({
                 processing: true,

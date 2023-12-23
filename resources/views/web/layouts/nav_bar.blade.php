@@ -17,8 +17,9 @@
                     Data Master
                     </a>
                     <ul class="dropdown-menu">  
-                        <li><a class="dropdown-item @isset($page) {{ $page == "users" ? 'fw-medium' : '' }} @endisset" href="{{ route('m-users.index') }}">Master User</a></li>
                         <li><a class="dropdown-item @isset($page) {{ $page == "barang" ? 'fw-medium' : '' }} @endisset" href="{{ route('m-barang.index') }}">Master Barang</a></li>
+                        <li><a class="dropdown-item @isset($page) {{ $page == "customer" ? 'fw-medium' : '' }} @endisset" href="{{ route('m-customer.index') }}">Master Pelanggan</a></li>
+                        <li><a class="dropdown-item @isset($page) {{ $page == "users" ? 'fw-medium' : '' }} @endisset" href="{{ route('m-users.index') }}">Master User</a></li>
                     </ul>
                 </li>
             </ul>
