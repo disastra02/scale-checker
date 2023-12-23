@@ -59,6 +59,15 @@
                                         <input type="text" name="surat_jalan[]" class="form-control" autocomplete="off" id="suratJalan" placeholder="Masukkan No Surat Jalan" required>
                                         <input type="hidden" name="nomer_surat[]" value="1">
                                     </div>
+                                    <div class="mb-3">
+                                        <label for="customer" class="form-label">Customer <span class="text-danger">*</span></label>
+                                        <select class="form-select select2" name="customer[]" required>
+                                            <option selected value="" disabled>Customer</option>
+                                            @foreach ($customer as $item)
+                                                <option value="{{ $item->id }}">{{ $item->name }} - {{ $item->address }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <div class="d-flex flex-column mb-3">
                                         <label for="scanBarcode" class="form-label">Data Barang</label>
                                         <table class="table align-middle mb-0">
@@ -125,7 +134,7 @@
                 <hr>
                 <div class="row justify-content-end">
                     <div class="col-md-2 d-flex flex-column">
-                        <a class="btn btn-primary btn-light bg-danger-subtle text-danger border-danger" href="{{ route('w-cek-manual.index') }}"><i class="fa-solid fa-times"></i> &nbsp; Batal </a>
+                        <a class="btn btn-light" href="{{ route('w-cek-manual.index') }}"><i class="fa-solid fa-times"></i> &nbsp; Batal </a>
                     </div>
                     <div class="col-md-2 d-flex flex-column">
                         <button class="btn btn-primary btn-submit-data" type="button"><i class="fa-solid fa-check"></i> &nbsp; Simpan </button>
@@ -210,6 +219,15 @@
                                         <label for="suratJalan" class="form-label">No Surat Jalan <span class="text-danger">*</span></label>
                                         <input type="text" name="surat_jalan[]" class="form-control" autocomplete="off" id="suratJalan" placeholder="Masukkan No Surat Jalan" required>
                                         <input type="hidden" name="nomer_surat[]" value="${idStreamAll}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="customer" class="form-label">Customer <span class="text-danger">*</span></label>
+                                        <select class="form-select select2" name="customer[]" required>
+                                            <option selected value="" disabled>Customer</option>
+                                            @foreach ($customer as $item)
+                                                <option value="{{ $item->id }}">{{ $item->name }} - {{ $item->address }}</option>
+                                            @endforeach
+                                        </select>
                                     </div>
                                     <div class="d-flex flex-column mb-3">
                                         <label for="scanBarcode" class="form-label">Data Barang</label>

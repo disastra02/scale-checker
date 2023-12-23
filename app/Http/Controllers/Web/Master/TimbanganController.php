@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Web\Master;
 
 use App\Http\Controllers\Controller;
 use App\Models\Master\Barang;
+use App\Models\Master\Customer;
 use App\Models\Master\Letter;
 use App\Models\Master\Timbangan;
 use App\Models\Master\Transport;
@@ -32,6 +33,7 @@ class TimbanganController extends Controller
     public function create()
     {
         $data['barang'] = Barang::orderBy('id', 'DESC')->get();
+        $data['customer'] = Customer::orderBy('name', 'ASC')->get();
 
         return view('web.cek_manual.create', $data);
     }
@@ -59,6 +61,7 @@ class TimbanganController extends Controller
                 $suratJalan = Letter::create([
                     'no_surat' => $req->input('surat_jalan.'.$keySurat),
                     'id_transport' => $transport->id,
+                    'id_customer' => $req->input('customer.'.$keySurat),
                     'created_by' => $user->id
                 ]);
 
@@ -98,7 +101,7 @@ class TimbanganController extends Controller
             $data['suratJalan'] = Letter::with([
                 'timbangans' => function ($query) {
                     $query->join('barangs', 'barangs.kode', 'timbangans.kode_barang');
-                }
+                }, 'customers'
             ])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get();
 
             return view('web.cek_manual.detail', $data);

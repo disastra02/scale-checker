@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Master;
 
 use App\Http\Controllers\Controller;
 use App\Models\Master\Barang;
+use App\Models\Master\Customer;
 use App\Models\Master\Letter;
 use App\Models\Master\Timbangan;
 use App\Models\Master\Transport;
@@ -29,6 +30,7 @@ class TimbanganController extends Controller
     public function create()
     {
         $data['dataBarang'] = Barang::get()->keyBy('kode');
+        $data['customer'] = Customer::orderBy('name', 'ASC')->get();
         return view('master.timbangan.create', $data);
     }
 
@@ -55,6 +57,7 @@ class TimbanganController extends Controller
                 $suratJalan = Letter::create([
                     'no_surat' => $req->input('surat_jalan.'.$keySurat),
                     'id_transport' => $transport->id,
+                    'id_customer' => $req->input('customer.'.$keySurat),
                     'created_by' => $user->id
                 ]);
 

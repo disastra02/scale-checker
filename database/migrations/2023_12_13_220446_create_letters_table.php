@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('letters', function (Blueprint $table) {
             $table->id();
             $table->bigInteger('id_transport');
+            $table->bigInteger('id_customer');
             $table->string('no_surat');
             $table->bigInteger('created_by');
             $table->timestamps();

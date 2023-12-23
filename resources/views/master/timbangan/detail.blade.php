@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
         <div class="col-12">
             <div class="card mb-4 border-0">
-                <div class="card-body p-2">
+                <div class="card-body p-0">
                     <div class="d-flex justify-content-between align-items-center">
                         <button class="btn btn-light back-page bg-transparent border-0"><i class="fa-solid fa-arrow-left"></i></button>
                         <h5 class="fw-bold mb-0">Detail Timbangan</h5>
@@ -29,13 +29,13 @@
 
         <div class="col-12">
             <div class="card mb-4 border-0">
-                <div class="card-body p-2">
+                <div class="card-body p-0">
                     <div class="row mb-3">
                         <div class="col-6">
                             <span class="mb-1 text-black-50">Kendaraan</span>
                         </div>
                         <div class="col-6 text-end">
-                            <h5 class="mb-0 fw-bold">{{ $transport->no_kendaraan }}</h5>
+                            <p class="mb-0 fw-bold">{{ $transport->no_kendaraan }}</p>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -43,7 +43,7 @@
                             <span class="mb-1 text-black-50">Tanggal</span>
                         </div>
                         <div class="col-6 text-end">
-                            <h5 class="mb-0 fw-bold">{{ $transport->created_at->format('Y-m-d'); }}</h5>
+                            <p class="mb-0 fw-bold">{{ $transport->created_at->format('Y-m-d'); }}</p>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -51,7 +51,7 @@
                             <span class="mb-1 text-black-50">Waktu</span>
                         </div>
                         <div class="col-6 text-end">
-                            <h5 class="mb-0 fw-bold">{{ $transport->created_at->format('H:i'); }}</h5>
+                            <p class="mb-0 fw-bold">{{ $transport->created_at->format('H:i'); }}</p>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -59,7 +59,7 @@
                             <span class="mb-1 text-black-50">Total Surat</span>
                         </div>
                         <div class="col-6 text-end">
-                            <h5 class="mb-0 fw-bold">{{ getJumlahSurat($transport->id) }}</h5>
+                            <p class="mb-0 fw-bold">{{ getJumlahSurat($transport->id) }}</p>
                         </div>
                     </div>
                     <div class="row mb-3">
@@ -67,7 +67,7 @@
                             <span class="mb-1 text-black-50">Total Berat</span>
                         </div>
                         <div class="col-6 text-end">
-                            <h5 class="mb-0 fw-bold">{{ getJumlahBerat($transport->id) }}</h5>
+                            <p class="mb-0 fw-bold">{{ getJumlahBerat($transport->id) }}</p>
                         </div>
                     </div>
                     <div class="row">
@@ -78,11 +78,15 @@
                                         <span class="mb-0 text-black-50">{{ $loop->iteration }}. Surat Jalan</span>
                                     </div>
                                     <div class="card-body">
-                                        <span class="mb-1 text-black-50">Nomer Surat Jalan</span>
-                                        <h5 class="mb-0 fw-bold">{{ $item->no_surat }}</h5>
+                                        <p class="mb-0 text-black-50">Nomer Surat Jalan</p>
+                                        <p class="mb-0 fw-bold">{{ $item->no_surat }}</p>
+                                        <p class="mb-0 mt-3 text-black-50">Pelanggan</p>
+                                        <p class="mb-0 fw-bold">{{ $item->customers->name }}</p>
+                                        <p class="mb-0 mt-3 text-black-50">Alamat</p>
+                                        <p class="mb-0 fw-bold">{{ $item->customers->address }}</p>
                                         @if ($item->timbangans)
                                             <p class="mb-1 mt-3 text-black-50">Data Barang</p>
-                                            <table class="table table-borderless align-middle mb-0">
+                                            <table class="table table-borderless align-middle mb-0 table-sm">
                                                 <thead>
                                                     <tr>
                                                         <th class="text-center" width="5%">No</th>
@@ -142,7 +146,7 @@
                         @endforelse
                     </div>
                     <div class="row justify-content-end">
-                        <div class="col-4 d-flex flex-column">
+                        <div class="col-5 d-flex flex-column">
                             <button class="btn btn-light back-page" type="button"><i class="fa-solid fa-arrow-left"></i> &nbsp; Kembali </button>
                         </div>
                     </div>

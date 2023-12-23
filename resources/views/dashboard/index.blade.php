@@ -30,8 +30,8 @@
                     <div class="card border-0 bg-primary-subtle text-primary border-0">
                         <div class="card-body">
                             <h2 class="fw-bold mb-3"><i class="fa-solid fa-truck"></i></h2>
-                            <span>Kendaraan</span>
-                            <h5 class="mb-0 fw-bold">{{ $totalKendaraan }}</h5>
+                            <span>Mobil</span>
+                            <h6 class="mb-0 fw-bold">{{ $totalKendaraan }}</h6>
                         </div>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                         <div class="card-body">
                             <h2 class="fw-bold mb-3"><i class="fa-solid fa-envelope"></i></h2>
                             <span>Surat</span>
-                            <h5 class="mb-0 fw-bold">{{ $totalSurat }}</h5>
+                            <h6 class="mb-0 fw-bold">{{ $totalSurat }}</h6>
                         </div>
                     </div>
                 </div>
@@ -49,7 +49,7 @@
                         <div class="card-body">
                             <h2 class="fw-bold mb-3"><i class="fa-solid fa-weight-scale"></i></h2>
                             <span>Berat</span>
-                            <h5 class="mb-0 fw-bold">{{ converHasilSatuan($totalBerat) }}</h5>
+                            <h6 class="mb-0 fw-bold">{{ converHasilSatuan($totalBerat) }}</h6>
                         </div>
                     </div>
                 </div>

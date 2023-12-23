@@ -49,7 +49,7 @@ class TimbanganController extends Controller
             $data['suratJalan'] = Letter::with([
                 'timbangans' => function ($query) {
                     $query->join('barangs', 'barangs.kode', 'timbangans.kode_barang');
-                }
+                }, 'customers'
             ])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get();
 
             return view('web.timbangan.detail', $data);

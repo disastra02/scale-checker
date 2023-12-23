@@ -47,7 +47,7 @@
                                 <h3 class="fw-bold mb-0 text-center">Surat Jalan</h3>
                                 <p class="text-center text-black-50 mb-4">Nomor : {{ $item->no_surat }}</p>
 
-                                <div class="row mb-3">
+                                <div class="row mb-4">
                                     <div class="col-md-6">
                                         <div class="row">
                                             <div class="col-md-12">
@@ -56,8 +56,12 @@
                                                     <div class="col-md-8">: <span class="text-black-50">{{ $transport->no_kendaraan }}</span></div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-4"><span class="fw-medium">Tanggal</span></div>
-                                                    <div class="col-md-8">: <span class="text-black-50">{{ getTanggalIndo($item->created_at->format('Y-m-d')) }}</span></div>
+                                                    <div class="col-md-4"><span class="fw-medium">Pelanggan</span></div>
+                                                    <div class="col-md-8">: <span class="text-black-50">{{ $item->customers->name }}</span></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4"><span class="fw-medium">Alamat</span></div>
+                                                    <div class="col-md-8">: <span class="text-black-50">{{ $item->customers->address }}</span></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -65,6 +69,10 @@
                                     <div class="col-md-6">
                                         <div class="row">
                                             <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-4"><span class="fw-medium">Tanggal</span></div>
+                                                    <div class="col-md-8">: <span class="text-black-50">{{ getTanggalIndo($item->created_at->format('Y-m-d')) }}, {{ $item->created_at->format('H:i') }}</span></div>
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4"><span class="fw-medium">Jumlah Barang</span></div>
                                                     <div class="col-md-8">: <span class="text-black-50">{{ getJumlahBarang($item->id) }}</span></div>

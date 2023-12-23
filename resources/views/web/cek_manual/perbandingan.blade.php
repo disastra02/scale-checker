@@ -102,15 +102,17 @@
                                                                     <div class="col-md-8">: <span class="text-black-50">{{ $transport->no_kendaraan }}</span></div>
                                                                 </div>
                                                                 <div class="row">
+                                                                    <div class="col-md-4"><span class="fw-medium">Pelanggan</span></div>
+                                                                    <div class="col-md-8">: <span class="text-black-50">{{ $item->customers->name }}</span></div>
+                                                                </div>
+                                                                <div class="row">
+                                                                    <div class="col-md-4"><span class="fw-medium">Alamat</span></div>
+                                                                    <div class="col-md-8">: <span class="text-black-50">{{ $item->customers->address }}</span></div>
+                                                                </div>
+                                                                <div class="row">
                                                                     <div class="col-md-4"><span class="fw-medium">Tanggal</span></div>
                                                                     <div class="col-md-8">: <span class="text-black-50">{{ getTanggalIndo($item->created_at->format('Y-m-d')) }}</span></div>
                                                                 </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <div class="col-md-12">
-                                                        <div class="row">
-                                                            <div class="col-md-12">
                                                                 <div class="row">
                                                                     <div class="col-md-4"><span class="fw-medium">Jumlah Barang</span></div>
                                                                     <div class="col-md-8">: <span class="text-black-50">{{ getJumlahBarang($item->id) }}</span></div>

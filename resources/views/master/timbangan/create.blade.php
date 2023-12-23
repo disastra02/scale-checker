@@ -48,13 +48,22 @@
                                         <input type="text" name="surat_jalan[]" class="form-control" autocomplete="off" id="suratJalan" placeholder="Masukkan No Surat Jalan" required>
                                         <input type="hidden" name="nomer_surat[]" value="1">
                                     </div>
+                                    <div class="mb-3">
+                                        <label for="customer" class="form-label">Customer <span class="text-danger">*</span></label>
+                                        <select class="form-select select2" name="customer[]" required>
+                                            <option selected value="" disabled>Customer</option>
+                                            @foreach ($customer as $item)
+                                                <option value="{{ $item->id }}">{{ $item->name }} - {{ $item->address }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <div class="d-flex flex-column">
                                         <label for="scanBarcode" class="form-label">Scan Barcode</label>
                                         <button class="btn btn-qr-all btn-success btn-qr-code" data-id="1" type="button"><i class="fa-solid fa-camera"></i> &nbsp; Start Scan </button>
                                         <div class="text-center" id="scanDiv1" style="display: none;">
                                             <div class="mt-3" id="loadCamera1"><i class="fa-solid fa-spinner fa-spin-pulse"></i></div>
                                             <div class="my-3" id="reader1" style="display: none;"></div>
-                                            <table class="table align-middle mb-0">
+                                            <table class="table align-middle mb-0 mt-3">
                                                 <thead>
                                                     <tr>
                                                         <th class="text-start" width="55%">Barang</th>
@@ -76,7 +85,7 @@
                             <div class="card-body">
                                 <div class="row align-items-center">
                                     <div class="col-6">
-                                        <p class="fw-medium mb-0">Tambah Data Surat Jalan</p>
+                                        <p class="fw-medium mb-0">Tambah Surat Jalan</p>
                                     </div>
                                     <div class="col-6 text-end">
                                         <button class="btn btn-secondary btn-add-surat" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;" type="button"><i class="fa-solid fa-plus"></i>&nbsp; Tambah Surat</button>
@@ -85,11 +94,11 @@
                             </div>
                         </div>
 
-                        <div class="row justify-content-end mt-3">
-                            <div class="col-4 d-flex flex-column">
+                        <div class="row justify-content-center mt-3">
+                            <div class="col-5 d-flex flex-column">
                                 <button class="btn btn-light back-page" type="button"><i class="fa-solid fa-xmark"></i> &nbsp; Batal </button>
                             </div>
-                            <div class="col-4 d-flex flex-column">
+                            <div class="col-5 d-flex flex-column">
                                 <button class="btn btn-primary btn-submit-data" type="button"><i class="fa-solid fa-check"></i> &nbsp; Simpan </button>
                                 <button id="submitData" type="submit" class="d-none"></button>
                             </div>
@@ -221,7 +230,8 @@
             let startScanQr = (idStream, target) => {
                 Html5Qrcode.getCameras().then(devices => {
                     if (devices && devices.length) {
-                        var cameraId = devices[1] ? devices[1].id : devices[0].id;
+                        let lastId = devices.length - 1;
+                        var cameraId = devices[lastId].id;
                         
                         const html5QrCode = new Html5Qrcode(`reader${idStream}`);
                         htmlQrCodeAktif = html5QrCode;
@@ -348,13 +358,22 @@
                                         <input type="text" name="surat_jalan[]" class="form-control" autocomplete="off" id="suratJalan" placeholder="Masukkan No Surat Jalan" required>
                                         <input type="hidden" name="nomer_surat[]" value="${idStreamAll}">
                                     </div>
+                                    <div class="mb-3">
+                                        <label for="customer" class="form-label">Customer <span class="text-danger">*</span></label>
+                                        <select class="form-select select2" name="customer[]" required>
+                                            <option selected value="" disabled>Customer</option>
+                                            @foreach ($customer as $item)
+                                                <option value="{{ $item->id }}">{{ $item->name }} - {{ $item->address }}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                     <div class="d-flex flex-column">
                                         <label for="scanBarcode" class="form-label">Scan Barcode</label>
                                         <button class="btn btn-qr-all btn-success btn-qr-code" data-id="${idStreamAll}" type="button"><i class="fa-solid fa-camera"></i> &nbsp; Start Scan </button>
                                         <div class="text-center" id="scanDiv${idStreamAll}" style="display: none;">
                                             <div class="mt-3" id="loadCamera${idStreamAll}"><i class="fa-solid fa-spinner fa-spin-pulse"></i></div>
                                             <div class="my-3" id="reader${idStreamAll}" style="display: none;"></div>
-                                            <table class="table align-middle">
+                                            <table class="table align-middle mb-0 mt-3">
                                                 <thead>
                                                     <tr>
                                                         <th class="text-start" width="55%">Barang</th>

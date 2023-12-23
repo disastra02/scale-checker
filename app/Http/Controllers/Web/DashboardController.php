@@ -28,7 +28,7 @@ class DashboardController extends Controller
         $data['user'] = Auth::user();
         $data['totalKendaraan'] = Transport::where('created_by', '!=', $data['user']->id)->count(); 
         $data['totalSurat'] = Letter::where('created_by', '!=', $data['user']->id)->count(); 
-        $data['totalBerat'] = Timbangan::sum('berat_barang'); 
+        $data['totalBerat'] = Timbangan::where('created_by', '!=', $data['user']->id)->sum('berat_barang'); 
         $data['totalChecker'] = User::where('id_jenis', 2)->count();
         $data['kendaraan'] = Transport::where('created_by', '!=', $data['user']->id)->orderBy('id', 'DESC')->get();
 

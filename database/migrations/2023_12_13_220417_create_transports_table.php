@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('transports', function (Blueprint $table) {
             $table->id();
             $table->string('no_kendaraan');
-            $table->bigInteger('customer_id');
             $table->bigInteger('created_by');
             $table->timestamps();
         });
