@@ -96,6 +96,7 @@
                                                     </button>
                                                     <ul class="dropdown-menu">
                                                         <li><a class="dropdown-item" href="{{ route('w-timbangan.show', $item->id) }}">Detail</a></li>
+                                                        <li><a class="dropdown-item" href="{{ route('w-timbangan.perbandingan', $item->id) }}">Perbandingan</a></li>
                                                         <li>
                                                             <form action="{{ route('w-timbangan.destroy', $item->id) }}" method="POST">
                                                                 @method("DELETE")

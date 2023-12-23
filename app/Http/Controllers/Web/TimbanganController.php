@@ -7,6 +7,7 @@ use App\Models\Master\Letter;
 use App\Models\Master\Timbangan;
 use App\Models\Master\Transport;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Throwable;
 
@@ -56,6 +57,28 @@ class TimbanganController extends Controller
         } catch (Throwable $e) {
             Session::flash('error', 'Terjadi sesuatu kesalahan pada server.');
             return redirect()->route('w-dashboard.index');
+        }
+    }
+
+    public function perbandingan(string $id)
+    {
+        try {
+            // Transport
+            $data['user'] = Auth::user();
+            $data['transport'] = Transport::where('id', $id)->first();
+            $data['kendaraan'] = Transport::where('created_by', $data['user']->id)->orderBy('id', 'DESC')->get();
+            
+            // Surat Jalan
+            $data['suratJalan'] = Letter::with([
+                'timbangans' => function ($query) {
+                    $query->join('barangs', 'barangs.kode', 'timbangans.kode_barang');
+                }
+            ])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get();
+
+            return view('web.timbangan.perbandingan', $data);
+        } catch (Throwable $e) {
+            Session::flash('error', 'Terjadi sesuatu kesalahan pada server.');
+            return redirect()->route('w-cek-manual.index');
         }
     }
 

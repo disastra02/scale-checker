@@ -55,7 +55,7 @@ class TimbanganController extends Controller
 
             foreach ($dataAllSuratJalan as $keySurat => $dtSurat) {
                 $suratJalan = Letter::create([
-                    'no_surat' => $req->input('surat_jalan.'.$keySurat),
+                    'no_surat' => strtoupper($req->input('surat_jalan.'.$keySurat)),
                     'id_transport' => $transport->id,
                     'id_customer' => $req->input('customer.'.$keySurat),
                     'created_by' => $user->id

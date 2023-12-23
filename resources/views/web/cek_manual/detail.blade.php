@@ -30,11 +30,16 @@
                             <span class="badge text-bg-primary">Total {{ getJumlahSurat($transport->id) }} Surat</span> &nbsp; <span class="badge text-bg-secondary">Total Berat {{ getJumlahBerat($transport->id) }}</span>
                         </div>
                     </div>
-                    <div class="col-md-6 text-end">
+                    <div class="col-md-6 d-flex justify-content-end">
                         <a class="btn btn-light btn-sm" href="{{ route('w-cek-manual.index') }}" title="Kembali"><i class="fa-solid fa-arrow-left"></i></a>
-                        <a class="btn btn-warning btn-sm ms-2" href="#" title="Perbandingan"><i class="fa-solid fa-arrows-left-right"></i> &nbsp; Perbandingan</a>
+                        <a class="btn btn-warning btn-sm ms-2" href="{{ route('w-cek-manual.perbandingan', $transport->id) }}" title="Perbandingan"><i class="fa-solid fa-arrows-left-right"></i> &nbsp; Perbandingan</a>
                         <a class="btn btn-success btn-sm ms-2" href="#" title="Print"><i class="fa-solid fa-file-pdf"></i> &nbsp; Print</a>
-                        <a class="btn btn-danger btn-sm ms-2" href="#" title="Hapus"><i class="fa-solid fa-trash"></i> &nbsp; Hapus</a>
+                        <form action="{{ route('w-cek-manual.destroy', $transport->id) }}" method="POST">
+                            @method("DELETE")
+                            @csrf
+
+                            <a class="btn btn-danger btn-sm ms-2 delete-data" type="submit" title="Hapus"><i class="fa-solid fa-trash"></i> &nbsp; Hapus</a>
+                        </form>
                     </div>
                 </div>
             </div>
@@ -160,6 +165,25 @@
     <script>
         $(document).ready(function() {
             $(`td.active`).parent().addClass('border-top border-secondary-subtle');
+
+            // Button delete
+            $('.delete-data').click(function(e){
+                e.preventDefault();
+                Swal.fire({
+                    title: "Apakah anda yakin ?",
+                    text: `Data akan dihapus !`,
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#3085d6",
+                    cancelButtonColor: "#d33",
+                    confirmButtonText: "Hapus",
+                    cancelButtonText: "Batal",
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        $(e.target).closest('form').submit();
+                    }
+                });
+            });
         });
     </script>
 @endpush

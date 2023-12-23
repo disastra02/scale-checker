@@ -35,11 +35,22 @@ Route::get('/after-login', [AfterLoginController::class, 'index'])->name('after-
 Route::resource('timbangan', TimbanganController::class);
 
 // Website
+// Dashboard
 Route::get('w-dashboard', [DashboardController::class, 'index'])->name('w-dashboard.index');
+
+// Checker
+Route::get('w-timbangan/{id}/perbandingan', [WebTimbanganController::class, 'perbandingan'])->name('w-timbangan.perbandingan');
 Route::resource('w-timbangan', WebTimbanganController::class);
+
+// Manual
 Route::get('w-cek-manual/{id}/perbandingan', [MasterTimbanganController::class, 'perbandingan'])->name('w-cek-manual.perbandingan');
 Route::get('w-cek-manual/perbandingan-detail', [MasterTimbanganController::class, 'perbandinganDetail'])->name('w-cek-manual.perbandinganDetail');
 Route::resource('w-cek-manual', MasterTimbanganController::class);
+
+// Master 
+// Barang
 Route::resource('m-barang', BarangController::class);
+
+// User
 Route::resource('m-users', UsersController::class);
 
