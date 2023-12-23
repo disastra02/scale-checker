@@ -13,6 +13,15 @@ if ( !function_exists('getJumlahSurat') )
     }
 }
 
+if ( !function_exists('getJumlahCustomer') )
+{
+    function getJumlahCustomer($id){
+        $hasil = Letter::select('id_customer')->where("id_transport", $id)->groupBy('id_customer')->get()->count(); 
+
+        return $hasil;
+    }
+}
+
 if ( !function_exists('getJumlahBerat') )
 {
     function getJumlahBerat($id){
@@ -120,6 +129,31 @@ if ( !function_exists('getTanggalIndo') )
             10 =>'Oktober',
             11 =>'November',
             12 =>'Desember'
+        );
+
+        $pecahkan = explode('-', $tanggal);
+			
+        return $pecahkan[2] . ' ' . $bulan[ (int)$pecahkan[1] ] . ' ' . $pecahkan[0];
+    }
+}
+
+if ( !function_exists('getTanggalTable') )
+{
+    function getTanggalTable($tanggal){
+        date_default_timezone_set("Asia/Bangkok");
+        $bulan = array (
+            1 => 'Jan',
+            2 => 'Feb',
+            3 => 'Mar',
+            4 => 'Apr',
+            5 => 'Mei',
+            6 => 'Jun',
+            7 => 'Jul',
+            8 =>'Agu',
+            9 =>'Sep',
+            10 =>'Okt',
+            11 =>'Nov',
+            12 =>'Des'
         );
 
         $pecahkan = explode('-', $tanggal);

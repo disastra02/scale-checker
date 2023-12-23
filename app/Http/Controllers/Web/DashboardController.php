@@ -30,7 +30,6 @@ class DashboardController extends Controller
         $data['totalSurat'] = Letter::where('created_by', '!=', $data['user']->id)->count(); 
         $data['totalBerat'] = Timbangan::where('created_by', '!=', $data['user']->id)->sum('berat_barang'); 
         $data['totalChecker'] = User::where('id_jenis', 2)->count();
-        $data['kendaraan'] = Transport::where('created_by', '!=', $data['user']->id)->orderBy('id', 'DESC')->get();
 
         for($jumlahTanggal; $jumlahTanggal >= 0; $jumlahTanggal--) {
             $day = date('Y-m-d', strtotime('-'.$jumlahTanggal.' days'));

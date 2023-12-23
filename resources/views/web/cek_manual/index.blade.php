@@ -21,7 +21,7 @@
                     </div>
                 </div>
             </div>
-            <table class="table align-middle" id="datacek">
+            <table class="table align-middle" id="dataChecker">
                 <thead>
                     <tr>
                         <th class="text-center">No</th>
@@ -33,37 +33,6 @@
                         <th class="text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
-                    @foreach ($kendaraan as $item)
-                        <tr>
-                            <td class="text-center">{{ $loop->iteration }}</td>
-                            <td>{{ getUser($item->created_by) ? getUser($item->created_by)->name : '-' }}</td>
-                            <td>{{ $item->no_kendaraan }}</td>
-                            <td>{{ getJumlahSurat($item->id) }} Surat</td>
-                            <td>{{ getJumlahBerat($item->id) }}</td>
-                            <td>{{ getTanggalIndo($item->created_at->format('Y-m-d')) }}, {{ $item->created_at->format('H:i') }}</td>
-                            <td class="text-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="{{ route('w-cek-manual.show', $item->id) }}">Detail</a></li>
-                                        <li><a class="dropdown-item" href="{{ route('w-cek-manual.perbandingan', $item->id) }}">Perbandingan</a></li>
-                                        <li>
-                                            <form action="{{ route('w-cek-manual.destroy', $item->id) }}" method="POST">
-                                                @method("DELETE")
-                                                @csrf
-
-                                                <a class="dropdown-item delete-data" type="submit">Hapus</a>
-                                            </form>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </td>
-                        </tr>
-                    @endforeach
-                </tbody>
             </table>
         </div>
     </div>
@@ -72,10 +41,26 @@
 @push('scripts')
     <script>
         $(document).ready(function() {
-            new DataTable('#datacek');
+            // new DataTable('#datacek');
+
+            // Data Checker
+            var tableChecker = $('#dataChecker').DataTable({
+                processing: true,
+                serverSide: true,
+                ajax: "{{ route('w-cek-manual.scopeData') }}",
+                columns: [
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'user', name: 'user'},
+                    {data: 'no_kendaraan', name: 'no_kendaraan'},
+                    {data: 'total', name: 'total', searchable: false},
+                    {data: 'berat', name: 'berat', searchable: false},
+                    {data: 'tanggal', name: 'tanggal', searchable: false},
+                    {data: 'aksi', name: 'aksi', orderable: false, searchable: false},
+                ]
+            });
 
             // Button delete
-            $('.delete-data').click(function(e){
+            $('body').on('click', '.delete-data', function(e){
                 e.preventDefault();
                 Swal.fire({
                     title: "Apakah anda yakin ?",

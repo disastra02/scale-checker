@@ -10,6 +10,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Throwable;
+use Yajra\DataTables\Facades\DataTables;
 
 class TimbanganController extends Controller
 {
@@ -22,6 +23,57 @@ class TimbanganController extends Controller
     public function index()
     {
         //
+    }
+
+    public function scopeData(Request $req)
+    {
+        if ($req->ajax()) {
+            $user = Auth::user();
+            $data = Transport::where('created_by', '!=', $user->id)->orderBy('id', 'DESC')->get();
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('user', function($item){
+                    return getUser($item->created_by) ? getUser($item->created_by)->name : '-'; 
+                })
+                ->addColumn('total', function($item){
+                    $html = '<span class="badge text-bg-primary">'.getJumlahSurat($item->id).' Surat</span>&nbsp;<span class="badge text-bg-secondary">'.getJumlahCustomer($item->id).' Pelanggan</span>';
+
+                    return $html;
+                })
+                ->addColumn('berat', function($item){
+                    return getJumlahBerat($item->id); 
+                })
+                ->addColumn('tanggal', function($item){
+                    return getTanggalTable($item->created_at->format('Y-m-d')).', '.$item->created_at->format('H:i'); 
+                })
+                ->addColumn('aksi', function($item){
+                    $html = '<div class="text-center">
+                                <div class="btn-group">
+                                    <button type="button" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
+                                        <i class="fa-solid fa-ellipsis-vertical"></i>
+                                    </button>
+                                    <ul class="dropdown-menu">
+                                        <li><a class="dropdown-item" href="'.route('w-timbangan.show', $item->id).'">Detail</a></li>
+                                        <li><a class="dropdown-item" href="'.route('w-timbangan.perbandingan', $item->id).'">Perbandingan</a></li>
+                                        <li>
+                                            <form action="'.route('w-timbangan.destroy', $item->id).'" method="POST">
+                                                '.method_field("DELETE").'
+                                                '.csrf_field().'
+
+                                                <a class="dropdown-item delete-data" type="submit">Hapus</a>
+                                            </form>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>';
+
+                    return $html;
+                })
+                ->rawColumns(['user', 'total', 'berat', 'tanggal', 'aksi'])
+                ->make(true);
+
+        }
     }
 
     /**
