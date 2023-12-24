@@ -3,13 +3,13 @@
 namespace App\Http\Controllers\Web\Report;
 
 use App\Http\Controllers\Controller;
-use App\Models\Master\Barang;
-use App\Models\Master\Timbangan;
+use App\Models\Master\Transport;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Yajra\DataTables\Facades\DataTables;
 
-class ReportBarangController extends Controller
+class ReportCheckerController extends Controller
 {
     public function __construct()
     {
@@ -19,9 +19,9 @@ class ReportBarangController extends Controller
 
     public function index()
     {
-        $data['page'] = 'report_barang';
+        $data['page'] = 'report_checker';
 
-        return view('web.report.barang.index', $data);
+        return view('web.report.checker.index', $data);
     }
 
     public function getJumlah(Request $req)
@@ -29,11 +29,12 @@ class ReportBarangController extends Controller
         if ($req->ajax()) {
             $startDate = $req->startdate.' 00:00:00';
             $endDate = $req->enddate.' 23:59:59';
-            $jumlahBarang = Timbangan::select('kode_barang')->whereBetween('created_at', [$startDate, $endDate])->groupBy('kode_barang')->get()->count();
-            $totalBarang = Barang::count();
-            $barangTersimpan = $totalBarang - $jumlahBarang;
+            
+            $jumlahChecker = Transport::select('transports.created_by')->join('users', 'users.id', 'transports.created_by')->where('users.id_jenis', '!=', 1)->whereBetween('transports.created_at', [$startDate, $endDate])->groupBy('transports.created_by')->get()->count();
+            $totalChecker = User::where('id_jenis', 2)->count();
+            $tersimpan = $totalChecker - $jumlahChecker;
 
-            return response()->json(['jumlah' => $jumlahBarang, 'total' => $totalBarang, 'tersimpan' => $barangTersimpan]);
+            return response()->json(['jumlah' => $jumlahChecker, 'total' => $totalChecker, 'tersimpan' => $tersimpan]);
         }
     }
 
@@ -44,23 +45,24 @@ class ReportBarangController extends Controller
             $endDate = $req->enddate.' 23:59:59';
             $tipe = $req->tipe;
 
-            $data = Barang::select('barangs.kode', DB::raw('(SELECT COUNT(*) FROM timbangans WHERE timbangans.created_at BETWEEN "'.$startDate.'" AND "'.$endDate.'" AND timbangans.kode_barang = barangs.kode GROUP BY timbangans.kode_barang) AS total'))
-                ->leftJoin('timbangans', 'timbangans.kode_barang', 'barangs.kode')
+            $data = User::select('users.id', DB::raw('(SELECT COUNT(*) FROM transports WHERE transports.created_at BETWEEN "'.$startDate.'" AND "'.$endDate.'" AND transports.created_by = users.id GROUP BY transports.created_by) AS total'))
+                ->leftJoin('transports', 'transports.created_by', 'users.id')
+                ->where('users.id_jenis', '!=', 1)
                 ->where(function($query) use ($tipe, $startDate, $endDate) {
                     if ($tipe == 1) {
-                        $query->whereNotNull('timbangans.id')->whereBetween('timbangans.created_at', [$startDate, $endDate]);
+                        $query->whereNotNull('transports.id')->whereBetween('transports.created_at', [$startDate, $endDate]);
                     } else if ($tipe == 2) {
-                        $query->where(DB::raw('(SELECT COUNT(*) FROM timbangans WHERE timbangans.created_at BETWEEN "'.$startDate.'" AND "'.$endDate.'" AND timbangans.kode_barang = barangs.kode GROUP BY timbangans.kode_barang)'), '=', null);
+                        $query->where(DB::raw('(SELECT COUNT(*) FROM transports WHERE transports.created_at BETWEEN "'.$startDate.'" AND "'.$endDate.'" AND transports.created_by = users.id GROUP BY transports.created_by)'), '=', null);
                     }
-                })->groupBy('barangs.id')->orderBy('total', 'DESC')->get();
+                })->groupBy('users.id')->orderBy('total', 'DESC')->get();
 
-            // $data = Timbangan::select('kode_barang', DB::raw('COUNT(*) as total'))->whereBetween('created_at', [$startDate, $endDate])->groupBy('kode_barang')->orderBy('total', 'DESC')->get();
+            // $data = Transport::select('transports.created_by', DB::raw('COUNT(*) as total'))->join('users', 'users.id', 'transports.created_by')->where('users.id_jenis', '!=', 1)->whereBetween('transports.created_at', [$startDate, $endDate])->groupBy('transports.created_by')->orderBy('total', 'DESC')->get();
 
             return DataTables::of($data)
                 ->addIndexColumn()
                 ->addColumn('nama', function($item){
-                    $barang = Barang::where('kode', $item->kode)->first();
-                    $hasil = $barang ? $barang->name : '-';
+                    $user = User::where('id', $item->id)->first();
+                    $hasil = $user ? $user->name : '-';
 
                     return $hasil;
                 })

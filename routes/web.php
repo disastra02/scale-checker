@@ -8,6 +8,8 @@ use App\Http\Controllers\Web\Master\CustomerController;
 use App\Http\Controllers\Web\Master\TimbanganController as MasterTimbanganController;
 use App\Http\Controllers\Web\Master\UsersController;
 use App\Http\Controllers\Web\Report\ReportBarangController;
+use App\Http\Controllers\Web\Report\ReportCheckerController;
+use App\Http\Controllers\Web\Report\ReportCustomerController;
 use App\Http\Controllers\Web\TimbanganController as WebTimbanganController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -69,4 +71,14 @@ Route::resource('m-customer', CustomerController::class);
 Route::get('r-barang/scope-data', [ReportBarangController::class, 'scopeData'])->name('r-barang.scopeData');
 Route::get('r-barang/get-jumlah', [ReportBarangController::class, 'getJumlah'])->name('r-barang.getJumlah');
 Route::resource('r-barang', ReportBarangController::class);
+
+// Customer
+Route::get('r-customer/scope-data', [ReportCustomerController::class, 'scopeData'])->name('r-customer.scopeData');
+Route::get('r-customer/get-jumlah', [ReportCustomerController::class, 'getJumlah'])->name('r-customer.getJumlah');
+Route::resource('r-customer', ReportCustomerController::class);
+
+// Customer
+Route::get('r-checker/scope-data', [ReportCheckerController::class, 'scopeData'])->name('r-checker.scopeData');
+Route::get('r-checker/get-jumlah', [ReportCheckerController::class, 'getJumlah'])->name('r-checker.getJumlah');
+Route::resource('r-checker', ReportCheckerController::class);
 

@@ -30,7 +30,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('w-dashboard.index') }}" class="text-white">Dashboard</a></li>
-            <li class="breadcrumb-item text-white active" aria-current="page">Laporan Barang</li>
+            <li class="breadcrumb-item text-white active" aria-current="page">Laporan Checker</li>
         </ol>
     </nav>
 
@@ -38,11 +38,11 @@
         <div class="card-body">
             <div class="card-title mb-4">
                 <div class="row align-items-center">
-                    <div class="col-md-6">
-                        <h3 class="fw-bold mb-0">Laporan Barang</h3>
+                    <div class="col-md-4">
+                        <h3 class="fw-bold mb-0">Laporan Checker</h3>
                         <span class="text-black-50">Title deskripsi</span>
                     </div>
-                    <div class="col-md-6 d-flex justify-content-end">
+                    <div class="col-md-8 d-flex justify-content-end">
                         <div class="">
                             <div class="range" id="rangeDate">
                                 <i class="fa fa-calendar"></i>&nbsp;&nbsp;<span></span>&nbsp;&nbsp;<i class="fa fa-caret-down"></i>
@@ -50,8 +50,8 @@
                         </div>
                         <div class="ms-3">
                             <select class="form-select" id="tipeData">
-                                <option selected value="1">Terjual</option>
-                                <option value="2">Tersedia</option>
+                                <option selected value="1">Aktif</option>
+                                <option value="2">Belum</option>
                                 <option value="3">Semua</option>
                             </select>
                         </div>
@@ -65,36 +65,35 @@
                 <div class="col-md-3">
                     <div class="card">
                         <div class="card-body px-3 py-2">
-                            <h5 class="fw-bold mb-0" id="jumlahBarang">0</h5>
-                            <span>Total Barang Terjual</span>
+                            <h5 class="fw-bold mb-0" id="jumlahChecker">0</h5>
+                            <span>Total Checker Aktif</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="card">
                         <div class="card-body px-3 py-2">
-                            <h5 class="fw-bold mb-0" id="jumlahBarangTersimpan">0</h5>
-                            <span>Total Barang Tersedia</span>
+                            <h5 class="fw-bold mb-0" id="jumlahCheckerBelum">0</h5>
+                            <span>Total Checker Belum</span>
                         </div>
                     </div>
                 </div>
                 <div class="col-md-3">
                     <div class="card">
                         <div class="card-body px-3 py-2">
-                            <h5 class="fw-bold mb-0" id="totalBarang">0</h5>
-                            <span>Total Barang Semua</span>
+                            <h5 class="fw-bold mb-0" id="totalChecker">0</h5>
+                            <span>Total Checker Semua</span>
                         </div>
                     </div>
                 </div>
             </div>
             
-            <table class="table align-middle" id="dataReportBarang">
+            <table class="table align-middle" id="dataReportChecker">
                 <thead>
                     <tr>
                         <th class="text-center" width="8%">No</th>
-                        <th class="text-center" width="22%">Kode</th>
                         <th class="text-center" width="42%">Nama</th>
-                        <th class="text-center" width="8%">Jumlah</th>
+                        <th class="text-center" width="8%">Transaksi</th>
                     </tr>
                 </thead>
             </table>
@@ -131,7 +130,7 @@
             cb(start, end);
 
             // Filter Data
-            var tableBarang;
+            var tableChecker;
             let startDate = start.format('YYYY-MM-DD');
             let endDate = end.format('YYYY-MM-DD');
             let tipeData = $('#tipeData').val();
@@ -154,29 +153,28 @@
             function getJumlah(start, end, tipeData) {
                 $.ajax({
                     method: "GET",
-                    url: `{{ route('r-barang.getJumlah') }}?startdate=${start}&enddate=${end}&tipe=${tipeData}`,
+                    url: `{{ route('r-checker.getJumlah') }}?startdate=${start}&enddate=${end}&tipe=${tipeData}`,
                     beforeSend: function(res) {
                         Swal.showLoading();
                     },
                     success: function(res) {
                         Swal.close();
-                        $('#jumlahBarang').html(res.jumlah ?? 0);
-                        $('#totalBarang').html(res.total ?? 0);
-                        $('#jumlahBarangTersimpan').html(res.tersimpan ?? 0);
+                        $('#jumlahChecker').html(res.jumlah ?? 0);
+                        $('#totalChecker').html(res.total ?? 0);
+                        $('#jumlahCheckerBelum').html(res.tersimpan ?? 0);
                     }
                 });
             }
 
             function getTable(start, end, tipeData) {
-                // Data Barang
-                tableBarang = $('#dataReportBarang').DataTable({
+                // Data Checker
+                tableChecker = $('#dataReportChecker').DataTable({
                     processing: true,
                     serverSide: true,
                     destroy: true,
-                    ajax: `{{ route('r-barang.scopeData') }}?startdate=${start}&enddate=${end}&tipe=${tipeData}`,
+                    ajax: `{{ route('r-checker.scopeData') }}?startdate=${start}&enddate=${end}&tipe=${tipeData}`,
                     columns: [
                         {data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center"},
-                        {data: 'kode', name: 'kode'},
                         {data: 'nama', name: 'nama'},
                         {data: 'total', name: 'total', searchable: false, className: "text-center"},
                     ]
