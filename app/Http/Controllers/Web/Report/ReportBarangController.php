@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Web\Report;
 use App\Http\Controllers\Controller;
 use App\Models\Master\Barang;
 use App\Models\Master\Timbangan;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Throwable;
 use Yajra\DataTables\Facades\DataTables;
 
 class ReportBarangController extends Controller
@@ -43,8 +46,47 @@ class ReportBarangController extends Controller
             $startDate = $req->startdate.' 00:00:00';
             $endDate = $req->enddate.' 23:59:59';
             $tipe = $req->tipe;
+            $data = $this->getData($startDate, $endDate, $tipe);
 
-            $data = Barang::select('barangs.kode', DB::raw('(SELECT COUNT(*) FROM timbangans JOIN users ON users.id = timbangans.created_by WHERE timbangans.created_at BETWEEN "'.$startDate.'" AND "'.$endDate.'" AND timbangans.kode_barang = barangs.kode AND users.id_jenis != 1 GROUP BY timbangans.kode_barang) AS total'))
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('nama', function($item){
+                    $barang = getBarang($item->kode);
+                    $hasil = $barang ? $barang->name : '-';
+
+                    return $hasil;
+                })
+                ->addColumn('total', function($item){
+                    return $item->total ?? 0;
+                })
+                ->rawColumns(['nama', 'total'])
+                ->make(true);
+        }
+    }
+
+    public function printToPdf(Request $req)
+    {
+        try {
+            $startDate = $req->startdate.' 00:00:00';
+            $endDate = $req->enddate.' 23:59:59';
+            $tipe = $req->tipe;
+
+            $data['tanggal'] = getTanggalIndo($req->startdate).' s/d '.getTanggalIndo($req->enddate);
+            $data['tipe'] = $tipe == 1 ? 'Terjual' : ($tipe == 2 ? 'Tersedia' : 'Semua');
+            $data['data'] = $this->getData($startDate, $endDate, $tipe);
+            $namaFile = 'Laporan_Barang_'.$req->startdate.'_'.$req->startdate.'_'.$data['tipe'].'.pdf';
+
+            $pdf = Pdf::loadView('web.report.barang.pdf', $data);
+            return $pdf->download($namaFile);
+        } catch (Throwable $e) {
+            Session::flash('error', 'Terjadi sesuatu kesalahan pada server.');
+            return redirect()->route('r-barang.index');
+        }
+    }
+
+    public function getData($startDate, $endDate, $tipe) 
+    {
+        $data = Barang::select('barangs.kode', DB::raw('(SELECT COUNT(*) FROM timbangans JOIN users ON users.id = timbangans.created_by WHERE timbangans.created_at BETWEEN "'.$startDate.'" AND "'.$endDate.'" AND timbangans.kode_barang = barangs.kode AND users.id_jenis != 1 GROUP BY timbangans.kode_barang) AS total'))
                 ->leftJoin('timbangans', 'timbangans.kode_barang', 'barangs.kode')
                 ->join('users', function($query) use ($tipe) {
                     if ($tipe == 1) {
@@ -59,22 +101,8 @@ class ReportBarangController extends Controller
                     }
                 })->groupBy('barangs.id')->orderBy('total', 'DESC')->get();
 
-            // $data = Timbangan::select('kode_barang', DB::raw('COUNT(*) as total'))->whereBetween('created_at', [$startDate, $endDate])->groupBy('kode_barang')->orderBy('total', 'DESC')->get();
-
-            return DataTables::of($data)
-                ->addIndexColumn()
-                ->addColumn('nama', function($item){
-                    $barang = Barang::where('kode', $item->kode)->first();
-                    $hasil = $barang ? $barang->name : '-';
-
-                    return $hasil;
-                })
-                ->addColumn('total', function($item){
-                    return $item->total ?? 0;
-                })
-                ->rawColumns(['nama', 'total'])
-                ->make(true);
-        }
+        // $data = Timbangan::select('kode_barang', DB::raw('COUNT(*) as total'))->whereBetween('created_at', [$startDate, $endDate])->groupBy('kode_barang')->orderBy('total', 'DESC')->get();
+        return $data;
     }
 
     /**

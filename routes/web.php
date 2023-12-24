@@ -68,10 +68,11 @@ Route::resource('m-users', UsersController::class);
 Route::get('m-customer/scope-data', [CustomerController::class, 'scopeData'])->name('m-customer.scopeData');
 Route::resource('m-customer', CustomerController::class);
 
-// Report
+// Report Checker
 // Barang
 Route::get('r-barang/scope-data', [ReportBarangController::class, 'scopeData'])->name('r-barang.scopeData');
 Route::get('r-barang/get-jumlah', [ReportBarangController::class, 'getJumlah'])->name('r-barang.getJumlah');
+Route::get('r-barang/print', [ReportBarangController::class, 'printToPdf'])->name('r-barang.printToPdf');
 Route::resource('r-barang', ReportBarangController::class);
 
 // Customer
@@ -79,9 +80,10 @@ Route::get('r-customer/scope-data', [ReportCustomerController::class, 'scopeData
 Route::get('r-customer/get-jumlah', [ReportCustomerController::class, 'getJumlah'])->name('r-customer.getJumlah');
 Route::resource('r-customer', ReportCustomerController::class);
 
-// Customer
+// Checker
 Route::get('r-checker/scope-data', [ReportCheckerController::class, 'scopeData'])->name('r-checker.scopeData');
 Route::get('r-checker/get-jumlah', [ReportCheckerController::class, 'getJumlah'])->name('r-checker.getJumlah');
+Route::get('r-checker/print', [ReportCheckerController::class, 'printToPdf'])->name('r-checker.printToPdf');
 Route::resource('r-checker', ReportCheckerController::class);
 
 // Kendaraan

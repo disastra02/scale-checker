@@ -5,8 +5,11 @@ namespace App\Http\Controllers\Web\Report;
 use App\Http\Controllers\Controller;
 use App\Models\Master\Transport;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Session;
+use Throwable;
 use Yajra\DataTables\Facades\DataTables;
 
 class ReportCheckerController extends Controller
@@ -44,19 +47,7 @@ class ReportCheckerController extends Controller
             $startDate = $req->startdate.' 00:00:00';
             $endDate = $req->enddate.' 23:59:59';
             $tipe = $req->tipe;
-
-            $data = User::select('users.id', DB::raw('(SELECT COUNT(*) FROM transports WHERE transports.created_at BETWEEN "'.$startDate.'" AND "'.$endDate.'" AND transports.created_by = users.id GROUP BY transports.created_by) AS total'))
-                ->leftJoin('transports', 'transports.created_by', 'users.id')
-                ->where('users.id_jenis', '!=', 1)
-                ->where(function($query) use ($tipe, $startDate, $endDate) {
-                    if ($tipe == 1) {
-                        $query->whereNotNull('transports.id')->whereBetween('transports.created_at', [$startDate, $endDate]);
-                    } else if ($tipe == 2) {
-                        $query->where(DB::raw('(SELECT COUNT(*) FROM transports WHERE transports.created_at BETWEEN "'.$startDate.'" AND "'.$endDate.'" AND transports.created_by = users.id GROUP BY transports.created_by)'), '=', null);
-                    }
-                })->groupBy('users.id')->orderBy('total', 'DESC')->get();
-
-            // $data = Transport::select('transports.created_by', DB::raw('COUNT(*) as total'))->join('users', 'users.id', 'transports.created_by')->where('users.id_jenis', '!=', 1)->whereBetween('transports.created_at', [$startDate, $endDate])->groupBy('transports.created_by')->orderBy('total', 'DESC')->get();
+            $data = $this->getData($startDate, $endDate, $tipe);
 
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -72,6 +63,44 @@ class ReportCheckerController extends Controller
                 ->rawColumns(['nama', 'total'])
                 ->make(true);
         }
+    }
+
+    public function printToPdf(Request $req)
+    {
+        try {
+            $startDate = $req->startdate.' 00:00:00';
+            $endDate = $req->enddate.' 23:59:59';
+            $tipe = $req->tipe;
+
+            $data['tanggal'] = getTanggalIndo($req->startdate).' s/d '.getTanggalIndo($req->enddate);
+            $data['tipe'] = $tipe == 1 ? 'Aktif' : ($tipe == 2 ? 'Belum' : 'Semua');
+            $data['data'] = $this->getData($startDate, $endDate, $tipe);
+            $namaFile = 'Laporan_Checker_'.$req->startdate.'_'.$req->startdate.'_'.$data['tipe'].'.pdf';
+
+            $pdf = Pdf::loadView('web.report.checker.pdf', $data);
+            return $pdf->download($namaFile);
+        } catch (Throwable $e) {
+            Session::flash('error', 'Terjadi sesuatu kesalahan pada server.');
+            return redirect()->route('r-checker.index');
+        }
+    }
+
+    public function getData($startDate, $endDate, $tipe) 
+    {
+        $data = User::select('users.id', DB::raw('(SELECT COUNT(*) FROM transports WHERE transports.created_at BETWEEN "'.$startDate.'" AND "'.$endDate.'" AND transports.created_by = users.id GROUP BY transports.created_by) AS total'))
+                ->leftJoin('transports', 'transports.created_by', 'users.id')
+                ->where('users.id_jenis', '!=', 1)
+                ->where(function($query) use ($tipe, $startDate, $endDate) {
+                    if ($tipe == 1) {
+                        $query->whereNotNull('transports.id')->whereBetween('transports.created_at', [$startDate, $endDate]);
+                    } else if ($tipe == 2) {
+                        $query->where(DB::raw('(SELECT COUNT(*) FROM transports WHERE transports.created_at BETWEEN "'.$startDate.'" AND "'.$endDate.'" AND transports.created_by = users.id GROUP BY transports.created_by)'), '=', null);
+                    }
+                })->groupBy('users.id')->orderBy('total', 'DESC')->get();
+
+            // $data = Transport::select('transports.created_by', DB::raw('COUNT(*) as total'))->join('users', 'users.id', 'transports.created_by')->where('users.id_jenis', '!=', 1)->whereBetween('transports.created_at', [$startDate, $endDate])->groupBy('transports.created_by')->orderBy('total', 'DESC')->get();
+
+        return $data;
     }
 
     /**
