@@ -1,5 +1,23 @@
 @extends('layouts.app')
 
+@push('css')
+    <style>
+        .select2-container .select2-selection--single {
+            height: 36px !important;
+            border: var(--bs-border-width) solid var(--bs-border-color) !important;
+            border-radius: var(--bs-border-radius) !important;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__rendered {
+            line-height: 34px;
+        }
+
+        .select2-container--default .select2-selection--single .select2-selection__arrow {
+            height: 36px !important;
+        }
+    </style>
+@endpush
+
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -115,6 +133,9 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.8/html5-qrcode.min.js" integrity="sha512-r6rDA7W6ZeQhvl8S7yRVQUKVHdexq+GAlNkNNqVC7YyIV+NwqCTJe2hDWCiffTyRNOeGEzRRJ9ifvRm/HCzGYg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
         $(document).ready(function() {
+            // Select 2
+            $('.select2').select2();
+
             var dataBarang = JSON.parse(`{!! json_encode($dataBarang) !!}`);
             var statusStream = false, htmlQrCodeAktif = null;
             var idStreamAll = 1, idStreamAktif = 0;
@@ -390,6 +411,7 @@
                             </div>`;
 
                 $('#sectionSuratJalan').append(html);
+                $('.select2').select2();
             });
 
             let alertCustom = (status, title, text) => {
