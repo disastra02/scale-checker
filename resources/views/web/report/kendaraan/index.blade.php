@@ -56,7 +56,7 @@
                             </select>
                         </div> --}}
                         <button type="button" class="btn btn-primary ms-3 btn-pencarian"><i class="fa-solid fa-magnifying-glass"></i> &nbsp; Cari</button>
-                        <a class="btn btn-success ms-3" href="#" title="Print"><i class="fa-solid fa-file-pdf"></i> &nbsp; Print</a>
+                        <button class="btn btn-success btn-print ms-3" title="Print"><i class="fa-solid fa-file-pdf"></i> &nbsp; Print</button>
                     </div>
                 </div>
             </div>
@@ -182,6 +182,11 @@
             }
 
             getAll(startDate, endDate);
+
+            // Print Data
+            $('.btn-print').click(function() {
+                window.location.href = `{{ route('r-kendaraan.printToPdf') }}?startdate=${startDate}&enddate=${endDate}`;
+            });
         });
     </script>
 @endpush

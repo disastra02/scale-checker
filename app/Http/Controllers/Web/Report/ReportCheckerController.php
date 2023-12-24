@@ -75,7 +75,7 @@ class ReportCheckerController extends Controller
             $data['tanggal'] = getTanggalIndo($req->startdate).' s/d '.getTanggalIndo($req->enddate);
             $data['tipe'] = $tipe == 1 ? 'Aktif' : ($tipe == 2 ? 'Belum' : 'Semua');
             $data['data'] = $this->getData($startDate, $endDate, $tipe);
-            $namaFile = 'Laporan_Checker_'.$req->startdate.'_'.$req->startdate.'_'.$data['tipe'].'.pdf';
+            $namaFile = 'Laporan_Checker_'.$req->startdate.'_'.$req->enddate.'_'.$data['tipe'].'.pdf';
 
             $pdf = Pdf::loadView('web.report.checker.pdf', $data);
             return $pdf->download($namaFile);
@@ -98,8 +98,7 @@ class ReportCheckerController extends Controller
                     }
                 })->groupBy('users.id')->orderBy('total', 'DESC')->get();
 
-            // $data = Transport::select('transports.created_by', DB::raw('COUNT(*) as total'))->join('users', 'users.id', 'transports.created_by')->where('users.id_jenis', '!=', 1)->whereBetween('transports.created_at', [$startDate, $endDate])->groupBy('transports.created_by')->orderBy('total', 'DESC')->get();
-
+        // $data = Transport::select('transports.created_by', DB::raw('COUNT(*) as total'))->join('users', 'users.id', 'transports.created_by')->where('users.id_jenis', '!=', 1)->whereBetween('transports.created_at', [$startDate, $endDate])->groupBy('transports.created_by')->orderBy('total', 'DESC')->get();
         return $data;
     }
 

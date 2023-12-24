@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Master\Barang;
+use App\Models\Master\Customer;
 use App\Models\Master\Letter;
 use App\Models\Master\Timbangan;
 use App\Models\User;
@@ -108,6 +109,15 @@ if ( !function_exists('getBarang') )
 {
     function getBarang($id){
         $hasil = Barang::where('kode', $id)->first();
+
+        return $hasil;
+    }
+}
+
+if ( !function_exists('getCustomer') )
+{
+    function getCustomer($id){
+        $hasil = Customer::where('id', $id)->first();
 
         return $hasil;
     }
