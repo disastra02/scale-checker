@@ -44,7 +44,7 @@
                 serverSide: true,
                 ajax: "{{ route('m-barang.scopeData') }}",
                 columns: [
-                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center"},
                     {data: 'kode', name: 'kode'},
                     {data: 'name', name: 'name'},
                     {data: 'aksi', name: 'aksi', orderable: false, searchable: false},

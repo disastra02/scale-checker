@@ -7,6 +7,7 @@ use App\Http\Controllers\Web\Master\BarangController;
 use App\Http\Controllers\Web\Master\CustomerController;
 use App\Http\Controllers\Web\Master\TimbanganController as MasterTimbanganController;
 use App\Http\Controllers\Web\Master\UsersController;
+use App\Http\Controllers\Web\Report\ReportBarangController;
 use App\Http\Controllers\Web\TimbanganController as WebTimbanganController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -62,3 +63,10 @@ Route::resource('m-users', UsersController::class);
 // Customer
 Route::get('m-customer/scope-data', [CustomerController::class, 'scopeData'])->name('m-customer.scopeData');
 Route::resource('m-customer', CustomerController::class);
+
+// Report
+// Barang
+Route::get('r-barang/scope-data', [ReportBarangController::class, 'scopeData'])->name('r-barang.scopeData');
+Route::get('r-barang/get-jumlah', [ReportBarangController::class, 'getJumlah'])->name('r-barang.getJumlah');
+Route::resource('r-barang', ReportBarangController::class);
+

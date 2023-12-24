@@ -13,7 +13,17 @@
                     <a class="nav-link @isset($page) {{ $page == "manual" ? 'active fw-medium' : '' }} @endisset" aria-current="page" href="{{ route('w-cek-manual.index') }}">Cek Manual</a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle @isset($page) {{ ($page == "users" || $page == "barang") ? 'fw-medium' : '' }} @endisset" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    <a class="nav-link dropdown-toggle @isset($page) {{ in_array($page, ["report_barang", "barang", "customer"]) ? 'fw-medium' : '' }} @endisset" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Laporan
+                    </a>
+                    <ul class="dropdown-menu">  
+                        <li><a class="dropdown-item @isset($page) {{ $page == "report_barang" ? 'fw-medium' : '' }} @endisset" href="{{ route('r-barang.index') }}">Laporan Barang</a></li>
+                        <li><a class="dropdown-item @isset($page) {{ $page == "customer" ? 'fw-medium' : '' }} @endisset" href="{{ route('m-customer.index') }}">Master Pelanggan</a></li>
+                        <li><a class="dropdown-item @isset($page) {{ $page == "users" ? 'fw-medium' : '' }} @endisset" href="{{ route('m-users.index') }}">Master User</a></li>
+                    </ul>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle @isset($page) {{ in_array($page, ["users", "barang", "customer"]) ? 'fw-medium' : '' }} @endisset" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     Data Master
                     </a>
                     <ul class="dropdown-menu">  

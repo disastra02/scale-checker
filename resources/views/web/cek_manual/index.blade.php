@@ -47,7 +47,7 @@
                 serverSide: true,
                 ajax: "{{ route('w-cek-manual.scopeData') }}",
                 columns: [
-                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center"},
                     {data: 'user', name: 'user'},
                     {data: 'no_kendaraan', name: 'no_kendaraan'},
                     {data: 'total', name: 'total', searchable: false},

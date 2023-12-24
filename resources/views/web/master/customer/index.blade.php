@@ -44,7 +44,7 @@
                 serverSide: true,
                 ajax: "{{ route('m-customer.scopeData') }}",
                 columns: [
-                    {data: 'DT_RowIndex', name: 'DT_RowIndex'},
+                    {data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center"},
                     {data: 'name', name: 'name'},
                     {data: 'address', name: 'address', searchable: false},
                     {data: 'aksi', name: 'aksi', orderable: false, searchable: false},
