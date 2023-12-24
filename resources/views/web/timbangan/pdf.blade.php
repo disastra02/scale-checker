@@ -39,6 +39,10 @@
             border-top: 0.5px solid #dee2e6;
         }
 
+        .border-bottom {
+            border-bottom: 0.5px solid #dee2e6;
+        }
+
         .table-header tr th {
             padding: 0.1rem 0.1rem;
         }
@@ -125,7 +129,7 @@
                                         </tr>
 
                                         @if ($loop->last)
-                                            <tr class="border-top border-secondary-subtle">
+                                            <tr class="border-top border-bottom border-secondary-subtle">
                                                 <td colspan="3" class="fw-bold">Total Berat</td>
                                                 <td class="fw-bold text-center">{{ getJumlahBeratLetter($item->id) }}</td>
                                             </tr>

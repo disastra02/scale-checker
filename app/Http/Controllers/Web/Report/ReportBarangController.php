@@ -29,7 +29,7 @@ class ReportBarangController extends Controller
         if ($req->ajax()) {
             $startDate = $req->startdate.' 00:00:00';
             $endDate = $req->enddate.' 23:59:59';
-            $jumlahBarang = Timbangan::select('kode_barang')->whereBetween('created_at', [$startDate, $endDate])->groupBy('kode_barang')->get()->count();
+            $jumlahBarang = Timbangan::select('timbangans.kode_barang')->join('users', 'users.id', 'timbangans.created_by')->where('users.id_jenis', '!=', 1)->whereBetween('timbangans.created_at', [$startDate, $endDate])->groupBy('timbangans.kode_barang')->get()->count();
             $totalBarang = Barang::count();
             $barangTersimpan = $totalBarang - $jumlahBarang;
 
@@ -44,13 +44,18 @@ class ReportBarangController extends Controller
             $endDate = $req->enddate.' 23:59:59';
             $tipe = $req->tipe;
 
-            $data = Barang::select('barangs.kode', DB::raw('(SELECT COUNT(*) FROM timbangans WHERE timbangans.created_at BETWEEN "'.$startDate.'" AND "'.$endDate.'" AND timbangans.kode_barang = barangs.kode GROUP BY timbangans.kode_barang) AS total'))
+            $data = Barang::select('barangs.kode', DB::raw('(SELECT COUNT(*) FROM timbangans JOIN users ON users.id = timbangans.created_by WHERE timbangans.created_at BETWEEN "'.$startDate.'" AND "'.$endDate.'" AND timbangans.kode_barang = barangs.kode AND users.id_jenis != 1 GROUP BY timbangans.kode_barang) AS total'))
                 ->leftJoin('timbangans', 'timbangans.kode_barang', 'barangs.kode')
+                ->join('users', function($query) use ($tipe) {
+                    if ($tipe == 1) {
+                        $query->on('users.id', 'timbangans.created_by');
+                    }
+                })
                 ->where(function($query) use ($tipe, $startDate, $endDate) {
                     if ($tipe == 1) {
-                        $query->whereNotNull('timbangans.id')->whereBetween('timbangans.created_at', [$startDate, $endDate]);
+                        $query->whereNotNull('timbangans.id')->where('users.id_jenis', '!=', 1)->whereBetween('timbangans.created_at', [$startDate, $endDate]);
                     } else if ($tipe == 2) {
-                        $query->where(DB::raw('(SELECT COUNT(*) FROM timbangans WHERE timbangans.created_at BETWEEN "'.$startDate.'" AND "'.$endDate.'" AND timbangans.kode_barang = barangs.kode GROUP BY timbangans.kode_barang)'), '=', null);
+                        $query->where(DB::raw('(SELECT COUNT(*) FROM timbangans JOIN users ON users.id = timbangans.created_by WHERE timbangans.created_at BETWEEN "'.$startDate.'" AND "'.$endDate.'" AND timbangans.kode_barang = barangs.kode AND users.id_jenis != 1 GROUP BY timbangans.kode_barang)'), '=', null);
                     }
                 })->groupBy('barangs.id')->orderBy('total', 'DESC')->get();
 

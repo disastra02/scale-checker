@@ -155,7 +155,7 @@
                                                                 </tr>
 
                                                                 @if ($loop->last)
-                                                                    <tr class="border-top border-secondary-subtle">
+                                                                    <tr class="border-top border-bottom border-secondary-subtle">
                                                                         <td colspan="3" class="fw-bold">Total Berat</td>
                                                                         <td class="fw-bold text-center">{{ getJumlahBeratLetter($item->id) }}</td>
                                                                     </tr>
