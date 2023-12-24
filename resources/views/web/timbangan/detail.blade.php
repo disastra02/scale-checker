@@ -32,10 +32,10 @@
                     </div>
                     <div class="col-md-6 d-flex justify-content-end">
                         <a class="btn btn-light btn-sm" href="{{ route('w-dashboard.index') }}" title="Kembali"><i class="fa-solid fa-arrow-left"></i></a>
-                        <a class="btn btn-warning btn-sm ms-2" href="{{ route('w-timbangan.perbandingan', $transport->id) }}" title="Perbandingan"><i class="fa-solid fa-arrows-left-right"></i> &nbsp; Perbandingan</a>
-                        <a class="btn btn-success btn-sm ms-2" href="#" title="Print"><i class="fa-solid fa-file-pdf"></i> &nbsp; Print</a>
+                        <a class="btn btn-warning btn-sm ms-2" href="{{ route('w-cek-checker.perbandingan', $transport->id) }}" title="Perbandingan"><i class="fa-solid fa-arrows-left-right"></i> &nbsp; Perbandingan</a>
+                        <a class="btn btn-success btn-sm ms-2" href="{{ route('w-cek-checker.printToPdf', $transport->id) }}" title="Print"><i class="fa-solid fa-file-pdf"></i> &nbsp; Print</a>
 
-                        <form action="{{ route('w-timbangan.destroy', $transport->id) }}" method="POST">
+                        <form action="{{ route('w-cek-checker.destroy', $transport->id) }}" method="POST">
                             @method("DELETE")
                             @csrf
 
@@ -62,8 +62,12 @@
                                                     <div class="col-md-8">: <span class="text-black-50">{{ $transport->no_kendaraan }}</span></div>
                                                 </div>
                                                 <div class="row">
-                                                    <div class="col-md-4"><span class="fw-medium">Tanggal</span></div>
-                                                    <div class="col-md-8">: <span class="text-black-50">{{ getTanggalIndo($item->created_at->format('Y-m-d')) }}</span></div>
+                                                    <div class="col-md-4"><span class="fw-medium">Pelanggan</span></div>
+                                                    <div class="col-md-8">: <span class="text-black-50">{{ $item->customers->name }}</span></div>
+                                                </div>
+                                                <div class="row">
+                                                    <div class="col-md-4"><span class="fw-medium">Alamat</span></div>
+                                                    <div class="col-md-8">: <span class="text-black-50">{{ $item->customers->address }}</span></div>
                                                 </div>
                                             </div>
                                         </div>
@@ -71,6 +75,10 @@
                                     <div class="col-md-6">
                                         <div class="row">
                                             <div class="col-md-12">
+                                                <div class="row">
+                                                    <div class="col-md-4"><span class="fw-medium">Tanggal</span></div>
+                                                    <div class="col-md-8">: <span class="text-black-50">{{ getTanggalIndo($item->created_at->format('Y-m-d')) }}</span></div>
+                                                </div>
                                                 <div class="row">
                                                     <div class="col-md-4"><span class="fw-medium">Jumlah Barang</span></div>
                                                     <div class="col-md-8">: <span class="text-black-50">{{ getJumlahBarang($item->id) }}</span></div>

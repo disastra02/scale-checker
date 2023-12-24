@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Master\Letter;
 use App\Models\Master\Timbangan;
 use App\Models\Master\Transport;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -54,10 +55,11 @@ class TimbanganController extends Controller
                                         <i class="fa-solid fa-ellipsis-vertical"></i>
                                     </button>
                                     <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="'.route('w-timbangan.show', $item->id).'">Detail</a></li>
-                                        <li><a class="dropdown-item" href="'.route('w-timbangan.perbandingan', $item->id).'">Perbandingan</a></li>
+                                        <li><a class="dropdown-item" href="'.route('w-cek-checker.show', $item->id).'">Detail</a></li>
+                                        <li><a class="dropdown-item" href="'.route('w-cek-checker.perbandingan', $item->id).'">Perbandingan</a></li>
+                                        <li><a class="dropdown-item" href="'.route('w-cek-checker.printToPdf', $item->id).'">Print</a></li>
                                         <li>
-                                            <form action="'.route('w-timbangan.destroy', $item->id).'" method="POST">
+                                            <form action="'.route('w-cek-checker.destroy', $item->id).'" method="POST">
                                                 '.method_field("DELETE").'
                                                 '.csrf_field().'
 
@@ -124,13 +126,37 @@ class TimbanganController extends Controller
             $data['suratJalan'] = Letter::with([
                 'timbangans' => function ($query) {
                     $query->join('barangs', 'barangs.kode', 'timbangans.kode_barang');
-                }
+                }, 'customers'
             ])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get();
 
             return view('web.timbangan.perbandingan', $data);
         } catch (Throwable $e) {
             Session::flash('error', 'Terjadi sesuatu kesalahan pada server.');
             return redirect()->route('w-cek-manual.index');
+        }
+    }
+
+    public function printToPdf(string $id)
+    {
+        try {
+            // Transport
+            $transport = Transport::where('id', $id)->first();
+            $data['transport'] = $transport;
+            
+            // Surat Jalan
+            $data['suratJalan'] = Letter::with([
+                'timbangans' => function ($query) {
+                    $query->join('barangs', 'barangs.kode', 'timbangans.kode_barang');
+                }, 'customers'
+            ])->where('id_transport', $transport->id)->orderBy('id', 'ASC')->get();
+
+            $namaFile = 'Kendaraan_'.str_replace(' ', '-', $transport->no_kendaraan).'_'.str_replace(' ', '-', getUser($transport->created_by)->name ?? 'No_Name').'_'.$transport->created_at->format('Y-m-d').'.pdf';
+
+            $pdf = Pdf::loadView('web.timbangan.pdf', $data);
+            return $pdf->download($namaFile);
+        } catch (Throwable $e) {
+            Session::flash('error', 'Terjadi sesuatu kesalahan pada server.');
+            return redirect()->route('w-dashboard.index');
         }
     }
 

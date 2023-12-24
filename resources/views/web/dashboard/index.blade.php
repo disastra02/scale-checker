@@ -128,7 +128,7 @@
             var tableChecker = $('#dataChecker').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('w-timbangan.scopeData') }}",
+                ajax: "{{ route('w-cek-checker.scopeData') }}",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center"},
                     {data: 'user', name: 'user'},

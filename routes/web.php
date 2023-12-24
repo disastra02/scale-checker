@@ -44,9 +44,10 @@ Route::resource('timbangan', TimbanganController::class);
 Route::get('w-dashboard', [DashboardController::class, 'index'])->name('w-dashboard.index');
 
 // Checker
-Route::get('w-timbangan/scope-data', [WebTimbanganController::class, 'scopeData'])->name('w-timbangan.scopeData');
-Route::get('w-timbangan/{id}/perbandingan', [WebTimbanganController::class, 'perbandingan'])->name('w-timbangan.perbandingan');
-Route::resource('w-timbangan', WebTimbanganController::class);
+Route::get('w-cek-checker/scope-data', [WebTimbanganController::class, 'scopeData'])->name('w-cek-checker.scopeData');
+Route::get('w-cek-checker/{id}/perbandingan', [WebTimbanganController::class, 'perbandingan'])->name('w-cek-checker.perbandingan');
+Route::get('w-cek-checker/{id}/print', [WebTimbanganController::class, 'printToPdf'])->name('w-cek-checker.printToPdf');
+Route::resource('w-cek-checker', WebTimbanganController::class);
 
 // Manual
 Route::get('w-cek-manual/scope-data', [MasterTimbanganController::class, 'scopeData'])->name('w-cek-manual.scopeData');
