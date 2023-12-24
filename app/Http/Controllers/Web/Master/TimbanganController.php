@@ -60,6 +60,7 @@ class TimbanganController extends Controller
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" href="'.route('w-cek-manual.show', $item->id).'">Detail</a></li>
                                         <li><a class="dropdown-item" href="'.route('w-cek-manual.perbandingan', $item->id).'">Perbandingan</a></li>
+                                        <li><a class="dropdown-item" href="'.route('w-cek-checker.printToPdf', $item->id).'">Print</a></li>
                                         <li>
                                             <form action="'.route('w-cek-manual.destroy', $item->id).'" method="POST">
                                                 '.method_field("DELETE").'

@@ -33,7 +33,7 @@
                     <div class="col-md-6 d-flex justify-content-end">
                         <a class="btn btn-light btn-sm" href="{{ route('w-cek-manual.index') }}" title="Kembali"><i class="fa-solid fa-arrow-left"></i></a>
                         <a class="btn btn-warning btn-sm ms-2" href="{{ route('w-cek-manual.perbandingan', $transport->id) }}" title="Perbandingan"><i class="fa-solid fa-arrows-left-right"></i> &nbsp; Perbandingan</a>
-                        <a class="btn btn-success btn-sm ms-2" href="#" title="Print"><i class="fa-solid fa-file-pdf"></i> &nbsp; Print</a>
+                        <a class="btn btn-success btn-sm ms-2" href="{{ route('w-cek-checker.printToPdf', $transport->id) }}" title="Print"><i class="fa-solid fa-file-pdf"></i> &nbsp; Print</a>
                         <form action="{{ route('w-cek-manual.destroy', $transport->id) }}" method="POST">
                             @method("DELETE")
                             @csrf
