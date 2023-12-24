@@ -10,6 +10,7 @@ use App\Http\Controllers\Web\Master\UsersController;
 use App\Http\Controllers\Web\Report\ReportBarangController;
 use App\Http\Controllers\Web\Report\ReportCheckerController;
 use App\Http\Controllers\Web\Report\ReportCustomerController;
+use App\Http\Controllers\Web\Report\ReportKendaraanController;
 use App\Http\Controllers\Web\TimbanganController as WebTimbanganController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -81,4 +82,8 @@ Route::resource('r-customer', ReportCustomerController::class);
 Route::get('r-checker/scope-data', [ReportCheckerController::class, 'scopeData'])->name('r-checker.scopeData');
 Route::get('r-checker/get-jumlah', [ReportCheckerController::class, 'getJumlah'])->name('r-checker.getJumlah');
 Route::resource('r-checker', ReportCheckerController::class);
+
+// Kendaraan
+Route::get('r-kendaraan/scope-data', [ReportKendaraanController::class, 'scopeData'])->name('r-kendaraan.scopeData');
+Route::resource('r-kendaraan', ReportKendaraanController::class);
 

@@ -62,7 +62,7 @@
             </div>
 
             <div class="row justify-content-center mb-4">
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="card">
                         <div class="card-body px-3 py-2">
                             <h5 class="fw-bold mb-0" id="jumlahBarang">0</h5>
@@ -70,7 +70,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="card">
                         <div class="card-body px-3 py-2">
                             <h5 class="fw-bold mb-0" id="jumlahBarangTersimpan">0</h5>
@@ -78,7 +78,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-3">
+                <div class="col-md-4">
                     <div class="card">
                         <div class="card-body px-3 py-2">
                             <h5 class="fw-bold mb-0" id="totalBarang">0</h5>
