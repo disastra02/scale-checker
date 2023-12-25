@@ -57,7 +57,7 @@
     </style>
 </head>
 <body class="bg-white">
-    <h3 class="fw-bold mb-0 text-center mb-2">Laporan Checker {{ $tipe }}</h3>
+    <h3 class="fw-bold mb-0 text-center mb-2">Laporan Scan Timbangan {{ $tipe }}</h3>
     <p class="text-center text-black-50 mb-4">{{ $tanggal }}</p>
     
     <table class="table table-custom align-middle mb-0">

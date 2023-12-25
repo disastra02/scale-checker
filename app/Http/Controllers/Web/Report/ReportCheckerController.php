@@ -75,7 +75,7 @@ class ReportCheckerController extends Controller
             $data['tanggal'] = getTanggalIndo($req->startdate).' s/d '.getTanggalIndo($req->enddate);
             $data['tipe'] = $tipe == 1 ? 'Aktif' : ($tipe == 2 ? 'Belum' : 'Semua');
             $data['data'] = $this->getData($startDate, $endDate, $tipe);
-            $namaFile = 'Laporan_Checker_'.$req->startdate.'_'.$req->enddate.'_'.$data['tipe'].'.pdf';
+            $namaFile = 'Laporan_Scan_Timbangan_'.$req->startdate.'_'.$req->enddate.'_'.$data['tipe'].'.pdf';
 
             $pdf = Pdf::loadView('web.report.checker.pdf', $data);
             return $pdf->download($namaFile);
