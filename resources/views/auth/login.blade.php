@@ -100,7 +100,7 @@
     <div class="login-desktop" style="display: none;">
         <div class="row justify-content-center align-items-center">
             <div class="col-md-4 col-sm-8">
-                <div class="card bg-light">
+                <div class="card shadow-lg border-light-subtle">
                     <div class="card-body py-5">
                         <div class="text-center mb-4">
                             <img src="{{ asset('asset/images/login.png') }}" width="55%" alt="warehouse">
@@ -108,7 +108,7 @@
     
                         <div class="mb-3">
                             <h3 class="mb-0 fw-bold">Login</h3>
-                            <span class="">Title deskripsi</span>
+                            <span class="">Selamat Datang Kembali</span>
                         </div>
     
                         <form method="POST" action="{{ route('login') }}">
