@@ -14,7 +14,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <h3 class="fw-bold mb-0">Master Pelanggan</h3>
-                        <span class="text-black-50">Title deskripsi</span>
+                        <span class="text-black-50">Data Pelanggan Keseluruhan</span>
                     </div>
                     <div class="col-md-6 text-end">
                         <button class="btn btn-primary"><i class="fa-solid fa-plus"></i> &nbsp; Tambah Data</button>

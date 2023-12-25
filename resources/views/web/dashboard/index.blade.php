@@ -11,7 +11,7 @@
         <div class="card-body">
             <div class="card-title mb-4">
                 <h3 class="fw-bold mb-0">Summary Dashboard</h3>
-                <span class="text-black-50">Title deskripsi</span>
+                <span class="text-black-50">Aktivitas Scan Timbangan</span>
             </div>
             <div class="row">
                 <div class="col-md-4">
@@ -66,7 +66,7 @@
                         <div class="card-body">
                             <div class="card-title mb-4">
                                 <h3 class="fw-bold mb-0">Pengecekan Barang</h3>
-                                <span class="text-black-50">Title deskripsi</span>
+                                <span class="text-black-50">Scan Timbangan</span>
                             </div>
                             <table class="table align-middle" id="dataChecker">
                                 <thead>
@@ -113,7 +113,7 @@
                     },
                     title: {
                         display: true,
-                        text: 'Aktivitas Checker'
+                        text: 'Aktivitas Scan Timbangan'
                     }
                 },
                 scales: {

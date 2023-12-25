@@ -119,4 +119,10 @@
             Tidak ada data.
         </div>
     </div>
-@endforelse              
+@endforelse    
+
+<script>
+    $(document).ready(function() {
+            $(`td.active`).parent().addClass('border-top border-secondary-subtle');
+    });
+</script>

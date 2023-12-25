@@ -30,7 +30,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('w-dashboard.index') }}" class="text-white">Dashboard</a></li>
-            <li class="breadcrumb-item text-white active" aria-current="page">Laporan Checker</li>
+            <li class="breadcrumb-item text-white active" aria-current="page">Laporan Scan Timbangan</li>
         </ol>
     </nav>
 
@@ -39,8 +39,8 @@
             <div class="card-title mb-4">
                 <div class="row align-items-center">
                     <div class="col-md-4">
-                        <h3 class="fw-bold mb-0">Laporan Checker</h3>
-                        <span class="text-black-50">Title deskripsi</span>
+                        <h3 class="fw-bold mb-0">Laporan Scan Timbangan</h3>
+                        <span class="text-black-50">Melihat Aktivitas Scan Timbangan</span>
                     </div>
                     <div class="col-md-8 d-flex justify-content-end">
                         <div class="">
@@ -66,7 +66,7 @@
                     <div class="card">
                         <div class="card-body px-3 py-2">
                             <h5 class="fw-bold mb-0" id="jumlahChecker">0</h5>
-                            <span>Total Checker Aktif</span>
+                            <span>Total Scan Timbangan Aktif</span>
                         </div>
                     </div>
                 </div>
@@ -74,7 +74,7 @@
                     <div class="card">
                         <div class="card-body px-3 py-2">
                             <h5 class="fw-bold mb-0" id="jumlahCheckerBelum">0</h5>
-                            <span>Total Checker Belum</span>
+                            <span>Total Scan Timbangan Belum</span>
                         </div>
                     </div>
                 </div>
@@ -82,7 +82,7 @@
                     <div class="card">
                         <div class="card-body px-3 py-2">
                             <h5 class="fw-bold mb-0" id="totalChecker">0</h5>
-                            <span>Total Checker Semua</span>
+                            <span>Total Scan Timbangan Semua</span>
                         </div>
                     </div>
                 </div>

@@ -39,8 +39,8 @@
             <div class="card-title mb-0">
                 <div class="row align-items-center">
                     <div class="col-md-6">
-                        <h3 class="fw-bold mb-0">Perbandingan Checker</h3>
-                        <span class="text-black-50">Title deskripsi</span>
+                        <h3 class="fw-bold mb-0">Perbandingan Scan Timbangan</h3>
+                        <span class="text-black-50">Memastikan Data Sesuai</span>
                     </div>
                     <div class="col-md-6">
                         <div class="">

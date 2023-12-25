@@ -14,7 +14,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <h3 class="fw-bold mb-0">Cek Manual</h3>
-                        <span class="text-black-50">Title deskripsi</span>
+                        <span class="text-black-50">Input Surat Jalan</span>
                     </div>
                     <div class="col-md-6 text-end">
                         <a class="btn btn-primary btn-sm" href="{{ route('w-cek-manual.create') }}"><i class="fa-solid fa-plus"></i> &nbsp; Tambah Data</a>

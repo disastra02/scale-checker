@@ -40,7 +40,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <h3 class="fw-bold mb-0">Laporan Kendaraan</h3>
-                        <span class="text-black-50">Title deskripsi</span>
+                        <span class="text-black-50">Melihat Aktivitas Kendaraan</span>
                     </div>
                     <div class="col-md-6 d-flex justify-content-end">
                         <div class="">

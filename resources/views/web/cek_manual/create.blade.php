@@ -33,7 +33,7 @@
             <div class="card-body">
                 <div class="card-title mb-4">
                     <h3 class="fw-bold mb-0">Pengecekan Barang Manual</h3>
-                    <span class="text-black-50">Title deskripsi</span>
+                    <span class="text-black-50">Menginput Surat Jalan</span>
                     <hr>
                 </div>
                 

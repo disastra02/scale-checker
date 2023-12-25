@@ -18,7 +18,7 @@
                     </a>
                     <ul class="dropdown-menu">  
                         <li><a class="dropdown-item @isset($page) {{ $page == "report_barang" ? 'fw-medium' : '' }} @endisset" href="{{ route('r-barang.index') }}">Laporan Barang</a></li>
-                        <li><a class="dropdown-item @isset($page) {{ $page == "report_checker" ? 'fw-medium' : '' }} @endisset" href="{{ route('r-checker.index') }}">Laporan Checker</a></li>
+                        <li><a class="dropdown-item @isset($page) {{ $page == "report_checker" ? 'fw-medium' : '' }} @endisset" href="{{ route('r-checker.index') }}">Laporan Scan Timbangan</a></li>
                         <li><a class="dropdown-item @isset($page) {{ $page == "report_kendaraan" ? 'fw-medium' : '' }} @endisset" href="{{ route('r-kendaraan.index') }}">Laporan Kendaraan</a></li>
                         <li><a class="dropdown-item @isset($page) {{ $page == "report_customer" ? 'fw-medium' : '' }} @endisset" href="{{ route('r-customer.index') }}">Laporan Pelanggan</a></li>
                     </ul>

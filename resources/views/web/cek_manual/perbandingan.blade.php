@@ -40,7 +40,7 @@
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <h3 class="fw-bold mb-0">Perbandingan Manual</h3>
-                        <span class="text-black-50">Title deskripsi</span>
+                        <span class="text-black-50">Memastikan Data Sesuai</span>
                     </div>
                     <div class="col-md-6">
                         <div class="">
