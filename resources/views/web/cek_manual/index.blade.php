@@ -4,7 +4,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('w-dashboard.index') }}" class="text-white">Dashboard</a></li>
-            <li class="breadcrumb-item text-white active" aria-current="page">Cek Manual</li>
+            <li class="breadcrumb-item text-white active" aria-current="page">Surat Jalan Manual</li>
         </ol>
     </nav>
 
@@ -13,7 +13,7 @@
             <div class="card-title mb-4">
                 <div class="row align-items-center">
                     <div class="col-md-6">
-                        <h3 class="fw-bold mb-0">Cek Manual</h3>
+                        <h3 class="fw-bold mb-0">Surat Jalan Manual</h3>
                         <span class="text-black-50">Input Surat Jalan</span>
                     </div>
                     <div class="col-md-6 text-end">

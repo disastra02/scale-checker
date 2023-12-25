@@ -10,7 +10,7 @@
                     <a class="nav-link @isset($page) {{ $page == "dashboard" ? 'active fw-medium' : '' }} @endisset" aria-current="page" href="{{ route('w-dashboard.index') }}">Dashboard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link @isset($page) {{ $page == "manual" ? 'active fw-medium' : '' }} @endisset" aria-current="page" href="{{ route('w-cek-manual.index') }}">Cek Manual</a>
+                    <a class="nav-link @isset($page) {{ $page == "manual" ? 'active fw-medium' : '' }} @endisset" aria-current="page" href="{{ route('w-cek-manual.index') }}">Surat Jalan</a>
                 </li>
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle @isset($page) {{ in_array($page, ["report_barang", "report_customer", "report_checker", "report_kendaraan"]) ? 'fw-medium' : '' }} @endisset" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">

@@ -15,7 +15,7 @@
 @section('content')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('w-cek-manual.index') }}" class="text-white">Cek Manual</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('w-cek-manual.index') }}" class="text-white">Surat Jalan Manual</a></li>
             <li class="breadcrumb-item text-white active" aria-current="page">Detail Manual</li>
         </ol>
     </nav>

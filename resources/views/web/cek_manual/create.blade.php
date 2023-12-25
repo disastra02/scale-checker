@@ -21,7 +21,7 @@
 @section('content')
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('w-cek-manual.index') }}" class="text-white">Cek Manual</a></li>
+            <li class="breadcrumb-item"><a href="{{ route('w-cek-manual.index') }}" class="text-white">Surat Jalan Manual</a></li>
             <li class="breadcrumb-item text-white active" aria-current="page">Tambah Data</li>
         </ol>
     </nav>
@@ -32,7 +32,7 @@
 
             <div class="card-body">
                 <div class="card-title mb-4">
-                    <h3 class="fw-bold mb-0">Pengecekan Barang Manual</h3>
+                    <h3 class="fw-bold mb-0">Pengecekan Surat Jalan</h3>
                     <span class="text-black-50">Menginput Surat Jalan</span>
                     <hr>
                 </div>
