@@ -26,30 +26,58 @@
 
         <div class="col-12">
             <div class="row align-items-center mb-4">
-                <div class="col-4">
-                    <div class="card border-0 bg-primary-subtle text-primary border-0">
-                        <div class="card-body">
-                            <h2 class="fw-bold mb-3"><i class="fa-solid fa-truck"></i></h2>
-                            <span>Mobil</span>
-                            <h6 class="mb-0 fw-bold">{{ $totalKendaraan }}</h6>
+                <div class="col-6 mb-4">
+                    <div class="card bg-primary-subtle text-primary border-0">
+                        <div class="card-body row align-items-center">
+                            <div class="col-8">
+                                <span>Mobil</span>
+                                <h6 class="mb-0 fw-bold">{{ $totalKendaraan }}</h6>
+                            </div>
+                            <div class="col-4 text-end">
+                                <h2 class="fw-bold mb-0"><i class="fa-solid fa-truck"></i></h2>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
-                    <div class="card border-0 bg-secondary-subtle text-secondary border-0">
-                        <div class="card-body">
-                            <h2 class="fw-bold mb-3"><i class="fa-solid fa-envelope"></i></h2>
-                            <span>Surat</span>
-                            <h6 class="mb-0 fw-bold">{{ $totalSurat }}</h6>
+                
+                <div class="col-6 mb-4">
+                    <div class="card bg-warning-subtle text-secondary border-0">
+                        <div class="card-body row align-items-center">
+                            <div class="col-8">
+                                <span>Pelanggan</span>
+                                <h6 class="mb-0 fw-bold">{{ $totalPelanggan }}</h6>
+                            </div>
+                            <div class="col-4 text-end">
+                                <h2 class="fw-bold mb-0"><i class="fa-solid fa-user"></i></h2>
+                            </div>
                         </div>
                     </div>
                 </div>
-                <div class="col-4">
+
+                <div class="col-6">
+                    <div class="card bg-secondary-subtle text-secondary border-0">
+                        <div class="card-body row align-items-center">
+                            <div class="col-8">
+                                <span>Surat</span>
+                                <h6 class="mb-0 fw-bold">{{ $totalSurat }}</h6>
+                            </div>
+                            <div class="col-4 text-end">
+                                <h2 class="fw-bold mb-0"><i class="fa-solid fa-envelope"></i></h2>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-6">
                     <div class="card bg-success-subtle text-success border-0">
-                        <div class="card-body">
-                            <h2 class="fw-bold mb-3"><i class="fa-solid fa-weight-scale"></i></h2>
-                            <span>Berat</span>
-                            <h6 class="mb-0 fw-bold">{{ converHasilSatuan($totalBerat) }}</h6>
+                        <div class="card-body row align-items-center">
+                            <div class="col-8">
+                                <span>Berat</span>
+                                <h6 class="mb-0 fw-bold">{{ converHasilSatuan($totalBerat) }}</h6>
+                            </div>
+                            <div class="col-4 text-end">
+                                <h2 class="fw-bold mb-0"><i class="fa-solid fa-weight-scale"></i></h2>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -99,7 +127,7 @@
                             <div class="row align-items-center">
                                 <div class="col-9">
                                     <span class="mb-1 text-black-50">Nomor Kendaraan</span>
-                                    <h5 class="mb-0 fw-bold">{{ $item->no_kendaraan }}</h5>
+                                    <p class="mb-0 fw-bold">{{ $item->no_kendaraan }}</p>
                                 </div>
                                 <div class="col-3 d-flex justify-content-end">
                                     <div class="dropdown">
@@ -125,19 +153,19 @@
                             <div class="row align-items-center">
                                 <div class="col-6 mb-3">
                                     <span class="mb-1 text-black-50">Surat Jalan</span>
-                                    <h5 class="mb-0 fw-bold">{{ getJumlahSurat($item->id) }}</h5>
+                                    <p class="mb-0 fw-bold">{{ getJumlahSurat($item->id) }}</p>
                                 </div>
                                 <div class="col-6 mb-3">
-                                    <span class="mb-1 text-black-50">Total Berat</span>
-                                    <h5 class="mb-0 fw-bold">{{ getJumlahBerat($item->id) }}</h5>
+                                    <span class="mb-1 text-black-50">Pelanggan</span>
+                                    <p class="mb-0 fw-bold">{{ getJumlahPelanggan($item->id) }}</p>
                                 </div>
                                 <div class="col-6">
-                                    <span class="mb-1 text-black-50">Tanggal</span>
-                                    <h5 class="mb-0 fw-bold">{{ $item->created_at->format('Y-m-d'); }}</h5>
+                                    <span class="mb-1 text-black-50">Total Berat</span>
+                                    <p class="mb-0 fw-bold">{{ getJumlahBerat($item->id) }}</p>
                                 </div>
                                 <div class="col-6">
                                     <span class="mb-1 text-black-50">Waktu</span>
-                                    <h5 class="mb-0 fw-bold">{{ $item->created_at->format('H:i'); }}</h5>
+                                    <p class="mb-0 fw-bold">{{ $item->created_at->format('Y-m-d') }}, {{ $item->created_at->format('H:i') }}</p>
                                 </div>
                             </div>
                         </div>

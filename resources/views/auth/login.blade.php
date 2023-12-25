@@ -29,7 +29,7 @@
                 <div class="card border-0">
                     <div class="card-body p-2">
                         <div class="text-center mb-4">
-                            <img src="{{ asset('asset/images/login.png') }}" width="65%" alt="warehouse">
+                            <img src="{{ asset('assets/images/login.png') }}" width="65%" alt="warehouse">
                         </div>
     
                         <h1 class="mb-3 fw-bold">Login</h1>
@@ -37,10 +37,10 @@
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="row mb-3">
-                                <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email') }}</label>
+                                <label for="emailField" class="col-md-4 col-form-label text-md-end">{{ __('Email') }}</label>
     
                                 <div class="col-md-6">
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email">
+                                    <input id="emailField" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email">
     
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -51,10 +51,10 @@
                             </div>
     
                             <div class="row mb-4">
-                                <label for="password" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
+                                <label for="passwordField" class="col-md-4 col-form-label text-md-end">{{ __('Password') }}</label>
     
                                 <div class="col-md-6">
-                                    <input id="password" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password">
+                                    <input id="passwordField" type="password" class="form-control @error('password') is-invalid @enderror" name="password" required autocomplete="current-password" placeholder="Password">
     
                                     @error('password')
                                         <span class="invalid-feedback" role="alert">
@@ -103,7 +103,7 @@
                 <div class="card shadow-lg border-light-subtle">
                     <div class="card-body py-5">
                         <div class="text-center mb-4">
-                            <img src="{{ asset('asset/images/login.png') }}" width="55%" alt="warehouse">
+                            <img src="{{ asset('assets/images/login.png') }}" width="55%" alt="warehouse">
                         </div>
     
                         <div class="mb-3">

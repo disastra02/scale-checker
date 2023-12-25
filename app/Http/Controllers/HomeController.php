@@ -17,6 +17,7 @@ class HomeController extends Controller
      */
     public function __construct()
     {
+        date_default_timezone_set("Asia/Bangkok");
         $this->middleware('auth');
     }
 
@@ -30,6 +31,7 @@ class HomeController extends Controller
         $data['user'] = Auth::user();
         $data['totalKendaraan'] = Transport::where("created_by", $data['user']->id)->whereDate("created_at", date('Y-m-d'))->count(); 
         $data['totalSurat'] = Letter::where("created_by", $data['user']->id)->whereDate("created_at", date('Y-m-d'))->count(); 
+        $data['totalPelanggan'] = Letter::select('id_transport', 'id_customer')->where("created_by", $data['user']->id)->whereDate("created_at", date('Y-m-d'))->groupBy('id_transport', 'id_customer')->get()->count(); 
         $data['totalBerat'] = Timbangan::where("created_by", $data['user']->id)->whereDate("created_at", date('Y-m-d'))->sum('berat_barang'); 
         $data['kendaraan'] = Transport::where("created_by", $data['user']->id)->whereDate("created_at", date('Y-m-d'))->orderBy('id', 'DESC')->get();
 

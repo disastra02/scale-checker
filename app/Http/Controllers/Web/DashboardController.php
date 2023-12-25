@@ -22,14 +22,18 @@ class DashboardController extends Controller
     public function index()
     {
         $jumlahTanggal = 6;
+        $startDate = date('Y-m-d', strtotime('-6 days')).' 00:00:00';
+        $endDate = date('Y-m-d').' 23:59:59';
+        
         $data['tanggal'] = [];
         $data['jumlah'] = [];
         $data['page'] = 'dashboard';
         $data['user'] = Auth::user();
-        $data['totalKendaraan'] = Transport::where('created_by', '!=', $data['user']->id)->count(); 
-        $data['totalSurat'] = Letter::where('created_by', '!=', $data['user']->id)->count(); 
-        $data['totalBerat'] = Timbangan::where('created_by', '!=', $data['user']->id)->sum('berat_barang'); 
-        $data['totalChecker'] = User::where('id_jenis', 2)->count();
+        $data['totalKendaraan'] = Transport::where('created_by', '!=', $data['user']->id)->whereBetween('created_at', [$startDate, $endDate])->count(); 
+        $data['totalSurat'] = Letter::where('created_by', '!=', $data['user']->id)->whereBetween('created_at', [$startDate, $endDate])->count(); 
+        $data['totalPelanggan'] = Letter::select('id_transport', 'id_customer')->where('created_by', '!=', $data['user']->id)->whereBetween('created_at', [$startDate, $endDate])->groupBy('id_transport', 'id_customer')->get()->count(); 
+        $data['totalBerat'] = Timbangan::where('created_by', '!=', $data['user']->id)->whereBetween('created_at', [$startDate, $endDate])->sum('berat_barang'); 
+        $data['totalChecker'] = User::where('id_jenis', 2)->whereBetween('created_at', [$startDate, $endDate])->count();
 
         for($jumlahTanggal; $jumlahTanggal >= 0; $jumlahTanggal--) {
             $day = date('Y-m-d', strtotime('-'.$jumlahTanggal.' days'));

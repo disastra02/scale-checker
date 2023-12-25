@@ -1,7 +1,7 @@
 @extends('web.layouts.app')
 
 @push('css')
-    <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.css" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('assets/daterangepicker-3.1/dist/css/daterangepicker.css') }}"/>
     <style>
         .range {
             display: block;
@@ -103,8 +103,8 @@
 @endsection
 
 @push('scripts')
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/momentjs/latest/moment.min.js"></script>
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/daterangepicker/daterangepicker.min.js"></script>
+    <script type="text/javascript" src="{{ asset('assets/moment-2.18.1/js/moment.min.js') }}"></script>
+    <script type="text/javascript" src="{{ asset('assets/daterangepicker-3.1/dist/js/daterangepicker.min.js') }}"></script>
     <script>
         $(document).ready(function() {
             // Date Range

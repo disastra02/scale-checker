@@ -15,6 +15,15 @@ if ( !function_exists('getJumlahSurat') )
     }
 }
 
+if ( !function_exists('getJumlahPelanggan') )
+{
+    function getJumlahPelanggan($id){
+        $hasil = Letter::select('id_customer')->where("id_transport", $id)->groupBy('id_customer')->get()->count(); 
+
+        return $hasil;
+    }
+}
+
 if ( !function_exists('getJumlahCustomer') )
 {
     function getJumlahCustomer($id){

@@ -29,8 +29,11 @@ class TimbanganController extends Controller
     public function scopeData(Request $req)
     {
         if ($req->ajax()) {
+            $startDate = date('Y-m-d', strtotime('-6 days')).' 00:00:00';
+            $endDate = date('Y-m-d').' 23:59:59';
+
             $user = Auth::user();
-            $data = Transport::where('created_by', '!=', $user->id)->orderBy('id', 'DESC')->get();
+            $data = Transport::where('created_by', '!=', $user->id)->whereBetween('created_at', [$startDate, $endDate])->orderBy('id', 'DESC')->get();
 
             return DataTables::of($data)
                 ->addIndexColumn()

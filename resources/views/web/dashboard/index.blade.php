@@ -16,42 +16,71 @@
             <div class="row">
                 <div class="col-md-4">
                     <div class="row">
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="card mb-4 bg-secondary-subtle text-secondary border-0 shadow-sm">
-                                <div class="card-body">
-                                    <h3 class="fw-bold mb-4"><i class="fa-solid fa-truck"></i></h3>
-                                    <h3 class="fw-bold mb-0">{{ $totalKendaraan }}</h3>
-                                    <span>Total Kendaraan</span>
+                                <div class="card-body row align-items-center">
+                                    <div class="col-md-9">
+                                        <h3 class="fw-bold mb-0">{{ $totalKendaraan }}</h3>
+                                        <span>Total Kendaraan</span>
+                                    </div>
+                                    <div class="col-md-3 text-end">
+                                        <h3 class="fw-bold mb-0"><i class="fa-solid fa-truck"></i></h3>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
+                        <div class="col-md-12">
                             <div class="card mb-4 bg-primary-subtle text-primary border-0 shadow-sm">
-                                <div class="card-body">
-                                    <h3 class="fw-bold mb-4"><i class="fa-solid fa-envelope"></i></h3>
-                                    <h3 class="fw-bold mb-0">{{ $totalSurat }}</h3>
-                                    <span>Total Surat</span>
+                                <div class="card-body row align-items-center">
+                                    <div class="col-md-9">
+                                        <h3 class="fw-bold mb-0">{{ $totalSurat }}</h3>
+                                        <span>Total Surat</span>
+                                    </div>
+                                    <div class="col-md-3 text-end">
+                                        <h3 class="fw-bold mb-0"><i class="fa-solid fa-envelope"></i></h3>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="card bg-success-subtle text-success border-0 shadow-sm">
-                                <div class="card-body">
-                                    <h3 class="fw-bold mb-4"><i class="fa-solid fa-weight-scale"></i></h3>
-                                    <h3 class="fw-bold mb-0">{{ converHasilSatuan($totalBerat) }}</h3>
-                                    <span>Total Berat</span>
+                        <div class="col-md-12">
+                            <div class="card mb-4 bg-warning-subtle text-secondary border-0 shadow-sm">
+                                <div class="card-body row align-items-center">
+                                    <div class="col-md-9">
+                                        <h3 class="fw-bold mb-0">{{ $totalPelanggan }}</h3>
+                                        <span>Total Pelanggan</span>
+                                    </div>
+                                    <div class="col-md-3 text-end">
+                                        <h3 class="fw-bold mb-0"><i class="fa-solid fa-user"></i></h3>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6">
-                            <div class="card bg-danger-subtle text-danger border-0 shadow-sm">
-                                <div class="card-body">
-                                    <h3 class="fw-bold mb-4"><i class="fa-solid fa-user"></i></h3>
-                                    <h3 class="fw-bold mb-0">{{ $totalChecker }}</h3>
-                                    <span>Total Checker</span>
+                        <div class="col-md-12">
+                            <div class="card mb-4 bg-success-subtle text-success border-0 shadow-sm">
+                                <div class="card-body row align-items-center">
+                                    <div class="col-md-9">
+                                        <h3 class="fw-bold mb-0">{{ converHasilSatuan($totalBerat) }}</h3>
+                                        <span>Total Berat</span>
+                                    </div>
+                                    <div class="col-md-3 text-end">
+                                        <h3 class="fw-bold mb-0"><i class="fa-solid fa-weight-scale"></i></h3>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                        {{-- <div class="col-md-12">
+                            <div class="card mb-4 bg-danger-subtle text-danger border-0 shadow-sm">
+                                <div class="card-body row align-items-center">
+                                    <div class="col-md-9">
+                                        <h3 class="fw-bold mb-0">{{ $totalChecker }}</h3>
+                                        <span>Total Checker</span>
+                                    </div>
+                                    <div class="col-md-3 text-end">
+                                        <h3 class="fw-bold mb-0"><i class="fa-solid fa-weight-scale"></i></h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div> --}}
                     </div>
                 </div>
                 <div class="col-md-8">
