@@ -106,7 +106,7 @@ class TimbanganController extends Controller
             // Surat Jalan
             $data['suratJalan'] = Letter::with([
                 'timbangans' => function ($query) {
-                    $query->join('barangs', 'barangs.kode', 'timbangans.kode_barang');
+                    $query->join('barangs', 'barangs.kode', 'timbangans.kode_barang')->orderBy('barangs.name', 'ASC');
                 }, 'customers'
             ])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get();
 
@@ -128,7 +128,7 @@ class TimbanganController extends Controller
             // Surat Jalan
             $data['suratJalan'] = Letter::with([
                 'timbangans' => function ($query) {
-                    $query->join('barangs', 'barangs.kode', 'timbangans.kode_barang');
+                    $query->join('barangs', 'barangs.kode', 'timbangans.kode_barang')->orderBy('barangs.name', 'ASC');
                 }, 'customers'
             ])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get();
 
