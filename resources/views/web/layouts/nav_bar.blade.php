@@ -9,6 +9,16 @@
                 <li class="nav-item">
                     <a class="nav-link @isset($page) {{ $page == "dashboard" ? 'active fw-medium' : '' }} @endisset" aria-current="page" href="{{ route('w-dashboard.index') }}">Dashboard</a>
                 </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle @isset($page) {{ in_array($page, ["users", "barang", "customer"]) ? 'fw-medium' : '' }} @endisset" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                    Data Master
+                    </a>
+                    <ul class="dropdown-menu">  
+                        <li><a class="dropdown-item @isset($page) {{ $page == "barang" ? 'fw-medium' : '' }} @endisset" href="{{ route('m-barang.index') }}">Master Barang</a></li>
+                        <li><a class="dropdown-item @isset($page) {{ $page == "customer" ? 'fw-medium' : '' }} @endisset" href="{{ route('m-customer.index') }}">Master Pelanggan</a></li>
+                        <li><a class="dropdown-item @isset($page) {{ $page == "users" ? 'fw-medium' : '' }} @endisset" href="{{ route('m-users.index') }}">Master User</a></li>
+                    </ul>
+                </li>
                 <li class="nav-item">
                     <a class="nav-link @isset($page) {{ $page == "manual" ? 'active fw-medium' : '' }} @endisset" aria-current="page" href="{{ route('w-cek-manual.index') }}">Surat Jalan</a>
                 </li>
@@ -21,16 +31,6 @@
                         <li><a class="dropdown-item @isset($page) {{ $page == "report_kendaraan" ? 'fw-medium' : '' }} @endisset" href="{{ route('r-kendaraan.index') }}">Laporan Kendaraan</a></li>
                         <li><a class="dropdown-item @isset($page) {{ $page == "report_customer" ? 'fw-medium' : '' }} @endisset" href="{{ route('r-customer.index') }}">Laporan Pelanggan</a></li>
                         <li><a class="dropdown-item @isset($page) {{ $page == "report_checker" ? 'fw-medium' : '' }} @endisset" href="{{ route('r-checker.index') }}">Laporan Scan Timbangan</a></li>
-                    </ul>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle @isset($page) {{ in_array($page, ["users", "barang", "customer"]) ? 'fw-medium' : '' }} @endisset" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                    Data Master
-                    </a>
-                    <ul class="dropdown-menu">  
-                        <li><a class="dropdown-item @isset($page) {{ $page == "barang" ? 'fw-medium' : '' }} @endisset" href="{{ route('m-barang.index') }}">Master Barang</a></li>
-                        <li><a class="dropdown-item @isset($page) {{ $page == "customer" ? 'fw-medium' : '' }} @endisset" href="{{ route('m-customer.index') }}">Master Pelanggan</a></li>
-                        <li><a class="dropdown-item @isset($page) {{ $page == "users" ? 'fw-medium' : '' }} @endisset" href="{{ route('m-users.index') }}">Master User</a></li>
                     </ul>
                 </li>
             </ul>

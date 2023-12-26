@@ -87,15 +87,15 @@ if ( !function_exists('getJumlahBeratLetterBarang') )
 if ( !function_exists('converHasilSatuan') )
 {
     function converHasilSatuan($jumlah){
-        if ($jumlah < 100) {
-            $perhitungan = number_format($jumlah, 3, ',');
-            $hasil = $perhitungan.' KG';
-        } else if ($jumlah >= 100 && $jumlah < 1000) {
-            $perhitungan = number_format($jumlah / 100, 3, ',');
-            $hasil = $perhitungan.' KW';
+        if ($jumlah < 1000) {
+            $perhitungan = number_format($jumlah, 2, ',');
+            $hasil = $perhitungan.' kg';
+        // } else if ($jumlah >= 100 && $jumlah < 1000) {
+        //     $perhitungan = number_format($jumlah / 100, 3, ',');
+        //     $hasil = $perhitungan.' KW';
         } else if ($jumlah >= 1000) {
-            $perhitungan = number_format($jumlah / 1000, 3, ',');
-            $hasil = $perhitungan.' TON';
+            $perhitungan = number_format($jumlah / 1000, 2, ',');
+            $hasil = $perhitungan.' ton';
         } else {
             $hasil = 0;
         }

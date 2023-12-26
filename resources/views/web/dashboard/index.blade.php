@@ -56,7 +56,7 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                            <div class="card mb-4 bg-success-subtle text-success border-0 shadow-sm">
+                            <div class="card bg-success-subtle text-success border-0 shadow-sm">
                                 <div class="card-body row align-items-center">
                                     <div class="col-md-9">
                                         <h3 class="fw-bold mb-0">{{ converHasilSatuan($totalBerat) }}</h3>
