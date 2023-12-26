@@ -99,7 +99,7 @@ class ReportBarangController extends Controller
                     } else if ($tipe == 2) {
                         $query->where(DB::raw('(SELECT COUNT(*) FROM timbangans JOIN users ON users.id = timbangans.created_by WHERE timbangans.created_at BETWEEN "'.$startDate.'" AND "'.$endDate.'" AND timbangans.kode_barang = barangs.kode AND users.id_jenis != 1 GROUP BY timbangans.kode_barang)'), '=', null);
                     }
-                })->groupBy('barangs.id')->orderBy('total', 'DESC')->get();
+                })->groupBy('barangs.kode', 'barangs.id')->orderBy('total', 'DESC')->get();
 
         // $data = Timbangan::select('kode_barang', DB::raw('COUNT(*) as total'))->whereBetween('created_at', [$startDate, $endDate])->groupBy('kode_barang')->orderBy('total', 'DESC')->get();
         return $data;
