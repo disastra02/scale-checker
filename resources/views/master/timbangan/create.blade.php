@@ -270,50 +270,55 @@
                             var audio = new Audio(`{{ asset('beeptest.mp3') }}`);
                             audio.play();
                             
+                            html5QrCode.pause();
                             let kodeBarangId = resultQr ? resultQr.substr(0, 7) : 0;
                             let beratBarangId = resultQr ? resultQr.substr(7, 4) / 10 : 0;
                             let barang = dataBarang[kodeBarangId];
-                            let namaBarang = barang ? barang['name'] : '-';
-                            html5QrCode.pause();
-                            
-                            Swal.fire({
-                                title: "Apakah anda yakin ?",
-                                text: `Data barang ${namaBarang} dan berat ${beratBarangId} kg akan disimpan !`,
-                                icon: "warning",
-                                showCancelButton: true,
-                                confirmButtonColor: "#3085d6",
-                                cancelButtonColor: "#d33",
-                                confirmButtonText: "Simpan",
-                                cancelButtonText: "Batal",
-                            }).then((result) => {
-                                if (result.isConfirmed) {
-                                    let valueQr = `${idStream}-${resultQr}`;
-
-                                    // if ($.inArray(valueQr, arrayDataTimbangan) != -1) {
-                                    //     alertCustom("error", "Terjadi Kesalahan !", "Data sudah digunakan.");
-                                    // } else {
-                                    //     arrayDataTimbangan.push(valueQr);
-                                        let html = `<tr id="qrValue${valueQr}">
-                                                        <td class="text-start">
-                                                            ${namaBarang}
-                                                            <input type="hidden" name="kode_barang[]" value="${kodeBarangId}">
-                                                        </td>
-                                                        <td class="text-start">
-                                                            ${beratBarangId} KG
-                                                            <input type="hidden" name="berat_barang[]" value="${beratBarangId}">
-                                                        </td>
-                                                        <td class="text-center">
-                                                            <button type="button" class="btn btn-danger bg-danger-subtle btn-remove-qr border-danger" data-id="${valueQr}" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"><i class="text-danger fa-solid fa-trash"></i></button>
-                                                            <input type="hidden" name="nomer_barcode[]" value="${idStream}">
-                                                        </td>
-                                                    </tr>`;
-                                        $(`#tbody${idStream}`).append(html);
-                                    // }
-                                    html5QrCode.resume();
-                                } else {
-                                    html5QrCode.resume();
-                                }
-                            });
+                            if (barang) {
+                                let namaBarang = barang ? barang['name'] : '-';
+                                
+                                Swal.fire({
+                                    title: "Apakah anda yakin ?",
+                                    text: `Data barang ${namaBarang} dan berat ${beratBarangId} kg akan disimpan !`,
+                                    icon: "warning",
+                                    showCancelButton: true,
+                                    confirmButtonColor: "#3085d6",
+                                    cancelButtonColor: "#d33",
+                                    confirmButtonText: "Simpan",
+                                    cancelButtonText: "Batal",
+                                }).then((result) => {
+                                    if (result.isConfirmed) {
+                                        let valueQr = `${idStream}-${resultQr}`;
+    
+                                        // if ($.inArray(valueQr, arrayDataTimbangan) != -1) {
+                                        //     alertCustom("error", "Terjadi Kesalahan !", "Data sudah digunakan.");
+                                        // } else {
+                                        //     arrayDataTimbangan.push(valueQr);
+                                            let html = `<tr id="qrValue${valueQr}">
+                                                            <td class="text-start">
+                                                                ${namaBarang}
+                                                                <input type="hidden" name="kode_barang[]" value="${kodeBarangId}">
+                                                            </td>
+                                                            <td class="text-start">
+                                                                ${beratBarangId} KG
+                                                                <input type="hidden" name="berat_barang[]" value="${beratBarangId}">
+                                                            </td>
+                                                            <td class="text-center">
+                                                                <button type="button" class="btn btn-danger bg-danger-subtle btn-remove-qr border-danger" data-id="${valueQr}" style="--bs-btn-padding-y: .25rem; --bs-btn-padding-x: .5rem; --bs-btn-font-size: .75rem;"><i class="text-danger fa-solid fa-trash"></i></button>
+                                                                <input type="hidden" name="nomer_barcode[]" value="${idStream}">
+                                                            </td>
+                                                        </tr>`;
+                                            $(`#tbody${idStream}`).append(html);
+                                        // }
+                                        html5QrCode.resume();
+                                    } else {
+                                        html5QrCode.resume();
+                                    }
+                                });
+                            } else {
+                                alertCustom("error", "Terjadi Kesalahan !", "Data barang tidak ditemukan.");
+                                html5QrCode.resume();
+                            }
                         },
                         errorMessage => {
                             // console.log(`QR Code no longer in front of camera.`);
