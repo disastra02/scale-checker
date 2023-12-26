@@ -92,9 +92,9 @@
                 <thead>
                     <tr>
                         <th class="text-center" width="8%">No</th>
-                        <th class="text-center" width="22%">Kode</th>
                         <th class="text-center" width="42%">Nama</th>
                         <th class="text-center" width="8%">Jumlah</th>
+                        <th class="text-center" width="22%">Total</th>
                     </tr>
                 </thead>
             </table>
@@ -180,8 +180,8 @@
                     ajax: `{{ route('r-barang.scopeData') }}?startdate=${start}&enddate=${end}&tipe=${tipeData}`,
                     columns: [
                         {data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center"},
-                        {data: 'kode', name: 'kode'},
                         {data: 'nama', name: 'nama'},
+                        {data: 'jumlah', name: 'jumlah', className: "text-center"},
                         {data: 'total', name: 'total', searchable: false, className: "text-center"},
                     ]
                 });

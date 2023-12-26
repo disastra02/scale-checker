@@ -56,10 +56,14 @@ class ReportBarangController extends Controller
 
                     return $hasil;
                 })
-                ->addColumn('total', function($item){
+                ->addColumn('jumlah', function($item){
                     return $item->total ?? 0;
                 })
-                ->rawColumns(['nama', 'total'])
+                ->addColumn('total', function($item) use ($startDate, $endDate) {
+                    $total = getJumlahBeratReport($item->kode, $startDate, $endDate);
+                    return $total;
+                })
+                ->rawColumns(['nama', 'jumlah', 'total'])
                 ->make(true);
         }
     }

@@ -48,6 +48,15 @@ if ( !function_exists('getJumlahBerat') )
     }
 }
 
+if ( !function_exists('getJumlahBeratReport') )
+{
+    function getJumlahBeratReport($id, $startdate, $enddate){
+        $total = Timbangan::join('users', 'users.id', 'timbangans.created_by')->where('users.id_jenis', '!=', 1)->where("kode_barang", $id)->whereBetween('timbangans.created_at', [$startdate, $enddate])->sum('berat_barang');
+
+        return converHasilSatuan($total);
+    }
+}
+
 if ( !function_exists('getJumlahBeratLetter') )
 {
     function getJumlahBeratLetter($id){
