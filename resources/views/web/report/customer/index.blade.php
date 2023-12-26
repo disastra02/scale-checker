@@ -36,7 +36,7 @@
 
     <div class="card shadow-lg">
         <div class="card-body">
-            <div class="card-title mb-4">
+            <div class="card-title mb-2">
                 <div class="row align-items-center">
                     <div class="col-md-6">
                         <h3 class="fw-bold mb-0">Laporan Pelanggan</h3>
@@ -58,6 +58,12 @@
                         <button type="button" class="btn btn-primary ms-3 btn-pencarian"><i class="fa-solid fa-magnifying-glass"></i> &nbsp; Cari</button>
                         <button class="btn btn-success btn-print ms-3" title="Print"><i class="fa-solid fa-file-pdf"></i> &nbsp; Print</button>
                     </div>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-12 mb-4">
+                    <canvas id="myChart" height="80%"></canvas>
                 </div>
             </div>
 
@@ -107,6 +113,49 @@
     <script type="text/javascript" src="{{ asset('assets/daterangepicker-3.1/dist/js/daterangepicker.min.js') }}"></script>
     <script>
         $(document).ready(function() {
+            const DATA_COUNT = 7;
+            const NUMBER_CFG = {count: DATA_COUNT, min: -100, max: 100};
+
+            const labels = Samples.utils.months({count: 7});
+            const data = {
+                labels: labels,
+                datasets: [
+                    {
+                    label: 'Hafshah Kusmawati',
+                    data: Samples.utils.numbers(NUMBER_CFG),
+                    borderColor: chartColors.red,
+                    backgroundColor: Samples.utils.transparentize(chartColors.red, 0.5),
+                    },
+                    {
+                    label: 'Adhiarja Wibisono',
+                    data: Samples.utils.numbers(NUMBER_CFG),
+                    borderColor: chartColors.blue,
+                    backgroundColor: Samples.utils.transparentize(chartColors.blue, 0.5),
+                    }
+                ]
+            };
+
+            const config = {
+                type: 'line',
+                data: data,
+                options: {
+                    responsive: true,
+                    plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    title: {
+                        display: true,
+                        text: 'ANALISA FLUKTUASI PENGIRIMAN BY PELANGGAN'
+                    }
+                    }
+                },
+            };
+
+            const ctx = document.getElementById('myChart');
+            new Chart(ctx, config);
+
+
             // Date Range
             var start = moment().subtract(6, 'days');
             var end = moment();

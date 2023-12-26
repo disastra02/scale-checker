@@ -64,18 +64,18 @@
         <thead>
             <tr class="border-top border-secondary-subtle">
                 <th class="text-center" width="5%">No</th>
-                <th class="text-start" width="20%">Kode</th>
                 <th class="text-start" width="55%">Nama Barang</th>
                 <th class="text-center" width="20%">Jumlah</th>
+                <th class="text-start" width="20%">Total</th>
             </tr>
         </thead>
         <tbody>
             @forelse ($data as $item)
                 <tr class="border-top border-bottom border-secondary-subtle">
                     <td class="text-center">{{ $loop->iteration }}</td>
-                    <td>{{ $item->kode }}</td>
                     <td>{{ getBarang($item->kode)->name ?? '-' }}</td>
                     <td class="text-center">{{ $item->total ?? 0 }}</td>
+                    <td>{{ getJumlahBeratReport($item->kode, $startDate, $endDate) ?? '-' }}</td>
                 </tr>
             @empty
                 <tr class="border-top border-bottom border-secondary-subtle">

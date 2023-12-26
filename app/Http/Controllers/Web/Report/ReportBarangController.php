@@ -77,6 +77,8 @@ class ReportBarangController extends Controller
 
             $data['tanggal'] = getTanggalIndo($req->startdate).' s/d '.getTanggalIndo($req->enddate);
             $data['tipe'] = $tipe == 1 ? 'Terjual' : ($tipe == 2 ? 'Tersedia' : 'Semua');
+            $data['startDate'] = $startDate;
+            $data['endDate'] = $endDate;
             $data['data'] = $this->getData($startDate, $endDate, $tipe);
             $namaFile = 'Laporan_Barang_'.$req->startdate.'_'.$req->enddate.'_'.$data['tipe'].'.pdf';
 
