@@ -31,6 +31,7 @@
             height: 320px;
             --bs-bg-opacity: 1;
             background-color: rgba(var(--bs-success-rgb),var(--bs-bg-opacity))!important;
+            /* background-color: #A11C1F !important; */
             z-index: -1;
         }
 

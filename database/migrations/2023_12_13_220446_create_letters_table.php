@@ -16,6 +16,7 @@ return new class extends Migration
             $table->bigInteger('id_transport');
             $table->bigInteger('id_customer');
             $table->string('no_surat');
+            $table->string('no_po');
             $table->bigInteger('created_by');
             $table->timestamps();
         });

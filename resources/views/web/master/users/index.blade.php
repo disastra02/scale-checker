@@ -26,7 +26,7 @@
                     <tr>
                         <th class="text-center" width="8%">No</th>
                         <th class="text-center" width="42%">Nama</th>
-                        <th class="text-center" width="28%">Email</th>
+                        <th class="text-center" width="28%">Username</th>
                         <th class="text-center" width="16%">Jenis</th>
                         <th class="text-center" width="8%">Aksi</th>
                     </tr>

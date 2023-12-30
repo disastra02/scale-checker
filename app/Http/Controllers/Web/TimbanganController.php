@@ -100,16 +100,9 @@ class TimbanganController extends Controller
     public function show(string $id)
     {
         try {
-            // Transport
             $data['transport'] = Transport::where('id', $id)->first();
+            $data['suratJalan'] = Letter::with(['customers'])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get();
             
-            // Surat Jalan
-            $data['suratJalan'] = Letter::with([
-                'timbangans' => function ($query) {
-                    $query->join('barangs', 'barangs.kode', 'timbangans.kode_barang')->orderBy('barangs.name', 'ASC');
-                }, 'customers'
-            ])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get();
-
             return view('web.timbangan.detail', $data);
         } catch (Throwable $e) {
             Session::flash('error', 'Terjadi sesuatu kesalahan pada server.');

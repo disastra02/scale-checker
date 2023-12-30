@@ -19,6 +19,9 @@ class JenisUserSeeder extends Seeder
             ],
             [
                 'name' => 'Checker'
+            ],
+            [
+                'name' => 'Security'
             ]
         ];
 

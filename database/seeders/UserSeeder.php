@@ -17,42 +17,49 @@ class UserSeeder extends Seeder
         $dataUser = [
             [
                 'name' => 'Checker A',
-                'email' => 'checkera@gmail.com',
+                'email' => 'checker_a',
                 'is_mobile' => true,
                 'id_jenis' => 2,
                 'password' => Hash::make('12345678')
             ],
             [
                 'name' => 'Checker B',
-                'email' => 'checkerb@gmail.com',
+                'email' => 'checker_b',
                 'is_mobile' => true,
                 'id_jenis' => 2,
                 'password' => Hash::make('12345678')
             ],
             [
                 'name' => 'Checker C',
-                'email' => 'checkerc@gmail.com',
+                'email' => 'checker_c',
                 'is_mobile' => true,
                 'id_jenis' => 2,
                 'password' => Hash::make('12345678')
             ],
             [
-                'name' => 'Checker D',
-                'email' => 'checkerd@gmail.com',
+                'name' => 'Security A',
+                'email' => 'security_a',
                 'is_mobile' => true,
-                'id_jenis' => 2,
+                'id_jenis' => 3,
                 'password' => Hash::make('12345678')
             ],
             [
-                'name' => 'Checker E',
-                'email' => 'checkere@gmail.com',
+                'name' => 'Security B',
+                'email' => 'security_b',
                 'is_mobile' => true,
-                'id_jenis' => 2,
+                'id_jenis' => 3,
+                'password' => Hash::make('12345678')
+            ],
+            [
+                'name' => 'Security C',
+                'email' => 'security_c',
+                'is_mobile' => true,
+                'id_jenis' => 3,
                 'password' => Hash::make('12345678')
             ],
             [
                 'name' => 'Admin Gudang',
-                'email' => 'admin@gmail.com',
+                'email' => 'admin',
                 'is_mobile' => false,
                 'id_jenis' => 1,
                 'password' => Hash::make('12345678')

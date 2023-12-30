@@ -49,97 +49,133 @@
                     <div class="col-md-12">
                         <div class="card shadow-sm border-light-subtle">
                             <div class="card-body">
-                                <h3 class="fw-bold mb-0 text-center">Surat Jalan</h3>
-                                <p class="text-center text-black-50 mb-4">Nomor : {{ $item->no_surat }}</p>
-
-                                <div class="row mb-4">
-                                    <div class="col-md-6">
+                                <div class="row mb-3 align-items-center">
+                                    <div class="col-md-2 text-center">
+                                        <img src="{{ asset('images/logo.png') }}" width="80" alt="logo">
+                                    </div>
+                                    <div class="col-md-10">
                                         <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="row">
-                                                    <div class="col-md-4"><span class="fw-medium">Nomor Kendaraan</span></div>
-                                                    <div class="col-md-8">: <span class="text-black-50">{{ $transport->no_kendaraan }}</span></div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-4"><span class="fw-medium">Pelanggan</span></div>
-                                                    <div class="col-md-8">: <span class="text-black-50">{{ $item->customers->name }}</span></div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-4"><span class="fw-medium">Alamat</span></div>
-                                                    <div class="col-md-8">: <span class="text-black-50">{{ $item->customers->address }}</span></div>
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-4"><span class="fw-medium">No Surat Jalan</span></div>
+                                                            <div class="col-md-8">: <span class="fw-medium">{{ $item->no_surat }}</span></div>
+                                                        </div>
+                                                        <div class="row">
+                                                            <div class="col-md-4"><span class="fw-medium">Customer</span></div>
+                                                            <div class="col-md-8">: <span class="fw-medium">{{ $item->customers->name }}</span></div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-6">
-                                        <div class="row">
-                                            <div class="col-md-12">
+                                            <div class="col-md-6">
                                                 <div class="row">
-                                                    <div class="col-md-4"><span class="fw-medium">Tanggal</span></div>
-                                                    <div class="col-md-8">: <span class="text-black-50">{{ getTanggalIndo($item->created_at->format('Y-m-d')) }}, {{ $item->created_at->format('H:i') }}</span></div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-4"><span class="fw-medium">Jumlah Barang</span></div>
-                                                    <div class="col-md-8">: <span class="text-black-50">{{ getJumlahBarang($item->id) }}</span></div>
-                                                </div>
-                                                <div class="row">
-                                                    <div class="col-md-4"><span class="fw-medium">Total Barang</span></div>
-                                                    <div class="col-md-8">: <span class="text-black-50">{{ getTotalBarang($item->id) }}</span></div>
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-4"><span class="fw-medium">Tgl</span></div>
+                                                            <div class="col-md-8">: <span class="fw-medium">{{ getTanggalIndo($item->created_at->format('Y-m-d')) }}</span></div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-md-12">
+                                                        <div class="row">
+                                                            <div class="col-md-4"><span class="fw-medium">No PO</span></div>
+                                                            <div class="col-md-8">: <span class="fw-medium">{{ $item->no_po }}</span></div>
+                                                        </div>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                @if ($item->timbangans)
-                                    <table class="table table-borderless align-middle mb-0">
-                                        <thead>
-                                            <tr class="border-top border-secondary-subtle">
-                                                <th class="text-center" width="5%">No</th>
-                                                <th class="text-start" width="55%">Barang</th>
-                                                <th class="text-center" width="20%">Berat</th>
-                                                <th class="text-center" width="20%">Total</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
+                                <table class="table table-sm table-bordered align-middle mb-0 text-uppercase text-center">
+                                    <thead>
+                                        <tr>
+                                            <th rowspan="2" width="4%" class="align-middle">No</th>
+                                            <th rowspan="2" width="16%" class="align-middle">Nama Barang</th>
+                                            <th colspan="10" width="70%">Jumlah</th>
+                                            <th rowspan="2" width="10%" class="align-middle">Total</th>
+                                        </tr>
+                                        <tr>
+                                            @for ($i = 1; $i <= 10; $i++)
+                                                <th width="6%">{{ $i }}</th>
+                                            @endfor
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        @forelse (getTimbanganGroup($item->id) as $data)
                                             @php
-                                                $last_item = null;
-                                                $same_item = null;
+                                                $dataTimbanganList = getTimbanganList($item->id, $data->kode_barang);
+                                                $jumlahTimbanganList = $dataTimbanganList->count(); 
+                                                $totalLoopTimbanganList = ceil($jumlahTimbanganList / 10) + 1;
                                             @endphp
-                                            @forelse ($item->timbangans as $data)
-                                                <tr>
-                                                    <td class="text-center">{{ $loop->iteration }}</td>
-                                                    <td>{{ $data->name }}</td>
-                                                    <td class="text-center">{{ converHasilSatuan($data->berat_barang) }}</td>
-                                                    @if ($last_item == $data->kode_barang)
-                                                        @php $same_item = $data->kode_barang; @endphp
-                                                        <td></td>
-                                                    @else
-                                                        <td class="active text-center">{{ getJumlahBeratLetterBarang($data->id_letter, $data->kode_barang) }}</td>
-                                                    @endif
-                                                </tr>
 
-                                                @if ($loop->last)
-                                                    <tr class="border-top border-bottom border-secondary-subtle">
-                                                        <td colspan="3" class="fw-bold">Total Berat</td>
-                                                        <td class="fw-bold text-center">{{ getJumlahBeratLetter($item->id) }}</td>
+                                            @for ($j = 1; $j <= $totalLoopTimbanganList; $j++)
+                                                @if ($j == 1)
+                                                    <tr>
+                                                        <td>{{ $loop->iteration }}</td>
+                                                        <td>{{ $data->barangs->name ?? '-' }}</td>
+                                                        @foreach ($dataTimbanganList as $key => $list)
+                                                            <td class="text-end">{{ $list->berat_barang }}</td>
+
+                                                            @php $dataTimbanganList->forget($key)@endphp
+                                                            @if ($loop->iteration == 10) @break @endif
+                                                            @if($loop->last)
+                                                                @for ($k = $loop->iteration + 1; $k <= 10; $k++)
+                                                                    <td></td>
+                                                                @endfor
+                                                            @endif
+                                                        @endforeach
+                                                        <td class="text-end">{{ getJumlahBeratLetterBarang($item->id, $list->kode_barang, false) }}</td>
+                                                    </tr>
+                                                @elseif ($j == $totalLoopTimbanganList)
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        @for ($m = 1; $m <= 10; $m++)
+                                                            <td></td>
+                                                        @endfor
+                                                        <td>-</td>
+                                                    </tr>
+                                                @else
+                                                    <tr>
+                                                        <td></td>
+                                                        <td></td>
+                                                        @foreach ($dataTimbanganList as $key => $list)
+                                                            <td class="text-end">{{ $list->berat_barang }}</td>
+
+                                                            @php $dataTimbanganList->forget($key)@endphp
+                                                            @if ($loop->iteration == 10) @break @endif
+                                                            @if($loop->last)
+                                                                @for ($n = $loop->iteration + 1; $n <= 10; $n++)
+                                                                    <td></td>
+                                                                @endfor
+                                                            @endif
+                                                        @endforeach
+                                                        <td></td>
                                                     </tr>
                                                 @endif
-                                                @php $last_item = $data->kode_barang; @endphp
-                                            @empty
+                                            @endfor
+
+                                            @if ($loop->last)
                                                 <tr>
-                                                    <td colspan="4" class="text-center">Tidak ada data</td>
+                                                    <td colspan="12" class="text-start fw-bold">Total</td>
+                                                    {{-- <td></td>
+                                                    @for ($p = 1; $p <= 10; $p++)
+                                                        <td></td>
+                                                    @endfor --}}
+                                                    <td class="text-end fw-bold">{{ getJumlahBeratLetter($item->id, false) }}</td>
                                                 </tr>
-                                            @endforelse
-                                        </tbody>
-                                    </table>
-                                @else
-                                    <div class="w-100 text-center">
-                                        <div class="alert alert-danger" role="alert">
-                                            Tidak ada data.
-                                        </div>
-                                    </div>
-                                @endif
+                                                
+                                            @endif
+                                        @empty
+                                            <tr>
+                                                <td colspan="13" class="text-center">Tidak ada data</td>
+                                            </tr>
+                                        @endforelse
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                     </div>

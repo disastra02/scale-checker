@@ -59,10 +59,21 @@ if ( !function_exists('getJumlahBeratReport') )
 
 if ( !function_exists('getJumlahBeratLetter') )
 {
-    function getJumlahBeratLetter($id){
-        $hasil = Timbangan::where("id_letter", $id)->sum('berat_barang');
+    function getJumlahBeratLetter($id, $convert = true){
+        $total = Timbangan::where("id_letter", $id)->sum('berat_barang');
+        $hasil = $convert ? converHasilSatuan($total) : number_format($total, 2, ',');
 
-        return converHasilSatuan($hasil);
+        return $hasil;
+    }
+}
+
+if ( !function_exists('getJumlahBeratLetterBarang') )
+{
+    function getJumlahBeratLetterBarang($id, $kodeBarang, $convert = true){
+        $total = Timbangan::where("id_letter", $id)->where("kode_barang", $kodeBarang)->sum('berat_barang');
+        $hasil = $convert ? converHasilSatuan($total) : number_format($total, 2, ',');
+
+        return $hasil;
     }
 }
 
@@ -81,15 +92,6 @@ if ( !function_exists('getTotalBarang') )
         $hasil = Timbangan::where("id_letter", $id)->count();
 
         return $hasil.' Barang';
-    }
-}
-
-if ( !function_exists('getJumlahBeratLetterBarang') )
-{
-    function getJumlahBeratLetterBarang($id, $kodeBarang){
-        $hasil = Timbangan::where("id_letter", $id)->where("kode_barang", $kodeBarang)->sum('berat_barang');
-
-        return converHasilSatuan($hasil);
     }
 }
 
@@ -127,6 +129,25 @@ if ( !function_exists('getBarang') )
 {
     function getBarang($id){
         $hasil = Barang::where('kode', $id)->first();
+
+        return $hasil;
+    }
+}
+
+// Timbangan Tally Sheet
+if ( !function_exists('getTimbanganGroup') )
+{
+    function getTimbanganGroup($id){
+        $hasil = Timbangan::with(['barangs'])->select('kode_barang')->where('id_letter', $id)->groupBy('kode_barang')->get();
+
+        return $hasil;
+    }
+}
+
+if ( !function_exists('getTimbanganList') )
+{
+    function getTimbanganList($id, $kode){
+        $hasil = Timbangan::with(['barangs'])->where('id_letter', $id)->where('kode_barang', $kode)->get();
 
         return $hasil;
     }

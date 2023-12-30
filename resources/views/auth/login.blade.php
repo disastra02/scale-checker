@@ -37,10 +37,10 @@
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="row mb-3">
-                                <label for="emailField" class="col-md-4 col-form-label text-md-end">{{ __('Email') }}</label>
+                                <label for="usernameField" class="col-md-4 col-form-label text-md-end">{{ __('Username') }}</label>
     
                                 <div class="col-md-6">
-                                    <input id="emailField" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email">
+                                    <input id="usernameField" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required placeholder="Username">
     
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">
@@ -114,10 +114,10 @@
                         <form method="POST" action="{{ route('login') }}">
                             @csrf
                             <div class="row mb-3">
-                                <label for="email" class="col-md-12 col-form-label text-md-start">{{ __('Email') }}</label>
+                                <label for="username" class="col-md-12 col-form-label text-md-start">{{ __('Username') }}</label>
     
                                 <div class="col-md-12">
-                                    <input id="email" type="email" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required autocomplete="email" autofocus placeholder="Email">
+                                    <input id="username" type="text" class="form-control @error('email') is-invalid @enderror" name="email" value="{{ old('email') }}" required placeholder="Username">
     
                                     @error('email')
                                         <span class="invalid-feedback" role="alert">

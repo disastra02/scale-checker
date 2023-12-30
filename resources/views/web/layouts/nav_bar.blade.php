@@ -1,6 +1,6 @@
 <nav class="navbar navbar-expand-lg">
-    <div class="container p-3">
-        <a class="navbar-brand fw-bolder" href="#"><h4 class="mb-1">Warehouse</h4></a>
+    <div class="container p-0">
+        <a class="navbar-brand fw-bolder" href="#"><h5 class="mb-1 d-flex align-items-center"><img src="{{ asset('images/logo.jpg') }}" alt="Logo" width="50"> <span>&nbsp; Sepakat Morrobati Gede</span></h5></a>
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>

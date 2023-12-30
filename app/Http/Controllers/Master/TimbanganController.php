@@ -51,11 +51,13 @@ class TimbanganController extends Controller
 
             // Surat Jalan & Timbangan
             $dataAllSuratJalan = $req->input('nomer_surat');
+            $dataAllNoPo = $req->input('nomer_po');
             $dataAllBarcode = $req->input('nomer_barcode');
 
             foreach ($dataAllSuratJalan as $keySurat => $dtSurat) {
                 $suratJalan = Letter::create([
                     'no_surat' => strtoupper($req->input('surat_jalan.'.$keySurat)),
+                    'no_po' => strtoupper($req->input('po.'.$keySurat)),
                     'id_transport' => $transport->id,
                     'id_customer' => $req->input('customer.'.$keySurat),
                     'created_by' => $user->id

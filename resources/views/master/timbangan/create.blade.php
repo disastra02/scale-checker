@@ -67,6 +67,11 @@
                                         <input type="hidden" name="nomer_surat[]" value="1">
                                     </div>
                                     <div class="mb-3">
+                                        <label for="noPo" class="form-label">No PO <span class="text-danger">*</span></label>
+                                        <input type="text" name="po[]" class="form-control" autocomplete="off" id="noPo" placeholder="Masukkan No PO" required>
+                                        <input type="hidden" name="nomer_po[]" value="1">
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="customer" class="form-label">Customer <span class="text-danger">*</span></label>
                                         <select class="form-select select2" name="customer[]" required>
                                             <option selected value="" disabled>Customer</option>
@@ -385,6 +390,11 @@
                                         <input type="hidden" name="nomer_surat[]" value="${idStreamAll}">
                                     </div>
                                     <div class="mb-3">
+                                        <label for="noPo" class="form-label">No PO <span class="text-danger">*</span></label>
+                                        <input type="text" name="po[]" class="form-control" autocomplete="off" id="noPo" placeholder="Masukkan No PO" required>
+                                        <input type="hidden" name="nomer_po[]" value="${idStreamAll}">
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="customer" class="form-label">Customer <span class="text-danger">*</span></label>
                                         <select class="form-select select2" name="customer[]" required>
                                             <option selected value="" disabled>Customer</option>
@@ -424,7 +434,7 @@
                     title: title,
                     text: text,
                     icon: status,
-                    showConfirmButton: false
+                    showConfirmButton: true
                 });
             }
 

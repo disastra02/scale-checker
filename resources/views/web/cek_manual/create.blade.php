@@ -60,6 +60,11 @@
                                         <input type="hidden" name="nomer_surat[]" value="1">
                                     </div>
                                     <div class="mb-3">
+                                        <label for="noPo" class="form-label">No PO <span class="text-danger">*</span></label>
+                                        <input type="text" name="po[]" class="form-control" autocomplete="off" id="noPo" placeholder="Masukkan No PO" required>
+                                        <input type="hidden" name="nomer_po[]" value="1">
+                                    </div>
+                                    <div class="mb-3">
                                         <label for="customer" class="form-label">Customer <span class="text-danger">*</span></label>
                                         <select class="form-select select2" name="customer[]" required>
                                             <option selected value="" disabled>Customer</option>
@@ -203,7 +208,7 @@
             // Tambah Surat Jalan
             $('body').on('click', '.btn-add-surat', function() {
                 idStreamAll++;
-                let html = `<div class="card bg-light">
+                let html = `<div class="card bg-light mt-3">
                                 <div class="card-header border-0 bg-secondary-subtle">
                                     <div class="row align-items-center">
                                         <div class="col-6">
@@ -219,6 +224,11 @@
                                         <label for="suratJalan" class="form-label">No Surat Jalan <span class="text-danger">*</span></label>
                                         <input type="text" name="surat_jalan[]" class="form-control" autocomplete="off" id="suratJalan" placeholder="Masukkan No Surat Jalan" required>
                                         <input type="hidden" name="nomer_surat[]" value="${idStreamAll}">
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="noPo" class="form-label">No PO <span class="text-danger">*</span></label>
+                                        <input type="text" name="po[]" class="form-control" autocomplete="off" id="noPo" placeholder="Masukkan No PO" required>
+                                        <input type="hidden" name="nomer_po[]" value="${idStreamAll}">
                                     </div>
                                     <div class="mb-3">
                                         <label for="customer" class="form-label">Customer <span class="text-danger">*</span></label>
