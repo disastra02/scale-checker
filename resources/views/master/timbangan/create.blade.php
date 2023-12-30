@@ -44,8 +44,8 @@
                 <div class="card mb-4 border-0">
                     <div class="card-body p-2">
                         <div class="mb-3">
-                            <label for="nomorKendaraan" class="form-label">Nomor Kendaraan <span class="text-danger">*</span></label>
-                            <input type="text" name="nomor_kendaraan" class="form-control" id="nomorKendaraan" autocomplete="off" placeholder="Masukkan Nomor Kendaraan" required>
+                            <label for="nomorKendaraan" class="form-label">No Polisi Kendaraan <span class="text-danger">*</span></label>
+                            <input type="text" name="nomor_kendaraan" class="form-control" id="nomorKendaraan" autocomplete="off" placeholder="Masukkan No Polisi Kendaraan" required>
                         </div>
                         
                         <div id="sectionSuratJalan">

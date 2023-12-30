@@ -27,7 +27,7 @@
                     <div class="col-md-6">
                         <h3 class="fw-bold mb-2">Detail Pengecekan</h3>
                         <div class="">
-                            <span class="badge text-bg-primary">Total {{ getJumlahSurat($transport->id) }} Surat</span> &nbsp; <span class="badge text-bg-secondary">Total Berat {{ getJumlahBerat($transport->id) }}</span>
+                            <span class="badge text-bg-primary">Total {{ getJumlahSurat($transport->id) }} Surat</span> &nbsp; <span class="badge text-bg-secondary">Total Berat {{ getJumlahBerat($transport->id) }}</span> &nbsp; <span class="badge text-bg-success">No Polisi Kendaraan {{ $transport->no_kendaraan }}</span>
                         </div>
                     </div>
                     <div class="col-md-6 d-flex justify-content-end">

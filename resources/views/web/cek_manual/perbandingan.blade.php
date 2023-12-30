@@ -23,6 +23,10 @@
         .select2-container--default .select2-selection--single .select2-selection__arrow {
             height: 36px !important;
         }
+
+        .f-12 {
+            font-size: 12px !important;
+        }
     </style>
 @endpush
 

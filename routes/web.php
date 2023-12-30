@@ -46,6 +46,7 @@ Route::get('w-dashboard', [DashboardController::class, 'index'])->name('w-dashbo
 // Checker
 Route::get('w-cek-checker/scope-data', [WebTimbanganController::class, 'scopeData'])->name('w-cek-checker.scopeData');
 Route::get('w-cek-checker/{id}/perbandingan', [WebTimbanganController::class, 'perbandingan'])->name('w-cek-checker.perbandingan');
+Route::get('w-cek-checker/get-option', [WebTimbanganController::class, 'getOption'])->name('w-cek-checker.getOption');
 Route::get('w-cek-checker/{id}/print', [WebTimbanganController::class, 'printToPdf'])->name('w-cek-checker.printToPdf');
 Route::resource('w-cek-checker', WebTimbanganController::class);
 

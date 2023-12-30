@@ -50,7 +50,7 @@
     @include('web.layouts.nav_bar')
 
     <main class="main-background">
-        <div class="container py-4 px-2">
+        <div class="container-content container py-4 px-2">
             @yield('content')
         </div>
     </main>

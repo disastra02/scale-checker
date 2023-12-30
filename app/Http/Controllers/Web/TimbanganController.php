@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Master\Letter;
 use App\Models\Master\Timbangan;
 use App\Models\Master\Transport;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -33,7 +34,7 @@ class TimbanganController extends Controller
             $endDate = date('Y-m-d').' 23:59:59';
 
             $user = Auth::user();
-            $data = Transport::where('created_by', '!=', $user->id)->whereBetween('created_at', [$startDate, $endDate])->orderBy('id', 'DESC')->get();
+            $data = Transport::join('users', 'users.id', 'transports.created_by')->select('transports.*')->where('users.id_jenis', 2)->whereBetween('transports.created_at', [$startDate, $endDate])->orderBy('id', 'DESC')->get();
 
             return DataTables::of($data)
                 ->addIndexColumn()
@@ -116,19 +117,26 @@ class TimbanganController extends Controller
             // Transport
             $data['user'] = Auth::user();
             $data['transport'] = Transport::where('id', $id)->first();
-            $data['kendaraan'] = Transport::where('created_by', $data['user']->id)->orderBy('id', 'DESC')->get();
-            
-            // Surat Jalan
-            $data['suratJalan'] = Letter::with([
-                'timbangans' => function ($query) {
-                    $query->join('barangs', 'barangs.kode', 'timbangans.kode_barang')->orderBy('barangs.name', 'ASC');
-                }, 'customers'
-            ])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get();
+            $data['pembuat'] = User::where('id_jenis', '!=', 2)->orderBy('id_jenis', 'ASC')->get();
+            $data['suratJalan'] = Letter::with(['customers'])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get();
 
             return view('web.timbangan.perbandingan', $data);
         } catch (Throwable $e) {
             Session::flash('error', 'Terjadi sesuatu kesalahan pada server.');
             return redirect()->route('w-cek-manual.index');
+        }
+    }
+
+    public function getOption(Request $req)
+    {
+        try {
+            $id = $req->get('id');
+            $data['kendaraan'] = Transport::where('created_by', $id)->orderBy('id', 'DESC')->get();
+            
+            return view('web.widget.option_perbandingan', $data);
+        } catch (Throwable $e) {
+            Session::flash('error', 'Terjadi sesuatu kesalahan pada server.');
+            return redirect()->route('w-dashboard.index');
         }
     }
 

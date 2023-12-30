@@ -29,15 +29,14 @@ class DashboardController extends Controller
         $data['jumlah'] = [];
         $data['page'] = 'dashboard';
         $data['user'] = Auth::user();
-        $data['totalKendaraan'] = Transport::where('created_by', '!=', $data['user']->id)->whereBetween('created_at', [$startDate, $endDate])->count(); 
-        $data['totalSurat'] = Letter::where('created_by', '!=', $data['user']->id)->whereBetween('created_at', [$startDate, $endDate])->count(); 
-        $data['totalPelanggan'] = Letter::select('id_transport', 'id_customer')->where('created_by', '!=', $data['user']->id)->whereBetween('created_at', [$startDate, $endDate])->groupBy('id_transport', 'id_customer')->get()->count(); 
-        $data['totalBerat'] = Timbangan::where('created_by', '!=', $data['user']->id)->whereBetween('created_at', [$startDate, $endDate])->sum('berat_barang'); 
+        $data['totalKendaraan'] = Transport::join('users', 'users.id', 'transports.created_by')->where('users.id_jenis', 2)->whereBetween('transports.created_at', [$startDate, $endDate])->count(); 
+        $data['totalSurat'] = Letter::join('users', 'users.id', 'letters.created_by')->where('users.id_jenis', 2)->whereBetween('letters.created_at', [$startDate, $endDate])->count(); 
+        $data['totalPelanggan'] = Letter::select('letters.id_transport', 'letters.id_customer')->join('users', 'users.id', 'letters.created_by')->where('users.id_jenis', 2)->whereBetween('letters.created_at', [$startDate, $endDate])->groupBy('letters.id_transport', 'letters.id_customer')->get()->count(); 
+        $data['totalBerat'] = Timbangan::join('users', 'users.id', 'timbangans.created_by')->where('users.id_jenis', 2)->whereBetween('timbangans.created_at', [$startDate, $endDate])->sum('timbangans.berat_barang'); 
         $data['totalChecker'] = User::where('id_jenis', 2)->whereBetween('created_at', [$startDate, $endDate])->count();
-
         for($jumlahTanggal; $jumlahTanggal >= 0; $jumlahTanggal--) {
             $day = date('Y-m-d', strtotime('-'.$jumlahTanggal.' days'));
-            $total = Transport::where('created_by', '!=', $data['user']->id)->whereDate('created_at', $day)->count();
+            $total = Transport::join('users', 'users.id', 'transports.created_by')->where('users.id_jenis', 2)->whereDate('transports.created_at', $day)->count();
 
             array_push($data['tanggal'], $day);
             array_push($data['jumlah'], $total);
