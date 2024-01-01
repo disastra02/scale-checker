@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Web;
 
+use App\Exports\TimbangansExport;
 use App\Http\Controllers\Controller;
 use App\Models\Master\Letter;
 use App\Models\Master\Timbangan;
@@ -11,6 +12,7 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Maatwebsite\Excel\Facades\Excel;
 use Throwable;
 use Yajra\DataTables\Facades\DataTables;
 
@@ -61,7 +63,7 @@ class TimbanganController extends Controller
                                     <ul class="dropdown-menu">
                                         <li><a class="dropdown-item" href="'.route('w-cek-checker.show', $item->id).'">Detail</a></li>
                                         <li><a class="dropdown-item" href="'.route('w-cek-checker.perbandingan', $item->id).'">Perbandingan</a></li>
-                                        <li><a class="dropdown-item" href="'.route('w-cek-checker.printToPdf', $item->id).'">Print</a></li>
+                                        <li><a class="dropdown-item" href="'.route('w-cek-checker.printToExcel', $item->id).'">Print</a></li>
                                         <li>
                                             <form action="'.route('w-cek-checker.destroy', $item->id).'" method="POST">
                                                 '.method_field("DELETE").'
@@ -134,6 +136,25 @@ class TimbanganController extends Controller
             $data['kendaraan'] = Transport::where('created_by', $id)->orderBy('id', 'DESC')->get();
             
             return view('web.widget.option_perbandingan', $data);
+        } catch (Throwable $e) {
+            Session::flash('error', 'Terjadi sesuatu kesalahan pada server.');
+            return redirect()->route('w-dashboard.index');
+        }
+    }
+
+    public function printToExcel(string $id)
+    {
+        try {
+            // Transport
+            $data['user'] = Auth::user();
+            $transport = Transport::where('id', $id)->first();
+            $data['transport'] = $transport;
+            $data['pembuat'] = User::where('id_jenis', '!=', 2)->orderBy('id_jenis', 'ASC')->get();
+            $data['suratJalan'] = Letter::with(['customers'])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get();
+
+            $namaFile = 'Kendaraan_'.str_replace(' ', '-', $transport->no_kendaraan).'_'.str_replace(' ', '-', getUser($transport->created_by)->name ?? 'No_Name').'_'.$transport->created_at->format('Y-m-d').'.xlsx';
+
+            return Excel::download(new TimbangansExport($data), $namaFile);
         } catch (Throwable $e) {
             Session::flash('error', 'Terjadi sesuatu kesalahan pada server.');
             return redirect()->route('w-dashboard.index');

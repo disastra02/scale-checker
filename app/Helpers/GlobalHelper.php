@@ -115,6 +115,14 @@ if ( !function_exists('converHasilSatuan') )
     }
 }
 
+if ( !function_exists('converDecimal') )
+{
+    function converDecimal($jumlah){
+        $hasil = number_format($jumlah, 2, ',');
+
+        return $hasil;
+    }
+}
 
 if ( !function_exists('getUser') )
 {
