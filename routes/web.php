@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AfterLoginController;
+use App\Http\Controllers\Master\PdtController;
 use App\Http\Controllers\Master\TimbanganController;
 use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\Master\BarangController;
@@ -38,6 +39,7 @@ Route::get('/after-login', [AfterLoginController::class, 'index'])->name('after-
 
 // Timbangan
 Route::resource('timbangan', TimbanganController::class);
+Route::resource('pdt', PdtController::class);
 
 // Website
 // Dashboard
