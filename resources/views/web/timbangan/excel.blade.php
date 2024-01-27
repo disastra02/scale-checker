@@ -1,4 +1,4 @@
-@foreach ($suratJalan as $item)
+{{-- @foreach ($suratJalan as $item) --}}
     <table>
         <tr>
             <td colspan="13"></td>
@@ -6,17 +6,17 @@
         <tr>
             <td colspan="2" rowspan="2" style="height: 40px;"></td>
             <td colspan="2" style="text-align: left; vertical-align: bottom;">No Surat Jalan</td>
-            <td colspan="3" style="text-align: left; vertical-align: bottom;">: {{ Str::upper($item->no_surat) }}</td>
+            <td colspan="3" style="text-align: left; vertical-align: bottom;">: {{ Str::upper($suratJalan->no_surat) }}</td>
             <td></td>
             <td colspan="2" style="text-align: left; vertical-align: bottom;">Tgl</td>
-            <td colspan="3" style="text-align: left; vertical-align: bottom;">: {{ getTanggalIndo($item->created_at->format('Y-m-d')) }}</td>
+            <td colspan="3" style="text-align: left; vertical-align: bottom;">: {{ getTanggalIndo($suratJalan->created_at->format('Y-m-d')) }}</td>
         </tr>
         <tr>
             <td colspan="2" style="height: 40px; text-align: left; vertical-align: top;">Customer</td>
-            <td colspan="3" style="text-align: left; vertical-align: top;">: {{ Str::upper($item->customers->name) }}</td>
+            <td colspan="3" style="text-align: left; vertical-align: top;">: {{ Str::upper($suratJalan->customers->name) }}</td>
             <td></td>
             <td colspan="2" style="text-align: left; vertical-align: top;">No PO</td>
-            <td colspan="3" style="text-align: left; vertical-align: top;">: {{ Str::upper($item->no_po) }}</td>
+            <td colspan="3" style="text-align: left; vertical-align: top;">: {{ Str::upper($suratJalan->no_po) }}</td>
         </tr>
     </table>
 
@@ -35,9 +35,9 @@
             </tr>
         </thead>
         <tbody>
-            @forelse (getTimbanganGroup($item->id) as $data)
+            @forelse (getTimbanganGroup($suratJalan->id) as $data)
                 @php
-                    $dataTimbanganList = getTimbanganList($item->id, $data->kode_barang);
+                    $dataTimbanganList = getTimbanganList($suratJalan->id, $data->kode_barang);
                     $jumlahTimbanganList = $dataTimbanganList->count(); 
                     $totalLoopTimbanganList = ceil($jumlahTimbanganList / 10) + 1;
                 @endphp
@@ -58,7 +58,7 @@
                                     @endfor
                                 @endif
                             @endforeach
-                            <td style="text-align: right; vertical-align: middle; border: 1px solid black;">{{ getJumlahBeratLetterBarang($item->id, $list->kode_barang, false) }}</td>
+                            <td style="text-align: right; vertical-align: middle; border: 1px solid black;">{{ getJumlahBeratLetterBarang($suratJalan->id, $list->kode_barang, false) }}</td>
                         </tr>
                     @elseif ($j == $totalLoopTimbanganList)
                         <tr>
@@ -92,7 +92,7 @@
                 @if ($loop->last)
                     <tr>
                         <td colspan="12" style="text-align: left; font-weight: bold; vertical-align: middle; border: 1px solid black;">TOTAL</td>
-                        <td style="text-align: right; font-weight: bold; vertical-align: middle; border: 1px solid black;">{{ getJumlahBeratLetter($item->id, false) }}</td>
+                        <td style="text-align: right; font-weight: bold; vertical-align: middle; border: 1px solid black;">{{ getJumlahBeratLetter($suratJalan->id, false) }}</td>
                     </tr>
                     <tr>
                         <td colspan="13"></td>
@@ -122,4 +122,4 @@
             @endforelse
         </tbody>
     </table>
-@endforeach
+{{-- @endforeach --}}

@@ -12,9 +12,11 @@ use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Throwable;
 use Yajra\DataTables\Facades\DataTables;
+use ZipArchive;
 
 class TimbanganController extends Controller
 {
@@ -149,12 +151,40 @@ class TimbanganController extends Controller
             $data['user'] = Auth::user();
             $transport = Transport::where('id', $id)->first();
             $data['transport'] = $transport;
-            $data['pembuat'] = User::where('id_jenis', '!=', 2)->orderBy('id_jenis', 'ASC')->get();
-            $data['suratJalan'] = Letter::with(['customers'])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get();
+            $suratJalan = Letter::with(['customers'])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC');
 
-            $namaFile = 'Kendaraan_'.str_replace(' ', '-', $transport->no_kendaraan).'_'.str_replace(' ', '-', getUser($transport->created_by)->name ?? 'No_Name').'_'.$transport->created_at->format('Y-m-d').'.xlsx';
+            if ($suratJalan->count() > 1) {
+                $zipFileName = 'excel\Kendaraan_'.str_replace(' ', '-', $transport->no_kendaraan).'_'.str_replace(' ', '-', getUser($transport->created_by)->name ?? 'No_Name').'_'.$transport->created_at->format('Y-m-d').'.zip';
+                $zip = new ZipArchive;
 
-            return Excel::download(new TimbangansExport($data), $namaFile);
+                $arrayFile = [];
+                if ($zip->open(public_path($zipFileName), ZipArchive::CREATE | ZipArchive::OVERWRITE) === true) {
+                    foreach ($suratJalan->get() as $index => $item) {
+                        $nomor = $index + 1;
+                        $data['suratJalan'] = $item;
+                        $namaFile = 'Kendaraan_'.str_replace(' ', '-', $transport->no_kendaraan).'_'.str_replace(' ', '-', getUser($transport->created_by)->name ?? 'No_Name').'_'.$transport->created_at->format('Y-m-d').'_Surat_'.$nomor.'.xlsx';
+
+                        array_push($arrayFile, $namaFile);
+                        $excelFilePath = 'excel\exports\\' . $namaFile;
+                        Excel::store(new TimbangansExport($data), $excelFilePath, 'real_public');
+                        $zip->addFile(public_path($excelFilePath), basename(public_path($excelFilePath)));
+                    }
+
+                    $zip->close();
+
+                    foreach ($arrayFile as $item) {
+                        $excelFilePath = 'excel\exports\\' . $item;
+                        Storage::disk('real_public')->delete($excelFilePath);
+                    }
+                }
+
+                return response()->download(public_path($zipFileName))->deleteFileAfterSend(true);
+            } else {
+                $data['suratJalan'] = $suratJalan->first();
+                $namaFile = 'Kendaraan_'.str_replace(' ', '-', $transport->no_kendaraan).'_'.str_replace(' ', '-', getUser($transport->created_by)->name ?? 'No_Name').'_'.$transport->created_at->format('Y-m-d').'.xlsx';
+
+                return Excel::download(new TimbangansExport($data), $namaFile);
+            }
         } catch (Throwable $e) {
             Session::flash('error', 'Terjadi sesuatu kesalahan pada server.');
             return redirect()->route('w-dashboard.index');

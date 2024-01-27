@@ -25,8 +25,8 @@
                     </a>
                     <ul class="dropdown-menu">  
                         <li><a class="dropdown-item @isset($page) {{ $page == "manual" ? 'fw-medium' : '' }} @endisset" href="{{ route('w-cek-manual.index') }}">Surat Jalan Admin</a></li>
-                        <li><a class="dropdown-item @isset($page) {{ $page == "customer" ? 'fw-medium' : '' }} @endisset" href="{{ route('m-customer.index') }}">Surat Jalan Checker</a></li>
-                        <li><a class="dropdown-item @isset($page) {{ $page == "users" ? 'fw-medium' : '' }} @endisset" href="{{ route('m-users.index') }}">Surat Jalan Security</a></li>
+                        {{-- <li><a class="dropdown-item @isset($page) {{ $page == "customer" ? 'fw-medium' : '' }} @endisset" href="{{ route('m-customer.index') }}">Surat Jalan Checker</a></li>
+                        <li><a class="dropdown-item @isset($page) {{ $page == "users" ? 'fw-medium' : '' }} @endisset" href="{{ route('m-users.index') }}">Surat Jalan Security</a></li> --}}
                     </ul>
                 </li>
                 <li class="nav-item dropdown">
