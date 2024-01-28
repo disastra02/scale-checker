@@ -8,6 +8,7 @@ use App\Models\Master\Customer;
 use App\Models\Master\Letter;
 use App\Models\Master\Timbangan;
 use App\Models\Master\Transport;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
@@ -52,25 +53,15 @@ class TimbanganController extends Controller
                     return getTanggalTable($item->created_at->format('Y-m-d')).', '.$item->created_at->format('H:i'); 
                 })
                 ->addColumn('aksi', function($item){
-                    $html = '<div class="text-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="'.route('w-cek-manual.show', $item->id).'">Detail</a></li>
-                                        <li><a class="dropdown-item" href="'.route('w-cek-manual.perbandingan', $item->id).'">Perbandingan</a></li>
-                                        <li><a class="dropdown-item" href="'.route('w-cek-checker.printToPdf', $item->id).'">Print</a></li>
-                                        <li>
-                                            <form action="'.route('w-cek-manual.destroy', $item->id).'" method="POST">
-                                                '.method_field("DELETE").'
-                                                '.csrf_field().'
-
-                                                <a class="dropdown-item delete-data" type="submit">Hapus</a>
-                                            </form>
-                                        </li>
-                                    </ul>
-                                </div>
+                    $html = '<div class="btn-group" role="group">
+                                <a class="btn btn-secondary btn-sm" href="'.route('w-cek-manual.show', $item->id).'" title="Detail"><i class="fa-solid fa-circle-info"></i> &nbsp; Detail</a>
+                                <a class="btn btn-warning btn-sm" href="'.route('w-cek-manual.perbandingan', $item->id).'" title="Perbandingan"><i class="fa-solid fa-arrows-left-right"></i> &nbsp; Perbandingan</a>
+                                <a class="btn btn-success btn-sm" href="'.route('w-cek-checker.printToExcel', $item->id).'" title="Tallysheet"><i class="fa-solid fa-file-excel"></i> &nbsp; Tallysheet</a>
+                                <form action="'.route('w-cek-manual.destroy', $item->id).'" method="POST">
+                                '.method_field("DELETE").'
+                                '.csrf_field().'                                
+                                    <a class="btn btn-danger btn-sm delete-data" type="submit" title="Hapus"><i class="fa-solid fa-trash"></i> &nbsp; Hapus</a>
+                                </form>
                             </div>';
 
                     return $html;
@@ -159,17 +150,11 @@ class TimbanganController extends Controller
     public function perbandingan(string $id)
     {
         try {
-            // Transport
-            $data['user'] = Auth::user();
-            $data['transport'] = Transport::where('id', $id)->first();
-            $data['kendaraan'] = Transport::where('created_by', '!=', $data['user']->id)->orderBy('id', 'DESC')->get();
-            
-            // Surat Jalan
-            $data['suratJalan'] = Letter::with([
-                'timbangans' => function ($query) {
-                    $query->join('barangs', 'barangs.kode', 'timbangans.kode_barang')->orderBy('barangs.name', 'ASC');;
-                }
-            ])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get();
+             // Transport
+             $data['user'] = Auth::user();
+             $data['transport'] = Transport::where('id', $id)->first();
+             $data['pembuat'] = User::orderBy('id_jenis', 'ASC')->get();
+             $data['suratJalan'] = Letter::with(['customers'])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get(); 
 
             return view('web.cek_manual.perbandingan', $data);
         } catch (Throwable $e) {

@@ -32,7 +32,7 @@ class ReportBarangController extends Controller
         if ($req->ajax()) {
             $startDate = $req->startdate.' 00:00:00';
             $endDate = $req->enddate.' 23:59:59';
-            $jumlahBarang = Timbangan::select('timbangans.kode_barang')->join('users', 'users.id', 'timbangans.created_by')->where('users.id_jenis', '!=', 1)->whereBetween('timbangans.created_at', [$startDate, $endDate])->groupBy('timbangans.kode_barang')->get()->count();
+            $jumlahBarang = Timbangan::select('timbangans.kode_barang')->join('users', 'users.id', 'timbangans.created_by')->where('users.id_jenis', 2)->whereBetween('timbangans.created_at', [$startDate, $endDate])->groupBy('timbangans.kode_barang')->get()->count();
             $totalBarang = Barang::count();
             $barangTersimpan = $totalBarang - $jumlahBarang;
 
@@ -101,7 +101,7 @@ class ReportBarangController extends Controller
                 })
                 ->where(function($query) use ($tipe, $startDate, $endDate) {
                     if ($tipe == 1) {
-                        $query->whereNotNull('timbangans.id')->where('users.id_jenis', '!=', 1)->whereBetween('timbangans.created_at', [$startDate, $endDate]);
+                        $query->whereNotNull('timbangans.id')->where('users.id_jenis', 2)->whereBetween('timbangans.created_at', [$startDate, $endDate]);
                     } else if ($tipe == 2) {
                         $query->where(DB::raw('(SELECT COUNT(*) FROM timbangans JOIN users ON users.id = timbangans.created_by WHERE timbangans.created_at BETWEEN "'.$startDate.'" AND "'.$endDate.'" AND timbangans.kode_barang = barangs.kode AND users.id_jenis != 1 GROUP BY timbangans.kode_barang)'), '=', null);
                     }

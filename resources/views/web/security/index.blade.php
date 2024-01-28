@@ -4,7 +4,7 @@
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ route('w-dashboard.index') }}" class="text-white">Dashboard</a></li>
-            <li class="breadcrumb-item text-white active" aria-current="page">Surat Jalan Manual</li>
+            <li class="breadcrumb-item text-white active" aria-current="page">Surat Jalan Security</li>
         </ol>
     </nav>
 
@@ -13,15 +13,12 @@
             <div class="card-title mb-4">
                 <div class="row align-items-center">
                     <div class="col-md-6">
-                        <h3 class="fw-bold mb-0">Surat Jalan Manual</h3>
-                        <span class="text-black-50">Input Surat Jalan</span>
-                    </div>
-                    <div class="col-md-6 text-end">
-                        <a class="btn btn-primary btn-sm" href="{{ route('w-cek-manual.create') }}"><i class="fa-solid fa-plus"></i> &nbsp; Tambah Data</a>
+                        <h3 class="fw-bold mb-0">Surat Jalan Security</h3>
+                        <span class="text-black-50">Hasil Input Surat Jalan</span>
                     </div>
                 </div>
             </div>
-            <table class="table align-middle" id="dataChecker">
+            <table class="table align-middle text-center" id="dataSecurity">
                 <thead>
                     <tr>
                         <th class="text-center" width="5%">No</th>
@@ -42,10 +39,10 @@
     <script>
         $(document).ready(function() {
             // Data Checker
-            var tableChecker = $('#dataChecker').DataTable({
+            var tableChecker = $('#dataSecurity').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('w-cek-manual.scopeData') }}",
+                ajax: "{{ route('w-cek-security.scopeData') }}",
                 columns: [
                     {data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center"},
                     {data: 'user', name: 'user'},

@@ -94,6 +94,7 @@
                         <th class="text-center" width="8%">No</th>
                         <th class="text-center" width="42%">Nomor Kendaraan</th>
                         <th class="text-center" width="8%">Transaksi</th>
+                        <th class="text-center" width="8%">Detail</th>
                     </tr>
                 </thead>
             </table>
@@ -177,6 +178,7 @@
                         {data: 'DT_RowIndex', name: 'DT_RowIndex', className: "text-center"},
                         {data: 'no_kendaraan', name: 'no_kendaraan'},
                         {data: 'total', name: 'total', searchable: false, className: "text-center"},
+                        {data: 'detail', name: 'detail', searchable: false, className: "text-center"},
                     ]
                 });
             }

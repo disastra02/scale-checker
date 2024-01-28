@@ -7,6 +7,7 @@ use App\Http\Controllers\Web\DashboardController;
 use App\Http\Controllers\Web\Master\BarangController;
 use App\Http\Controllers\Web\Master\CustomerController;
 use App\Http\Controllers\Web\Master\TimbanganController as MasterTimbanganController;
+use App\Http\Controllers\Web\Master\TimbanganSecurityController;
 use App\Http\Controllers\Web\Master\UsersController;
 use App\Http\Controllers\Web\Report\ReportBarangController;
 use App\Http\Controllers\Web\Report\ReportCheckerController;
@@ -59,6 +60,12 @@ Route::get('w-cek-manual/{id}/perbandingan', [MasterTimbanganController::class, 
 Route::get('w-cek-manual/perbandingan-detail', [MasterTimbanganController::class, 'perbandinganDetail'])->name('w-cek-manual.perbandinganDetail');
 Route::resource('w-cek-manual', MasterTimbanganController::class);
 
+// Timbangan Security
+Route::get('w-cek-security/scope-data', [TimbanganSecurityController::class, 'scopeData'])->name('w-cek-security.scopeData');
+Route::get('w-cek-security/{id}/perbandingan', [TimbanganSecurityController::class, 'perbandingan'])->name('w-cek-security.perbandingan');
+Route::get('w-cek-security/perbandingan-detail', [TimbanganSecurityController::class, 'perbandinganDetail'])->name('w-cek-security.perbandinganDetail');
+Route::resource('w-cek-security', TimbanganSecurityController::class);
+
 // Master 
 // Barang
 Route::get('m-barang/scope-data', [BarangController::class, 'scopeData'])->name('m-barang.scopeData');
@@ -94,5 +101,6 @@ Route::resource('r-checker', ReportCheckerController::class);
 // Kendaraan
 Route::get('r-kendaraan/scope-data', [ReportKendaraanController::class, 'scopeData'])->name('r-kendaraan.scopeData');
 Route::get('r-kendaraan/print', [ReportKendaraanController::class, 'printToPdf'])->name('r-kendaraan.printToPdf');
+Route::get('r-kendaraan/scope-data-show', [ReportKendaraanController::class, 'scopeDataShow'])->name('r-kendaraan.scopeDataShow');
 Route::resource('r-kendaraan', ReportKendaraanController::class);
 

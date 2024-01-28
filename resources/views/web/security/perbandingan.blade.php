@@ -33,8 +33,8 @@
 @section('content')
     <nav class="container" aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="{{ route('w-dashboard.index') }}" class="text-white">Dashboard</a></li>
-            <li class="breadcrumb-item text-white active" aria-current="page">Perbandingan Checker</li>
+            <li class="breadcrumb-item"><a href="{{ route('w-cek-security.index') }}" class="text-white">Surat Jalan Security</a></li>
+            <li class="breadcrumb-item text-white active" aria-current="page">Perbandingan Security</li>
         </ol>
     </nav>
 
@@ -251,7 +251,7 @@
             <hr>
             <div class="row justify-content-end">
                 <div class="col-md-2 d-flex flex-column">
-                    <a class="btn btn-light" href="{{ route('w-dashboard.index') }}"><i class="fa-solid fa-arrow-left"></i> &nbsp; Kembali </a>
+                    <a class="btn btn-light" href="{{ route('w-cek-security.index') }}"><i class="fa-solid fa-arrow-left"></i> &nbsp; Kembali </a>
                 </div>
             </div>
         </div>

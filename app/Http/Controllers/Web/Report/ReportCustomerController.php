@@ -32,7 +32,7 @@ class ReportCustomerController extends Controller
         if ($req->ajax()) {
             $startDate = $req->startdate.' 00:00:00';
             $endDate = $req->enddate.' 23:59:59';
-            $jumlahCustomer = Letter::select('id_customer')->whereBetween('created_at', [$startDate, $endDate])->groupBy('id_customer')->get()->count();
+            $jumlahCustomer = Letter::join('users', 'users.id', 'letters.created_by')->where('users.id_jenis', 2)->select('id_customer')->whereBetween('letters.created_at', [$startDate, $endDate])->groupBy('id_customer')->get()->count();
             $totalCustomer = Customer::count();
             $customerTersimpan = $totalCustomer - $jumlahCustomer;
 
@@ -101,7 +101,7 @@ class ReportCustomerController extends Controller
             })
             ->where(function($query) use ($tipe, $startDate, $endDate) {
                 if ($tipe == 1) {
-                    $query->whereNotNull('letters.id')->where('users.id_jenis', '!=', 1)->whereBetween('letters.created_at', [$startDate, $endDate]);
+                    $query->whereNotNull('letters.id')->where('users.id_jenis', 2)->whereBetween('letters.created_at', [$startDate, $endDate]);
                 } else if ($tipe == 2) {
                     $query->where(DB::raw('(SELECT COUNT(*) FROM letters JOIN users ON users.id = letters.created_by WHERE letters.created_at BETWEEN "'.$startDate.'" AND "'.$endDate.'" AND letters.id_customer = customers.id AND users.id_jenis != 1 GROUP BY letters.id_customer)'), '=', null);
                 }

@@ -32,10 +32,18 @@ class ReportKendaraanController extends Controller
             $startDate = $req->startdate.' 00:00:00';
             $endDate = $req->enddate.' 23:59:59';
 
-            $data = Transport::select('no_kendaraan', DB::raw('COUNT(*) as total'))->join('users', 'users.id', 'transports.created_by')->where('users.id_jenis', '!=', 1)->whereBetween('transports.created_at', [$startDate, $endDate])->groupBy('no_kendaraan')->orderBy('total', 'DESC')->get();
+            $data = Transport::select('no_kendaraan', DB::raw('COUNT(*) as total'))->join('users', 'users.id', 'transports.created_by')->where('users.id_jenis', 2)->whereBetween('transports.created_at', [$startDate, $endDate])->groupBy('no_kendaraan')->orderBy('total', 'DESC')->get();
 
             return DataTables::of($data)
                 ->addIndexColumn()
+                ->addColumn('detail', function($item) use ($startDate, $endDate) {
+                    $html = '<div class="btn-group" role="group">
+                                <a class="btn btn-secondary btn-sm" href="'.route('r-kendaraan.show', $item->no_kendaraan).'?awal='.$startDate.'&akhir='.$endDate.'" title="Detail"><i class="fa-solid fa-circle-info"></i> &nbsp; Detail</a>
+                            </div>';
+
+                    return $html;
+                })
+                ->rawColumns(['detail'])
                 ->make(true);
         }
     }
@@ -47,7 +55,7 @@ class ReportKendaraanController extends Controller
             $endDate = $req->enddate.' 23:59:59';
 
             $data['tanggal'] = getTanggalIndo($req->startdate).' s/d '.getTanggalIndo($req->enddate);
-            $data['data'] = Transport::select('no_kendaraan', DB::raw('COUNT(*) as total'))->join('users', 'users.id', 'transports.created_by')->where('users.id_jenis', '!=', 1)->whereBetween('transports.created_at', [$startDate, $endDate])->groupBy('no_kendaraan')->orderBy('total', 'DESC')->get();
+            $data['data'] = Transport::select('no_kendaraan', DB::raw('COUNT(*) as total'))->join('users', 'users.id', 'transports.created_by')->where('users.id_jenis', 2)->whereBetween('transports.created_at', [$startDate, $endDate])->groupBy('no_kendaraan')->orderBy('total', 'DESC')->get();
             $namaFile = 'Laporan_Kendaraan_'.$req->startdate.'_'.$req->enddate.'.pdf';
 
             $pdf = Pdf::loadView('web.report.kendaraan.pdf', $data);
@@ -79,15 +87,47 @@ class ReportKendaraanController extends Controller
         //
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
     public function show($id)
     {
-        //
+        try {
+            // $data['transport'] = Transport::where('id', $id)->first();
+            // $data['suratJalan'] = Letter::with(['customers'])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get();
+            $data['kendaraan'] = $id;
+
+            return view('web.report.kendaraan.detail', $data);
+        } catch (Throwable $e) {
+            Session::flash('error', 'Terjadi sesuatu kesalahan pada server.');
+            return redirect()->route('r-kendaraan.index');
+        }
+    }
+
+    public function scopeDataShow(Request $req)
+    {
+        if ($req->ajax()) {
+            $kendaraan = $req->kendaraan;
+            $startDate = $req->awal;
+            $endDate = $req->akhir;
+
+            $data = Transport::join('users', 'users.id', 'transports.created_by')->select('transports.*')->where('users.id_jenis', 2)->where('no_kendaraan', $kendaraan)->whereBetween('transports.created_at', [$startDate, $endDate])->orderBy('id', 'DESC')->get();
+
+            return DataTables::of($data)
+                ->addIndexColumn()
+                ->addColumn('tanggal', function($item){
+                    $tangal = getTanggalIndo($item->created_at->format('Y-m-d'));
+
+                    return $tangal;
+                })
+                ->addColumn('berat', function($item){
+                    return getJumlahBerat($item->id); 
+                })
+                ->addColumn('total', function($item){
+                    $html = '<span class="badge text-bg-primary">'.getJumlahSurat($item->id).' Surat</span>&nbsp;<span class="badge text-bg-secondary">'.getJumlahCustomer($item->id).' Pelanggan</span>';
+
+                    return $html;
+                })
+                ->rawColumns(['tanggal', 'berat', 'total'])
+                ->make(true);
+        }
     }
 
     /**

@@ -51,7 +51,7 @@
                         <div class="ms-3">
                             <select class="form-select" id="tipeData">
                                 <option selected value="1">Aktif</option>
-                                <option value="2">Belum</option>
+                                {{-- <option value="2">Belum</option> --}}
                                 <option value="3">Semua</option>
                             </select>
                         </div>
@@ -62,7 +62,7 @@
             </div>
 
             <div class="row justify-content-center mb-4">
-                <div class="col-md-4">
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-body px-3 py-2">
                             <h5 class="fw-bold mb-0" id="jumlahChecker">0</h5>
@@ -70,15 +70,15 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-md-4">
+                {{-- <div class="col-md-6">
                     <div class="card">
                         <div class="card-body px-3 py-2">
                             <h5 class="fw-bold mb-0" id="jumlahCheckerBelum">0</h5>
                             <span>Total Scan Timbangan Belum</span>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
+                </div> --}}
+                <div class="col-md-6">
                     <div class="card">
                         <div class="card-body px-3 py-2">
                             <h5 class="fw-bold mb-0" id="totalChecker">0</h5>
@@ -165,7 +165,7 @@
                         Swal.close();
                         $('#jumlahChecker').html(res.jumlah ?? 0);
                         $('#totalChecker').html(res.total ?? 0);
-                        $('#jumlahCheckerBelum').html(res.tersimpan ?? 0);
+                        // $('#jumlahCheckerBelum').html(res.tersimpan ?? 0);
                     }
                 });
             }

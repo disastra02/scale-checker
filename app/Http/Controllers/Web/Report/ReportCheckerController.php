@@ -33,7 +33,7 @@ class ReportCheckerController extends Controller
             $startDate = $req->startdate.' 00:00:00';
             $endDate = $req->enddate.' 23:59:59';
             
-            $jumlahChecker = Transport::select('transports.created_by')->join('users', 'users.id', 'transports.created_by')->where('users.id_jenis', '!=', 1)->whereBetween('transports.created_at', [$startDate, $endDate])->groupBy('transports.created_by')->get()->count();
+            $jumlahChecker = Transport::select('transports.created_by')->join('users', 'users.id', 'transports.created_by')->whereNotIn('users.id_jenis', [1, 3])->whereBetween('transports.created_at', [$startDate, $endDate])->groupBy('transports.created_by')->get()->count();
             $totalChecker = User::where('id_jenis', 2)->count();
             $tersimpan = $totalChecker - $jumlahChecker;
 
@@ -89,7 +89,7 @@ class ReportCheckerController extends Controller
     {
         $data = User::select('users.id', DB::raw('(SELECT COUNT(*) FROM transports WHERE transports.created_at BETWEEN "'.$startDate.'" AND "'.$endDate.'" AND transports.created_by = users.id GROUP BY transports.created_by) AS total'))
                 ->leftJoin('transports', 'transports.created_by', 'users.id')
-                ->where('users.id_jenis', '!=', 1)
+                ->whereNotIn('users.id_jenis', [1, 3])
                 ->where(function($query) use ($tipe, $startDate, $endDate) {
                     if ($tipe == 1) {
                         $query->whereNotNull('transports.id')->whereBetween('transports.created_at', [$startDate, $endDate]);

@@ -37,7 +37,6 @@ class TimbanganController extends Controller
             $startDate = date('Y-m-d', strtotime('-6 days')).' 00:00:00';
             $endDate = date('Y-m-d').' 23:59:59';
 
-            $user = Auth::user();
             $data = Transport::join('users', 'users.id', 'transports.created_by')->select('transports.*')->where('users.id_jenis', 2)->whereBetween('transports.created_at', [$startDate, $endDate])->orderBy('id', 'DESC')->get();
 
             return DataTables::of($data)
@@ -57,25 +56,15 @@ class TimbanganController extends Controller
                     return getTanggalTable($item->created_at->format('Y-m-d')).', '.$item->created_at->format('H:i'); 
                 })
                 ->addColumn('aksi', function($item){
-                    $html = '<div class="text-center">
-                                <div class="btn-group">
-                                    <button type="button" class="btn btn-light btn-sm" data-bs-toggle="dropdown" aria-expanded="false">
-                                        <i class="fa-solid fa-ellipsis-vertical"></i>
-                                    </button>
-                                    <ul class="dropdown-menu">
-                                        <li><a class="dropdown-item" href="'.route('w-cek-checker.show', $item->id).'">Detail</a></li>
-                                        <li><a class="dropdown-item" href="'.route('w-cek-checker.perbandingan', $item->id).'">Perbandingan</a></li>
-                                        <li><a class="dropdown-item" href="'.route('w-cek-checker.printToExcel', $item->id).'">Print</a></li>
-                                        <li>
-                                            <form action="'.route('w-cek-checker.destroy', $item->id).'" method="POST">
-                                                '.method_field("DELETE").'
-                                                '.csrf_field().'
-
-                                                <a class="dropdown-item delete-data" type="submit">Hapus</a>
-                                            </form>
-                                        </li>
-                                    </ul>
-                                </div>
+                    $html = '<div class="btn-group" role="group">
+                                <a class="btn btn-secondary btn-sm" href="'.route('w-cek-checker.show', $item->id).'" title="Detail"><i class="fa-solid fa-circle-info"></i> &nbsp; Detail</a>
+                                <a class="btn btn-warning btn-sm" href="'.route('w-cek-checker.perbandingan', $item->id).'" title="Perbandingan"><i class="fa-solid fa-arrows-left-right"></i> &nbsp; Perbandingan</a>
+                                <a class="btn btn-success btn-sm" href="'.route('w-cek-checker.printToExcel', $item->id).'" title="Tallysheet"><i class="fa-solid fa-file-excel"></i> &nbsp; Tallysheet</a>
+                                <form action="'.route('w-cek-checker.destroy', $item->id).'" method="POST">
+                                '.method_field("DELETE").'
+                                '.csrf_field().'                                
+                                    <a class="btn btn-danger btn-sm delete-data" type="submit" title="Hapus"><i class="fa-solid fa-trash"></i> &nbsp; Hapus</a>
+                                </form>
                             </div>';
 
                     return $html;
@@ -121,7 +110,7 @@ class TimbanganController extends Controller
             // Transport
             $data['user'] = Auth::user();
             $data['transport'] = Transport::where('id', $id)->first();
-            $data['pembuat'] = User::where('id_jenis', '!=', 2)->orderBy('id_jenis', 'ASC')->get();
+            $data['pembuat'] = User::orderBy('id_jenis', 'ASC')->get();
             $data['suratJalan'] = Letter::with(['customers'])->where('id_transport', $data['transport']->id)->orderBy('id', 'ASC')->get();
 
             return view('web.timbangan.perbandingan', $data);

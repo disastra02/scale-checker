@@ -33,7 +33,7 @@
                     <div class="col-md-6 d-flex justify-content-end">
                         <a class="btn btn-light btn-sm" href="{{ route('w-dashboard.index') }}" title="Kembali"><i class="fa-solid fa-arrow-left"></i></a>
                         <a class="btn btn-warning btn-sm ms-2" href="{{ route('w-cek-checker.perbandingan', $transport->id) }}" title="Perbandingan"><i class="fa-solid fa-arrows-left-right"></i> &nbsp; Perbandingan</a>
-                        <a class="btn btn-success btn-sm ms-2" href="{{ route('w-cek-checker.printToExcel', $transport->id) }}" title="Print"><i class="fa-solid fa-file-excel"></i> &nbsp; Print</a>
+                        <a class="btn btn-success btn-sm ms-2" href="{{ route('w-cek-checker.printToExcel', $transport->id) }}" title="Tallysheet"><i class="fa-solid fa-file-excel"></i> &nbsp; Tallysheet</a>
 
                         <form action="{{ route('w-cek-checker.destroy', $transport->id) }}" method="POST">
                             @method("DELETE")
